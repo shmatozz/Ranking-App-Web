@@ -12,7 +12,8 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+        <ol
+          className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
             Get started by editing{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
@@ -47,6 +48,20 @@ export default function Home() {
           >
             Read our docs
           </a>
+        </div>
+
+        <div className="font-montserrat">
+          <h4 className="text-h4">This is H4</h4>
+          <h5 className="text-h5">This is H5</h5>
+          <p className="text-bodyM_regular">This is BodyM Regular</p>
+          <p className="text-bodyM_medium">This is BodyM Medium</p>
+          <p className="text-bodyM_regular italic">This is BodyM Italic</p>
+          <p className="text-bodyS_regular">This is BodyS Regular</p>
+          <p className="text-bodyS_medium">This is BodyS Medium</p>
+          <p className="text-bodyS_regular italic">This is BodyS Italic</p>
+          <p className="text-caption_regular">This is BodyXS Regular</p>
+          <p className="text-caption_medium">This is BodyXS Medium</p>
+          <p className="text-caption_regular italic">This is BodyXS Italic</p>
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
