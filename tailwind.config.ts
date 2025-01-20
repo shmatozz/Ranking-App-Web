@@ -2,9 +2,7 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -43,12 +41,10 @@ export default {
           70: "#B91E12", 80: "#981109", 90: "#750E05",
         },
       },
-      fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
-      },
       fontSize: {
         h4: ["26px", { lineHeight: "32px", fontWeight: "600" }],
         h5: ["20px", { fontWeight: "500" }],
+        h5_bold: ["20px", { fontWeight: "600" }],
         bodyM_regular: ["16px", { fontWeight: "500" }],
         bodyM_medium: ["16px", { fontWeight: "600" }],
         bodyS_regular: ["14px", { fontWeight: "500" }],
