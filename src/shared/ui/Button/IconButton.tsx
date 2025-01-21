@@ -46,7 +46,7 @@ export const IconButton: React.FC<ButtonProps> = ({
     gray: {
       primary: "bg-base-70 text-base-0 hover:bg-base-80 active:bg-base-95 disabled:bg-base-20",
       secondary: "border border-2 border-base-70 text-base-70 hover:border-base-80 hover:text-base-80 active:border-base-95 active:text-base-95 disabled:border-base-20 disabled:text-base-20",
-      tertiary: "text-base-70 hover:text-base-80 hover:bg-base-5 active:text-base-95 active:bg-base-5 disabled:text-base-30 disabled:bg-transparent",
+      tertiary: "text-base-80 hover:bg-base-5 active:text-base-95 active:bg-base-5 disabled:text-base-30 disabled:bg-transparent",
     },
   }[palette][variant];
 

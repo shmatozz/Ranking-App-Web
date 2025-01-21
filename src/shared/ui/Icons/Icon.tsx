@@ -6,6 +6,8 @@ export const icons = {
   bell: Icons.Bell,
   bellBadge: Icons.BellBadge,
   checkboxBlank: Icons.CheckboxBlank,
+  vk: Icons.VK,
+  tg: Icons.TG,
 };
 
 type IconProps = {
