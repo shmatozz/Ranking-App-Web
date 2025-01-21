@@ -9,30 +9,26 @@ type ButtonProps = {
   size?: "S" | "M";
   variant?: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
-  children: React.ReactNode;
-  leftIcon?: keyof typeof icons;
-  rightIcon?: keyof typeof icons;
+  icon: keyof typeof icons;
   onClick?: () => void;
   className?: string;
 };
 
-export const Button: React.FC<ButtonProps> = ({
+export const IconButton: React.FC<ButtonProps> = ({
   palette = "blue",
   size = "M",
   variant = "primary",
   disabled = false,
-  children,
-  leftIcon,
-  rightIcon,
+  icon,
   onClick,
   className,
 }) => {
-  const baseClass = "flex items-center justify-center focus:outline-none transition gap-3 w-fit";
+  const baseClass = "flex items-center justify-center focus:outline-none gap-3";
 
   /* Size styles */
   const sizeClass = {
-    S: "h-10 px-4 py-2 text-bodyS_medium rounded-xl",
-    M: "h-[3.25rem] px-4 py-2 text-bodyM_medium rounded-2xl",
+    S: "h-10 w-10 rounded-xl",
+    M: "h-[3.25rem] w-[3.25rem] rounded-2xl",
   }[size];
 
   /* Color styles */
@@ -64,11 +60,7 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
     >
-      {leftIcon && <Icon name={leftIcon} size={size == "M" ? 32 : 24}/>}
-
-      {children}
-
-      {rightIcon && <Icon name={rightIcon} size={size == "M" ? 32 : 24}/>}
+      <Icon name={icon} size={size == "M" ? 32 : 24}/>
     </button>
   );
 };
