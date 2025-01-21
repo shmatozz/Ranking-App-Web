@@ -12,9 +12,10 @@ type IconProps = {
   name: keyof typeof icons;
   size?: number;
   color?: string;
+  className?: string;
 };
 
-export const Icon: React.FC<IconProps> = ({ name, size = 24, color = "currentColor" }) => {
+export const Icon: React.FC<IconProps> = ({ name, size = 24, color = "currentColor", className }) => {
   const IconComponent = icons[name];
 
   if (!IconComponent) {
@@ -23,6 +24,6 @@ export const Icon: React.FC<IconProps> = ({ name, size = 24, color = "currentCol
   }
 
   return (
-    <IconComponent size={size} color={color}/>
+    <IconComponent size={size} color={color} className={className}/>
   );
 };
