@@ -3,5 +3,6 @@ export {IconButton} from "./Button/IconButton";
 
 export {Icon, icons} from "./Icons/Icon";
 export {Logo} from "./Illustrations/Logo";
+export {FloatingCircles} from "./Illustrations/FloatingCircles";
 
 export {TextInput} from "./Text/TextInput"

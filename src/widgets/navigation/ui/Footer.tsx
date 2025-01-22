@@ -3,7 +3,7 @@ import {Button, IconButton, Logo} from "@/shared/ui";
 
 export const Footer = () => {
   return (
-    <footer className="flex bg-base-5 h-[12.5rem] justify-center">
+    <footer className="flex bg-base-5 h-[12.5rem] justify-center bg-opacity-75">
       {/* Content */}
       <div className={"flex flex-row h-full max-w-[75rem]"}>
         {/* Col 1 */}
