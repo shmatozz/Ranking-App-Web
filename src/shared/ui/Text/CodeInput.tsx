@@ -1,10 +1,36 @@
 'use client';
 
 import React from "react";
-import {NumberHolder} from "@/shared/ui";
 
-export const CodeInput = () => {
-  const [code, setCode] = React.useState("");
+interface CodeInputProps {
+  code: string;
+  setCode: (code: string) => void;
+}
+
+export const CodeInput: React.FC<CodeInputProps> = ({ code, setCode }) => {
+  const handleChange = (value: string, index: number) => {
+    if (/^\d?$/.test(value)) { // Разрешаем ввод только одной цифры
+      const newCodeArray = code.split("");
+      newCodeArray[index] = value || "";
+      const newCode = newCodeArray.join("");
+      setCode(newCode);
+
+      // Перемещаем фокус на следующее поле
+      if (value && index < 5) {
+        const nextInput = document.getElementById(`code-input-${index + 1}`);
+        nextInput?.focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === "Backspace") {
+      if (!code[index] && index > 0) {
+        const prevInput = document.getElementById(`code-input-${index - 1}`);
+        prevInput?.focus();
+      }
+    }
+  };
 
   return (
     <div className={"flex flex-col w-full bg-base-0 gap-6"}>
@@ -13,22 +39,24 @@ export const CodeInput = () => {
       </p>
 
       <div className={"flex flex-row gap-4 py-2 items-center justify-center"}>
-        <NumberHolder number={code[0]}/>
-        <NumberHolder number={code[1]}/>
-        <NumberHolder number={code[2]}/>
-        <NumberHolder number={code[3]}/>
-        <NumberHolder number={code[4]}/>
-        <NumberHolder number={code[5]}/>
+        {Array(6)
+          .fill("")
+          .map((_, index) => (
+            <input
+              key={index}
+              id={`code-input-${index}`}
+              type="text"
+              value={code[index] || ""}
+              maxLength={1}
+              placeholder={"_"}
+              inputMode="numeric"
+              className="flex w-9 h-[3.25rem] rounded-lg bg-base-0 text-h5 border-2 border-base-5 text-center"
+              onChange={(e) => handleChange(e.target.value, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              autoComplete={"off"}
+            />
+          ))}
       </div>
-
-      <input
-        name={"code"}
-        type={"hidden"}
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        inputMode={"numeric"}
-        maxLength={6}
-      />
     </div>
-  )
-}
+  );
+};
