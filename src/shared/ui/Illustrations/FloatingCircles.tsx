@@ -20,9 +20,9 @@ export const FloatingCircles: React.FC = () => {
       id: i,
       x: Math.random() * (window.innerWidth / 2),
       y: Math.random() * (window.innerHeight / 2),
-      size: Math.random() * (Math.min(window.innerHeight, window.innerWidth) / 5) + (Math.min(window.innerHeight, window.innerWidth) / 2), // Размер (50-150px)
-      velocityX: (Math.random() - 0.5) / 5,
-      velocityY: (Math.random() - 0.5) / 5,
+      size: Math.random() * (Math.min(window.innerHeight, window.innerWidth) / 5) + (Math.min(window.innerHeight, window.innerWidth) / 2),
+      velocityX: (Math.random() - 0.5) / 4,
+      velocityY: (Math.random() - 0.5) / 4,
     }));
     setCircles(generatedCircles);
   }, []);
