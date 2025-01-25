@@ -19,9 +19,8 @@ export const Recovery = () => {
     setState("code-sent");
     try {
       verifyEmail(email).then((response) => {
-        if (response.ok) {
-          setCorrectCode(response.body!.verificationCode);
-        }
+        console.log(response)
+        setCorrectCode(response.verificationCode);
       });
     } catch (error) {
       console.error("Ошибка при отправке кода", error);
@@ -43,7 +42,10 @@ export const Recovery = () => {
   const handlePasswordChange = async () => {
     setState("new password");
     try {
-
+      // updatePassword(email).then((response) => {
+      //   console.log(response)
+      //   setCorrectCode(response.verificationCode);
+      // });
     } catch (error) {
       console.error("Ошибка при проверке кода", error);
       setState("code-sent"); // Вернуть в состояние "code-sent" для повторной попытки

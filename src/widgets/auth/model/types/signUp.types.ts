@@ -9,3 +9,10 @@ export type SignUpCredentials = {
   password: string,
   confirmPassword: string
 }
+
+export type SignUpOrganizationCredentials = {
+  organizationEmail: string,
+  organizationName: string,
+  password: string,
+  confirmPassword: string
+}

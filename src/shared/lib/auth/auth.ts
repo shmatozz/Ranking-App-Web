@@ -32,7 +32,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       });
 
       const data = await res.json();
-      console.log(data.jwtToken)
 
       if (res.ok && data.jwtToken) {
         return { email: credentials.email as string, token: data.jwtToken }
@@ -44,13 +43,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.email = user.email;
         token.accessToken = user.token;
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.email = token.email as string;
       session.user.token = token.accessToken as string;
       return session;
     },

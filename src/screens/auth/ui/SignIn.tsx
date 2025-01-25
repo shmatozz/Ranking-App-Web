@@ -3,12 +3,12 @@ import {SignInUserForm} from "@/widgets/auth";
 import {Button} from "@/shared/ui";
 import clsx from "clsx";
 import Link from "next/link";
-import {cookies} from "next/headers";
-import {redirect} from "next/navigation";
+import {redirect, RedirectType} from "next/navigation";
+import {auth} from "@/shared/lib";
 
 export const SignIn = async () => {
-  const cookieStore = await cookies();
-  if (cookieStore.get("token")) redirect("/profile");
+  const session = await auth();
+  if (session) redirect("/profile", RedirectType.replace);
 
   return (
     <div

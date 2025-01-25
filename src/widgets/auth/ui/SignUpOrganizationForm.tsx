@@ -1,38 +1,46 @@
 import React from "react";
-import {TextInput} from "@/shared/ui";
+import {Button, TextInput} from "@/shared/ui";
+import {signUpOrganization} from "@/shared/lib";
 
 export const SignUpOrganizationForm = () => {
   return (
-    <form className={"flex flex-col gap-3 w-full"}>
+    <form
+      className={"flex flex-col gap-3 w-full"}
+      action={signUpOrganization}
+    >
       <TextInput
-        required
+        name={"organizationName"} required
         title={"Название организации"}
         type={"text"}
       />
 
       <TextInput
-        required
+        name={"organizationEmail"} required
         title={"E-mail"}
         type={"email"}
       />
 
       <TextInput
-        required
+        name={"organizationPhone"}
         title={"Контактный номер организации"}
         type={"tel"}
       />
 
       <TextInput
-        required
+        name={"password"} required
         title={"Пароль"}
         type={"password"}
       />
 
       <TextInput
-        required
+        name={"confirmPassword"} required
         title={"Повторите пароль"}
         type={"password"}
       />
+
+      <Button className={"w-full max-w-[300px] mt-3 self-center"} type={"submit"}>
+        Далее
+      </Button>
     </form>
   )
 }

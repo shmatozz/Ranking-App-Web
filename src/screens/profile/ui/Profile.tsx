@@ -1,18 +1,19 @@
 import React from "react";
 import {Button} from "@/shared/ui";
-import {cookies} from "next/headers";
 import {redirect} from "next/navigation";
+import {auth, quit} from "@/shared/lib";
 
 export const Profile = async () => {
-  const cookieStore = await cookies();
-  if (!cookieStore.get("token")) redirect("/sign-in");
-  console.log("FROM PROFILE");
+  const session = await auth();
+  if (!session) redirect("/sign-in");
+
+  console.log("FROM PROFILE", session);
 
   return (
     <div className={"w-full text-wrap"}>
-      {cookieStore.get("token")?.value}
+      {session.user.email}
 
-      <Button>
+      <Button onClick={quit}>
         SIGN OUT
       </Button>
     </div>
