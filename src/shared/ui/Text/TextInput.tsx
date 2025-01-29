@@ -45,7 +45,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       {/* Title with animation */}
       <label
         className={clsx(
-          "h-fit transition-transform duration-300 select-none -z-10",
+          "flex flex-row h-fit transition-transform duration-300 select-none gap-1",
           "pointer-events-none",
           isFocused || hasText ? "translate-y-0" : "translate-y-8",
           inputSize == "M" ? "text-bodyS_regular" : "text-caption_regular",
@@ -53,11 +53,12 @@ export const TextInput: React.FC<TextInputProps> = ({
         )}
       >
         {title}
+        { props.required && <p className={"text-red-50"}>*</p> }
       </label>
 
       {/* Input Field */}
       <input
-        id={title}
+        name={props.name}
         {...props}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => {
@@ -70,8 +71,8 @@ export const TextInput: React.FC<TextInputProps> = ({
           sizeClass,
           themeClass,
           "border placeholder-base-40 transition-opacity",
-          "block w-full rounded-md outline-none placeholder:italic focus:placeholder:opacity-0",
-          props.disabled && "opacity-50 cursor-not-allowed",
+          "block w-full z-[1] rounded-md outline-none placeholder:italic focus:placeholder:opacity-0",
+          props.disabled && "bg-base-5 cursor-not-allowed",
           isError ? "bg-red-5 border-red-70" : "bg-base-0 border-base-20",
           className
         )}

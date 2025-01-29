@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <header
-      className="flex flex-row h-[3.75rem] bg-blue-50 sticky top-0 justify-center gap-4 drop-shadow-lg"
+      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-center gap-4 drop-shadow-lg z-10"
     >
       {/* Logo */}
       <Link href={"/"}>

@@ -2,6 +2,7 @@ import {Montserrat} from "next/font/google";
 import "./globals.css";
 import {Header, Footer} from "@/widgets/navigation";
 import React from "react";
+import {FloatingCircles} from "@/shared/ui";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -18,11 +19,16 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${montserrat.className} antialiased`}
+        className={`${montserrat.className} antialiased flex flex-col min-h-screen`}
       >
         <Header/>
+        <FloatingCircles/>
 
-        {children}
+        <main className="flex flex-col flex-grow py-[3.25rem] shadow-md scroll">
+          <div className="flex flex-col flex-grow justify-center items-center">
+            {children}
+          </div>
+        </main>
 
         <Footer/>
       </body>
