@@ -7,8 +7,6 @@ export const Profile = async () => {
   const session = await auth();
   if (!session) redirect("/sign-in");
 
-  console.log("FROM PROFILE", session);
-
   return (
     <div className={"w-full text-wrap"}>
       {session.user.email}

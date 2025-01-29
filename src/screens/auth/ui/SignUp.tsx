@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect} from "react";
+import React from "react";
 import clsx from "clsx";
 import {SignUpOrganizationForm, SignUpUserForm} from "@/widgets/auth";
 import {Button} from "@/shared/ui";
@@ -8,10 +8,6 @@ import Link from "next/link";
 
 export const SignUp = () => {
   const [registrationState, setRegistrationState] = React.useState("user")
-
-  useEffect(() => {
-    console.log(registrationState);
-  }, [registrationState])
 
   return (
     <div
@@ -46,7 +42,7 @@ export const SignUp = () => {
 
         <div
           className={clsx(
-            "h-[3px] w-1/2 bg-blue-50 transition-transform",
+            "h-[4px] w-1/2 bg-blue-50 transition-transform",
             registrationState == "organization" ? "translate-x-[100%]" : "transform-x-0"
             )}
         />

@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials";
+import { CredentialsSignin } from 'next-auth';
 
 declare module "next-auth" {
   interface Session {
@@ -36,7 +37,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (res.ok && data.jwtToken) {
         return { email: credentials.email as string, token: data.jwtToken }
       } else {
-        throw new Error(data.msg);
+        throw new CredentialsSignin(data.msg || "Ошибка авторизации");
       }
     }
   })],
