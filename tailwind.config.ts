@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '660px',
+        'lg-md': '950px',
+        '2xl': '1600px',
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

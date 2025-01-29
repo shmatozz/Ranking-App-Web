@@ -17,6 +17,7 @@ export const icons = {
   info: Icons.Info,
   link: Icons.Link,
   medal: Icons.Medal,
+  menu: Icons.Menu,
   plus: Icons.Plus,
   podium: Icons.Podium,
   radioBlank: Icons.RadioBlank,

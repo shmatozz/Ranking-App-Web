@@ -1,24 +1,58 @@
 'use client'
 
-import React from "react";
-
-import {Icon, Logo} from "@/shared/ui";
+import React, { useState } from "react";
+import {Icon, icons, Logo} from "@/shared/ui";
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 export const Header = () => {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isActive = (href: string) => pathname === href;
 
-  const pageDivStyle: string = "flex items-center justify-center w-full relative transition-colors";
-  const activePageIndicatorStyle: string = "absolute bottom-0 w-full transition-all duration-200 group-hover:h-1";
-  const linkStyle: string = "flex w-[11.25rem] px-8 h-full justify-center group select-none";
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const NavLinks = ({ isActive }: { isActive: (href: string) => boolean }) => (
+    <div className="flex flex-col lg-md:flex-row gap-4">
+      <NavLink href="/calendar" label="Календарь" isActive={isActive} />
+      <NavLink href="/ratings" label="Рейтинг" isActive={isActive} />
+      <NavLink href="/about" label="О нас" isActive={isActive} />
+    </div>
+  );
+
+  const NavLink = ({ href, label, isActive }: { href: string; label: string; isActive: (href: string) => boolean }) => (
+    <Link href={href} onClick={toggleMenu} className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-14">
+      <div className={clsx(
+        "flex items-center justify-center w-full relative transition-colors",
+        isActive(href) ? "text-blue-10" : "text-base-0"
+      )}>
+        {label}
+        <div className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isActive(href) ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
+      </div>
+    </Link>
+  );
+
+  const IconLink = ({href, icon, isActive}: {
+    href: string;
+    icon: keyof typeof icons;
+    isActive: (href: string) => boolean
+  }) => (
+    <Link
+      href={href}
+      className="flex items-center justify-center h-full w-full w-max-[11.25rem] relative group"
+    >
+      <Icon name={icon} size={32} color={isActive(href) ? "#D3DCFF" : "white" } className={"transition-colors"}/>
+
+      <div className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isActive(href) ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
+    </Link>
+  );
+
 
   return (
     <header
-      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-center gap-4 drop-shadow-lg z-10"
+      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-8 z-10 lg-md:justify-center"
     >
       {/* Logo */}
       <Link href={"/"}>
@@ -29,65 +63,32 @@ export const Header = () => {
         </div>
       </Link>
 
-      {/* Navigation */}
-      <div className="flex w-full max-w-[56.25rem] h-full gap-4">
+      {/* Desktop Navigation */}
+      <nav className="hidden lg-md:flex w-full max-w-[56.25rem] h-full gap-4">
+        <NavLinks isActive={isActive} />
+      </nav>
 
-        {/* Page buttons */}
-        <div className="flex w-full">
-          {/* Calendar (competitions list) link */}
-          <Link
-            href={"/calendar"}
-            className={linkStyle}
-          >
-            <div className={clsx(pageDivStyle, isActive("/calendar") ? "text-blue-10" : "text-base-0")}>
-              Календарь
-              <div className={clsx(activePageIndicatorStyle, isActive("/calendar") ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
-            </div>
-          </Link>
-
-          {/* Ratings link */}
-          <Link
-            href={"/ratings"}
-            className={linkStyle}
-          >
-            <div className={clsx(pageDivStyle, isActive("/ratings") ? "text-blue-10" : "text-base-0")}>
-              Рейтинг
-              <div className={clsx(activePageIndicatorStyle, isActive("/ratings") ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
-            </div>
-          </Link>
-
-          {/* About us link */}
-          <Link
-            href={"/about"}
-            className={linkStyle}
-          >
-            <div className={clsx(pageDivStyle, isActive("/about") ? "text-blue-10" : "text-base-0")}>
-              О нас
-              <div className={clsx(activePageIndicatorStyle, isActive("/about") ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
-            </div>
-          </Link>
-        </div>
-
-        {/* Icon pages */}
-        <div className="flex flex-row items-center gap-4">
-          {/* Account link */}
-          <Link
-            href={"/profile"}
-            className="flex items-center justify-center h-full w-full relative group"
-          >
-            <Icon name={"account"} size={32} color={isActive("/profile") ? "#D3DCFF" : "white" } className={"transition-colors"}/>
-
-            <div className={clsx(activePageIndicatorStyle, isActive("/profile") ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
-          </Link>
-
-          {/* Notifications modal */}
+      <div className={"flex flex-row gap-4"}>
+        {/* Icons */}
+        <div className="flex flex-row gap-4 justify-end">
+          <IconLink href="/profile" icon="account" isActive={isActive} />
           <div className="flex items-center justify-center h-full w-[3.25rem] relative group">
-            <Icon name={"bell"} size={30} color={"white"}/>
-
-            <div className={activePageIndicatorStyle}/>
+            <Icon name="bell" size={30} color="white" />
           </div>
         </div>
+
+        {/* Бургер-меню для мобильных */}
+        <button className="h-full w-[3.25rem] flex items-center justify-center lg-md:hidden" onClick={toggleMenu}>
+          <Icon name={isMenuOpen ? "close" : "menu"} size={32} color="white" />
+        </button>
       </div>
+
+      {/* Мобильное меню */}
+      {isMenuOpen && (
+        <div className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 shadow-md flex flex-col items-center py-4 lg-md:hidden">
+          <NavLinks isActive={isActive} />
+        </div>
+      )}
     </header>
-  )
-}
+  );
+};
