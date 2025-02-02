@@ -59,11 +59,16 @@ export const TextInput: React.FC<TextInputProps> = ({
       {/* Input Field */}
       <input
         name={props.name}
-        {...props}
-        onFocus={() => setIsFocused(true)}
+        onFocus={(e) => {
+          setIsFocused(true);
+
+          if (props.onFocus) props.onFocus(e);
+        }}
         onBlur={(e) => {
           setIsFocused(false);
           setHasText(!!e.target.value); // Check if input has text
+
+          if (props.onBlur) props.onBlur(e);
         }}
         disabled={props.disabled}
         placeholder={title}
@@ -77,8 +82,10 @@ export const TextInput: React.FC<TextInputProps> = ({
           className
         )}
         onChange={(e) => {
-          if (e.target.value.length > 0) setHasText(true)
+          if (e.target.value.length > 0) setHasText(true);
+          if (props.onChange) props.onChange(e);
         }}
+        {...props}
       />
 
       {/* Helper Text (for error messages) */}
