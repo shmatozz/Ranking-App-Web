@@ -40,14 +40,14 @@ export const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <div
-      className={"relative flex flex-col w-full gap-1"}
+      className={"relative flex flex-col w-full gap-0"}
     >
       {/* Title with animation */}
       <label
         className={clsx(
           "flex flex-row h-fit transition-transform duration-300 select-none gap-1",
           "pointer-events-none",
-          isFocused || hasText ? "translate-y-0" : "translate-y-8",
+          isFocused || hasText || props.type == "date" ? "translate-y-0" : "translate-y-8",
           inputSize == "M" ? "text-bodyS_regular" : "text-caption_regular",
           isFocused ? themedTextClass : "text-base-40"
         )}
@@ -76,6 +76,9 @@ export const TextInput: React.FC<TextInputProps> = ({
           isError ? "bg-red-5 border-red-70" : "bg-base-0 border-base-20",
           className
         )}
+        onChange={(e) => {
+          if (e.target.value.length > 0) setHasText(true)
+        }}
       />
 
       {/* Helper Text (for error messages) */}
