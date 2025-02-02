@@ -2,37 +2,57 @@
 
 export const verifyEmail = async (email: string) => {
   try {
-    console.log(email)
-    const response = await fetch("http://localhost:9000/api/v1/auth/verify-email?emailToVerify=" + email,
+    console.log(email);
+    const response = await fetch("http://localhost:9000/api/v1/password/recovery",
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
-        }
-      })
+        },
+        body: JSON.stringify({email: email})
+      });
 
-    console.log(response);
-
-    return await response.json();
+     return response.ok;
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
 };
 
-export const updatePassword = async (password: string) => {
+export const verifyToken = async (token: string) => {
   try {
-    const response = await fetch(password,
+    console.log(token)
+
+    const response = await fetch("http://localhost:9000/api/v1/password/validate-token",
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({token: token})
+      });
+
+    return response.ok;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
+export const updatePassword = async (password: string, token: string) => {
+  try {
+    const response = await fetch("http://localhost:9000/api/v1/password/validate-token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ password: password, confirmPassword: password, token: token })
       })
 
     console.log(response);
 
-    return await response.json();
+    return (await response.text()).length == 0 ? {status: 200} : (await response.json());
   } catch (error) {
     console.error("Error:", error);
     throw error;

@@ -1,26 +1,37 @@
 'use client';
 
-import React from "react";
+import React, {useEffect} from "react";
 import clsx from "clsx";
-import {Button, CodeInput, TextInput} from "@/shared/ui";
-import {useRouter} from "next/navigation";
-import {verifyEmail} from "@/screens/auth/api/verify-email";
+import {Button, TextInput} from "@/shared/ui";
+import {useRouter, useSearchParams} from "next/navigation";
+import {updatePassword, verifyEmail, verifyToken} from "@/screens/auth/api/verify-email";
 
 export const Recovery = () => {
+  const params = useSearchParams()
   const router = useRouter();
-  const [state, setState] = React.useState<"email-input" | "code-sent" | "new password">("email-input");
+  const [state, setState] = React.useState<"email-input" | "new password">("email-input");
+  const [validating, setValidating] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const [code, setCode] = React.useState("");
-  const [correctCode, setCorrectCode] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
 
-  const handleSendCode = async () => {
-    setState("code-sent");
+  useEffect(() => {
+    if (params.has("token")) {
+      setValidating(true);
+      verifyToken(params.get("token")!)
+        .then((verified) => {
+          if (verified) {
+            setState("new password");
+            setValidating(false);
+          }
+        });
+    }
+  }, [params]);
+
+  const handleSendCode = () => {
     try {
       verifyEmail(email).then((response) => {
         console.log(response)
-        setCorrectCode(response.verificationCode);
       });
     } catch (error) {
       console.error("Ошибка при отправке кода", error);
@@ -28,29 +39,23 @@ export const Recovery = () => {
     }
   };
 
-  const handleVerifyCode = async () => {
+  const handlePasswordChange = () => {
+    setState("new password");
     try {
-      if (correctCode == code) {
-        setState("new password");
-      }
+      updatePassword(password, params.get("token")!)
+        .then((response) => {
+          if (response.status === 200) {
+            router.replace("/sign-in")
+          }
+        })
     } catch (error) {
       console.error("Ошибка при проверке кода", error);
-      setState("code-sent");
     }
   };
 
-  const handlePasswordChange = async () => {
-    setState("new password");
-    try {
-      // updatePassword(email).then((response) => {
-      //   console.log(response)
-      //   setCorrectCode(response.verificationCode);
-      // });
-    } catch (error) {
-      console.error("Ошибка при проверке кода", error);
-      setState("code-sent"); // Вернуть в состояние "code-sent" для повторной попытки
-    }
-  };
+  if (validating) {
+    return null
+  }
 
   return (
     <div
@@ -64,20 +69,20 @@ export const Recovery = () => {
         Восстановление пароля
       </p>
 
-      <TextInput
-        type={"email"} required
-        title={"Е-mail"}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        disabled={state !== "email-input"}
-      />
-
-      {state === "code-sent" && (
-        <CodeInput code={code} setCode={setCode} />
-      )}
+      {state == "email-input" &&
+        (
+          <TextInput
+            type={"email"} required
+            title={"Е-mail"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={state !== "email-input"}
+          />
+        )
+      }
 
       {state === "new password" && (
-        <div className={"w-full"}>
+        <div className={"flex flex-col w-full gap-1"}>
           <TextInput
             type={"password"} required
             title={"Пароль"}
@@ -103,19 +108,16 @@ export const Recovery = () => {
         onClick={() => {
           if (state === "email-input") {
             handleSendCode();
-          } else if (state === "code-sent") {
-            handleVerifyCode();
           } else if (state === "new password") {
             handlePasswordChange();
           }
         }}
-        disabled={(state == "email-input" && email.length == 0) || (state == "code-sent" && code.length == 0) || (state == "new password" && (password != passwordConfirm || password.length < 8))}
+        disabled={(state == "email-input" && email.length == 0) || (state == "new password" && (password != passwordConfirm || password.length < 8))}
       >
         {state === "email-input"
           ? "Отправить код"
-          : state === "code-sent"
-            ? "Подтвердить"
-            : "Сменить пароль"}
+          : "Сменить пароль"
+        }
       </Button>
 
       <Button
