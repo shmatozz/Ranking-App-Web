@@ -13,6 +13,7 @@ export {EyeOff} from "./eye-off";
 export {Info} from "./info";
 export {Link} from "./link";
 export {Medal} from "./medal";
+export {Menu} from "./menu";
 export {Plus} from "./plus";
 export {Podium} from "./podium";
 export {RadioBlank} from "./radio-blank";

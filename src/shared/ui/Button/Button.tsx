@@ -13,6 +13,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   leftIcon?: keyof typeof icons;
   rightIcon?: keyof typeof icons;
   onClick?: () => void;
+  isLoading?: boolean;
   className?: string;
 };
 
@@ -25,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
   leftIcon,
   rightIcon,
   onClick,
+  isLoading,
   className,
   ...props
 }) => {
@@ -56,18 +58,24 @@ export const Button: React.FC<ButtonProps> = ({
   }[palette][variant];
 
   /* State styles */
-  const stateClass = disabled ? "cursor-not-allowed" : "cursor-pointer";
+  const stateClass = disabled ? "cursor-not-allowed" : (isLoading ? "opacity-95 cursor-wait" : "cursor-pointer");
 
   return (
     <button
       type={props.type}
       className={clsx(baseClass, sizeClass, paletteClass, stateClass, className)}
-      onClick={disabled ? undefined : onClick}
+      onClick={disabled || isLoading ? undefined : onClick}
       disabled={disabled}
     >
       {leftIcon && <Icon name={leftIcon} size={size == "M" ? 32 : 24}/>}
 
-      {children}
+      {
+        isLoading ? (
+          <div className="h-7 w-7 border-4 border-transparent border-r-inherit rounded-full animate-spin"/>
+        ) : (
+         children
+        )
+      }
 
       {rightIcon && <Icon name={rightIcon} size={size == "M" ? 32 : 24}/>}
     </button>
