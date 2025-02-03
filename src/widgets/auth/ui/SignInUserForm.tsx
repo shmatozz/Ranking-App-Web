@@ -6,11 +6,15 @@ import Link from "next/link";
 import {submit} from "@/shared/lib";
 import {useRouter} from "next/navigation";
 
+
 export const SignInUserForm = () => {
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
+
     event.preventDefault();
     setError(null);
 
@@ -23,9 +27,12 @@ export const SignInUserForm = () => {
         router.replace("/profile");
       } else {
         setError(res == "Bad credentials." ? "Неверный пароль." : res);
+        window.scrollTo(0, 0);
       }
     } catch (e) {
       console.log("LOGGED", e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,7 +71,7 @@ export const SignInUserForm = () => {
         </Button>
       </Link>
 
-      <Button className={"w-full max-w-[300px] mt-3 self-center"} type="submit">
+      <Button className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type="submit">
         Вход
       </Button>
     </form>
