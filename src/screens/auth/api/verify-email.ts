@@ -7,12 +7,15 @@ export const verifyEmail = async (email: string) => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({email: email})
       });
 
-     return response.ok;
+    console.log(response);
+
+    const responseText = await response.text();
+    return responseText.length === 0 ? { status: 200 } : JSON.parse(responseText);
   } catch (error) {
     console.error("Error:", error);
     throw error;
@@ -32,7 +35,8 @@ export const verifyToken = async (token: string) => {
         body: JSON.stringify({token: token})
       });
 
-    return response.ok;
+    const responseText = await response.text();
+    return responseText.length === 0 ? { status: 200 } : JSON.parse(responseText);
   } catch (error) {
     console.error("Error:", error);
     throw error;
@@ -41,7 +45,7 @@ export const verifyToken = async (token: string) => {
 
 export const updatePassword = async (password: string, token: string) => {
   try {
-    const response = await fetch("http://localhost:9000/api/v1/password/validate-token",
+    const response = await fetch("http://localhost:9000/api/v1/password/change",
       {
         method: "POST",
         headers: {
@@ -52,7 +56,8 @@ export const updatePassword = async (password: string, token: string) => {
 
     console.log(response);
 
-    return (await response.text()).length == 0 ? {status: 200} : (await response.json());
+    const responseText = await response.text();
+    return responseText.length === 0 ? { status: 200 } : JSON.parse(responseText);
   } catch (error) {
     console.error("Error:", error);
     throw error;
