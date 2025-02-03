@@ -1,6 +1,10 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {Recovery} from "@/screens/auth";
 
 export default function RecoveryPage() {
-  return <Recovery/>
+  return (
+    <Suspense>
+      <Recovery />
+    </Suspense>
+  )
 }
