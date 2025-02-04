@@ -31,7 +31,7 @@ export async function signUp (formData: FormData) {
       birthDate: formData.get("birthDate")! as string,
       email: formData.get("email")! as string,
       emergencyPhone: formData.get("emergencyPhone")! as string,
-      gender: "MALE",
+      gender: formData.get("gender")! as string,
       password: formData.get("password")! as string,
       confirmPassword: formData.get("confirmPassword")! as string,
     })
