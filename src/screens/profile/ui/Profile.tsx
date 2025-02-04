@@ -1,19 +1,38 @@
-import React from "react";
-import {Button} from "@/shared/ui";
-import {redirect} from "next/navigation";
-import {auth, quit} from "@/shared/lib";
+'use client';
 
-export const Profile = async () => {
-  const session = await auth();
-  if (!session) redirect("/sign-in");
+import React from "react";
+import {Competitions, CompetitionsCreate, Info, Members, Results} from "@/widgets/profile";
+import {Subpages} from "@/screens/profile";
+
+export const Profile = () => {
+  const [subpage, setSubpage] = React.useState<Subpages>("info");
+  const user = "user";
 
   return (
-    <div className={"w-full text-wrap"}>
-      {session.user.email}
+    <div className={"flex flex-row h-fit w-full w-max-[1100px] text-wrap bg-base-0 rounded-3xl shadow-md px-[52px] py-8"}>
+      <div>
 
-      <Button onClick={quit}>
-        SIGN OUT
-      </Button>
+      </div>
+
+      {subpage == "info" && (
+        <Info type={user}/>
+      )}
+
+      {subpage == "comps" && (
+        <Competitions type={user}/>
+      )}
+
+      {subpage == "comps-create" && (
+        <CompetitionsCreate type={user}/>
+      )}
+
+      {subpage == "results" && (
+        <Results type={user}/>
+      )}
+
+      {subpage == "members" && (
+        <Members type={user}/>
+      )}
     </div>
   )
 }
