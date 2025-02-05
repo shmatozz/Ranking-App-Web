@@ -13,6 +13,7 @@ export type SignUpCredentials = {
 export type SignUpOrganizationCredentials = {
   organizationEmail: string,
   organizationName: string,
+  isOpen: boolean,
   password: string,
   confirmPassword: string
 }

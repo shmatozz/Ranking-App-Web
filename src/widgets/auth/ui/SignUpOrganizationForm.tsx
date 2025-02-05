@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useState} from "react";
-import {Button, TextInput} from "@/shared/ui";
+import {Button, Checkbox, TextInput} from "@/shared/ui";
 import {signUpOrganization} from "@/shared/lib";
 import {useRouter} from "next/navigation";
 
@@ -77,6 +77,11 @@ export const SignUpOrganizationForm = () => {
         name={"confirmPassword"} required
         title={"Повторите пароль"}
         type={"password"}
+      />
+
+      <Checkbox
+        name={"isOpen"} text={"Открытая организация"}
+        tooltipText={"Любой спортсмен сможет присоединиться к организации без подтверждения"}
       />
 
       <Button className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type={"submit"}>
