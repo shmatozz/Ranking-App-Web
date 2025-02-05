@@ -1,10 +1,10 @@
 'use client'
 
-import React from "react";
+import React, {ButtonHTMLAttributes} from "react";
 import clsx from "clsx";
 import {Icon, icons} from "@/shared/ui";
 
-type ButtonProps = {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   palette?: "blue" | "orange" | "gray";
   size?: "S" | "M";
   variant?: "primary" | "secondary" | "tertiary";
@@ -22,12 +22,13 @@ export const IconButton: React.FC<ButtonProps> = ({
   icon,
   onClick,
   className,
+  ...props
 }) => {
   const baseClass = "flex items-center justify-center focus:outline-none gap-3";
 
   /* Size styles */
   const sizeClass = {
-    S: "h-10 w-10 rounded-xl",
+    S: "h-[40px] w-[40px] rounded-xl",
     M: "h-[3.25rem] w-[3.25rem] rounded-2xl",
   }[size];
 
@@ -55,7 +56,7 @@ export const IconButton: React.FC<ButtonProps> = ({
 
   return (
     <button
-      type={"button"}
+      type={props.type}
       className={clsx(baseClass, sizeClass, paletteClass, stateClass, className)}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}

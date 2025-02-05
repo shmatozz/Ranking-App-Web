@@ -6,6 +6,7 @@ import {Icon} from "@/shared/ui";
 
 type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   title: string;
+  animatedLabel?: boolean;
   inputSize?: "S" | "M";
   theme?: "blue" | "orange";
   errorMessage?: string;
@@ -13,6 +14,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
 
 export const TextInput: React.FC<TextInputProps> = ({
   title,
+  animatedLabel= true,
   type,
   inputSize = "M",
   theme = "blue",
@@ -44,24 +46,26 @@ export const TextInput: React.FC<TextInputProps> = ({
   return (
     <div className={"relative flex flex-col w-full gap-0"}>
       {/* Title with animation */}
-      <label
-        className={clsx(
-          "flex flex-row h-fit transition-transform duration-300 select-none gap-1",
-          "pointer-events-none",
-          isFocused || hasText || type == "date" ? "translate-y-0" : "translate-y-8",
-          inputSize == "M" ? "text-bodyS_regular" : "text-caption_regular",
-          isFocused ? themedTextClass : "text-base-40"
-        )}
-      >
-        {title}
-        {props.required && <p className={"text-red-50"}>*</p>}
-      </label>
+      {animatedLabel && (
+        <label
+          className={clsx(
+            "flex flex-row h-fit transition-transform duration-300 select-none gap-1",
+            "pointer-events-none",
+            isFocused || hasText || type == "date" ? "translate-y-0" : "translate-y-8",
+            inputSize == "M" ? "text-bodyS_regular" : "text-caption_regular",
+            isFocused ? themedTextClass : "text-base-40"
+          )}
+        >
+          {title}
+          {props.required && <p className={"text-red-50"}>*</p>}
+        </label>
+      )}
 
       {/* Input Field */}
       <div className="relative w-full">
         <input
           name={props.name}
-          type={type == "password" ? (showPassword ? "text" : "password") : type }
+          type={type == "password" ? (showPassword ? "text" : "password") : type}
           onFocus={(e) => {
             setIsFocused(true);
 

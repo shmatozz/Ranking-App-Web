@@ -1,3 +1,3 @@
 export {Profile} from "./ui/Profile";
 
-export * from "./model/subpages.types";
+export {whoAmI} from "./api/whoami";

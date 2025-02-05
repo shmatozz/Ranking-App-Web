@@ -1,13 +1,13 @@
 import React from "react";
 
 interface ResultsProps {
-  type: "user" | "organization";
+  role: "sportsman" | "organization";
 }
 
 export const Results: React.FC<ResultsProps> = ({
-  type,
+  role,
 }) => {
-  if (type == "user") {
+  if (role == "sportsman") {
     return (
       <div className={"flex flex-col w-max h-fit gap-4"}>
         <label className={"text-h5_bold text-base-95 text-center"}>Результаты</label>

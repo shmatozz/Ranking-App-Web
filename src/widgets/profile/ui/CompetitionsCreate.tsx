@@ -1,13 +1,13 @@
 import React from "react";
 
 interface CompetitionsCreateProps {
-  type: "user" | "organization";
+  role: "sportsman" | "organization";
 }
 
 export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
-  type,
+  role,
 }) => {
-  if (type == "user") {
+  if (role == "sportsman") {
     return (
       <div className={"flex flex-col w-max h-fit gap-4"}>
         <label className={"text-h5_bold text-base-95 text-center"}>Создание соревнования</label>
