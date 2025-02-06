@@ -41,7 +41,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
             color={disabled ? "#C6C6C6" : (checked ? themeClass : "#9B9B9B")}/>
 
       <p className={clsx(
-        "w-full text-bodyS_regular",
+        "w-full text-bodyS_regular select-none",
         disabled ? " text-base-50" : "text-base-95",
       )}>{text}</p>
 
@@ -54,7 +54,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           <Icon name={"info"} size={16} color={"#C6C6C6"}/>
           {showTooltip && (
             <div
-              className="absolute left-0 top-6 w-48 bg-base-90 text-white text-caption_regular p-2 rounded shadow-md">
+              className="absolute left-0 top-6 w-48 bg-base-90 text-white text-caption_regular select-none p-2 rounded shadow-md">
               {tooltipText}
             </div>
           )}

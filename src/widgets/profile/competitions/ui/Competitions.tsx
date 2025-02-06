@@ -5,10 +5,12 @@ import {Button} from "@/shared/ui";
 
 interface CompetitionsProps {
   role: "sportsman" | "organization";
+  onCreateCompetitionClick?: () => void;
 }
 
 export const Competitions: React.FC<CompetitionsProps> = ({
   role,
+  onCreateCompetitionClick = () => console.log("onCreateCompetitionClick called"),
 }) => {
   const passed = useCompetitionsStore((state) => state.passed);
   const upcoming = useCompetitionsStore((state) => state.upcoming);
@@ -46,7 +48,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
         ))}
 
         {role == "organization" && (
-          <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"}>
+          <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"} onClick={onCreateCompetitionClick}>
             Добавить соревнование
           </Button>
         )}

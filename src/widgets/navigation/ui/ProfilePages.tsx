@@ -25,7 +25,7 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
         </Button>
 
         <Button
-          size={"M"} variant={page == "comps" ? "primary" : "tertiary"}
+          size={"M"} variant={page == "comps" || page == "comps-create" ? "primary" : "tertiary"}
           className={"w-full"}
           onClick={() => setPage("comps")}
         >

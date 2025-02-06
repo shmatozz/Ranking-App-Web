@@ -35,19 +35,19 @@ export const Profile: React.FC<ProfileProps> = ({
       )}
 
       {subpage == "comps" && (
-        <Competitions role={organization ? "organization" : "sportsman"}/>
+        <Competitions role={organization ? "organization" : "sportsman"} onCreateCompetitionClick={organization ? () => setSubpage("comps-create") : undefined}/>
       )}
 
       {subpage == "comps-create" && organization && (
-        <CompetitionsCreate/>
+        <CompetitionsCreate onCancel={() => setSubpage("comps")}/>
       )}
 
       {subpage == "results" && (
-        <Results role={organization ? "organization" : "sportsman"}/>
+        <Results/>
       )}
 
       {subpage == "members" && (
-        <Members role={organization ? "organization" : "sportsman"}/>
+        <Members/>
       )}
     </div>
   )
