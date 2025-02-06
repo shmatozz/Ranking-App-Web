@@ -42,7 +42,7 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
       </div>
 
       <Button
-        size={"M"} variant={"primary"} palette={"gray"}
+        size={"S"} variant={"primary"} palette={"gray"}
         className={"w-full"} onClick={quit}
       >
         Выйти

@@ -38,8 +38,8 @@ export const Profile: React.FC<ProfileProps> = ({
         <Competitions role={organization ? "organization" : "sportsman"}/>
       )}
 
-      {subpage == "comps-create" && (
-        <CompetitionsCreate role={organization ? "organization" : "sportsman"}/>
+      {subpage == "comps-create" && organization && (
+        <CompetitionsCreate/>
       )}
 
       {subpage == "results" && (
