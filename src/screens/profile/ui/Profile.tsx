@@ -19,10 +19,12 @@ export const Profile: React.FC<ProfileProps> = ({
   }, []);
 
   return (
-    <div className={"flex flex-row h-full w-[1100px] w-max-[1100px] gap-[50px] text-wrap bg-base-0 rounded-3xl shadow-md px-[52px] py-8"}>
-      <div className={"flex flex-col h-full w-full max-w-[250px] gap-4"}>
+    <div
+      className={"flex flex-col h-full max-w-[1100px] w-full justify-self-center gap-[50px] text-wrap bg-base-0 rounded-3xl shadow-md px-[24px] py-8 lg-md:flex-row xs:px-[52px]"}
+    >
+      <div className={"flex flex-col h-full w-full max-w-full gap-4 items-center lg-md:max-w-[250px]"}>
         {/* USER PHOTO */}
-        <div className={"h-[250px] w-[250px] bg-base-5 rounded-full"}/>
+        <div className={"h-[100px] w-[100px] bg-base-5 rounded-full lg-md:h-[250px] lg-md:w-[250px]"}/>
 
         {/* USER ID */}
         <div className={"flex flex-col gap-1 items-center"}>

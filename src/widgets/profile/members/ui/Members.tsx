@@ -23,30 +23,28 @@ export const Members: React.FC = ({
       <div className={"flex h-1 w-full bg-base-5"}/>
 
       {/* STATS */}
-      <div className={"flex flex-row w-full gap-4"}>
-        <div className={"flex flex-col w-full gap-1"}>
-          <p className={"text-bodyM_regular text-base-95 text-center"}>Всего участников</p>
-          <p className={"text-h5_bold text-blue-80 text-center"}>5</p>
+      <div className={"flex flex-col w-full gap-1"}>
+        <div className={"flex flex-row w-full items-center gap-4"}>
+          <p className={"w-full text-bodyS_regular text-base-95 text-center align-middle xs:text-bodyM_regular"}>Всего участников</p>
+          <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Средний рейтинг</p>
+          <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Средняя активность</p>
         </div>
 
-        <div className={"flex flex-col w-full gap-2"}>
-          <p className={"text-bodyM_regular text-base-95 text-center"}>Средний рейтинг</p>
-          <p className={"text-h5_bold text-blue-80 text-center"}>1305</p>
-        </div>
-
-        <div className={"flex flex-col w-full gap-2"}>
-          <p className={"text-bodyM_regular text-base-95 text-center"}>Средняя активность</p>
-          <p className={"text-h5_bold text-blue-80 text-center"}>25</p>
+        <div className={"flex flex-row w-full gap-1"}>
+          <p className={"w-full text-h5_bold text-blue-80 text-center"}>5</p>
+          <p className={"w-full text-h5_bold text-blue-80 text-center"}>1305</p>
+          <p className={"w-full text-h5_bold text-blue-80 text-center"}>25</p>
         </div>
       </div>
 
       {/* PARTICIPANTS */}
-      <div className={"flex flex-col w-full gap-1 items-center"}>
+      <div className={"flex flex-col w-full gap-2 items-center"}>
         <div className={"flex flex-row w-full gap-[10px] px-4"}>
           <div className={"min-w-9"}/>
-          <p className={"text-bodyM_medium text-base-95 w-full"}>ФИО</p>
-          <p className={"text-bodyM_medium text-base-95 w-[100px] text-center"}>Рейтинг</p>
-          <p className={"text-bodyM_medium text-base-95 w-[100px] text-center"}>Старты</p>
+          <p className={"text-bodyS_medium text-base-95 w-full xs:text-bodyM_medium"}>ФИО</p>
+          <p
+            className={"text-bodyS_medium text-base-95 w-full max-w-[80px] text-center xs:text-bodyM_medium"}>Рейтинг</p>
+          <p className={"text-bodyS_medium text-base-95 w-full max-w-[80px] text-center xs:text-bodyM_medium"}>Старты</p>
         </div>
 
         <div className={"h-[2px] w-full bg-base-5"}/>

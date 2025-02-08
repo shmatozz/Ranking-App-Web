@@ -15,7 +15,7 @@ export const UserResultsCard: React.FC<UserResultsCardProps> = (
       className={"flex flex-col w-full h-fit px-8 py-4 gap-2 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl"}
       onClick={props.onClick}
     >
-      <label className={"text-h5 text-blue-90"}>{props.result.name}</label>
+      <label className={"text-bodyM_medium text-blue-90 xs:text-h5"}>{props.result.name}</label>
 
       <div className={"flex flex-col gap-1 px-2"}>
         <div className={"flex flex-row w-full gap-2"}>
@@ -26,7 +26,7 @@ export const UserResultsCard: React.FC<UserResultsCardProps> = (
         {props.result.swimsResults.map((swim, index) => (
           <div
             key={index}
-            className="relative flex flex-row h-[28px] w-full gap-1 px-2 py-1 items-center overflow-hidden group"
+            className="relative flex flex-row h-fit w-full gap-1 px-2 py-1 items-center overflow-hidden group"
           >
             <div
               className={clsx(

@@ -26,15 +26,16 @@ export const Competitions: React.FC<CompetitionsProps> = ({
       <div className={"flex h-1 w-full bg-base-5"}/>
 
       {role == "organization" && (
-        <div className={"flex flex-row w-full"}>
-          <div className={"flex flex-col w-full"}>
-            <p className={"text-bodyM_regular text-base-95 text-center"}>Проведено стартов</p>
-            <p className={"text-h5_bold text-blue-80 text-center"}>10</p>
+        <div className={"flex flex-col w-full gap-1"}>
+          <div className={"flex flex-row w-full items-center gap-4"}>
+            <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Проведено стартов</p>
+            <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Среднее количество
+              участников</p>
           </div>
 
-          <div className={"flex flex-col w-full"}>
-            <p className={"text-bodyM_regular text-base-95 text-center"}>Среднее количество участников</p>
-            <p className={"text-h5_bold text-blue-80 text-center"}>65</p>
+          <div className={"flex flex-row w-full gap-1"}>
+            <p className={"w-full text-h5_bold text-blue-80 text-center"}>10</p>
+            <p className={"w-full text-h5_bold text-blue-80 text-center"}>65</p>
           </div>
         </div>
       )}
@@ -44,11 +45,12 @@ export const Competitions: React.FC<CompetitionsProps> = ({
         <label className={"w-full text-bodyM_medium text-base-95"}>Предстоящие</label>
 
         {upcoming.map((comp) => (
-          <CompetitionCard key={comp.competitionUuid} competition={comp} />
+          <CompetitionCard key={comp.competitionUuid} competition={comp}/>
         ))}
 
         {role == "organization" && (
-          <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"} onClick={onCreateCompetitionClick}>
+          <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
+                  onClick={onCreateCompetitionClick}>
             Добавить соревнование
           </Button>
         )}
@@ -59,7 +61,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
         <label className={"text-bodyM_medium text-base-95"}>Прошедшие</label>
 
         {passed.map((comp) => (
-          <CompetitionCard key={comp.competitionUuid} competition={comp} />
+          <CompetitionCard key={comp.competitionUuid} competition={comp}/>
         ))}
       </div>
     </div>

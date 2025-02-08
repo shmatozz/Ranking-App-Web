@@ -52,7 +52,7 @@ export const Header = () => {
 
   return (
     <header
-      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-8 z-10 lg-md:justify-center"
+      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-8 z-50 lg-md:justify-center"
     >
       {/* Logo */}
       <Link href={"/"}>
@@ -72,7 +72,7 @@ export const Header = () => {
         {/* Icons */}
         <div className="flex flex-row gap-4 justify-end">
           <IconLink href="/profile" icon="account" isActive={isActive} />
-          <div className="flex items-center justify-center h-full w-[3.25rem] relative group">
+          <div className={"hidden xs:flex items-center justify-center h-full w-[3.25rem] relative group"}>
             <Icon name="bell" size={30} color="white" />
           </div>
         </div>
@@ -85,8 +85,16 @@ export const Header = () => {
 
       {/* Мобильное меню */}
       {isMenuOpen && (
-        <div className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 shadow-md flex flex-col items-center py-4 lg-md:hidden">
-          <NavLinks isActive={isActive} />
+        <div
+          className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 shadow-md flex flex-col items-center py-4 lg-md:hidden">
+          <NavLinks isActive={isActive}/>
+          <div className={clsx(
+            "flex items-center justify-center w-full relative transition-colors text-base-0",
+          )}>
+            {"Уведомления"}
+            <div
+              className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1")}/>
+          </div>
         </div>
       )}
     </header>
