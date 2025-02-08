@@ -38,7 +38,7 @@ const ConfirmClient: React.FC<{email: string}> = ({email}) => {
 
     <div
       className={clsx(
-        "flex flex-col items-center gap-4",
+        "flex flex-col self-center items-center gap-4",
         "w-full max-w-[40rem] h-fit rounded-3xl px-[3.25rem] py-8",
         "bg-base-0 shadow-md"
       )}

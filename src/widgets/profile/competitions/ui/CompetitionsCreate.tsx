@@ -22,7 +22,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
         <TextInput inputSize={"M"} title={"Место проведения"}/>
 
-        <div className={"flex flex-row w-full gap-8"}>
+        <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
           <TextInput inputSize={"M"} title={"Дата"} type={"date"}/>
           <TextInput inputSize={"M"} title={"Макс. кол-во участников"} type={"number"} min={0}/>
         </div>

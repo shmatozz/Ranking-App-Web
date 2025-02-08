@@ -1,19 +1,16 @@
-import {auth} from "@/shared/lib";
+'use server';
 
-class UserService {
-  async getUserInfo(token: string) {
-    const response = await fetch("http://localhost:9000/api/v1/user/info", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-    });
+import {User} from "@/entities/user";
 
-    const data = await response.json();
+export async function getUserInfo(token: string): Promise<User> {
+  const response = await fetch("http://localhost:9000/api/v1/user/info", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+  });
 
-    console.log(data);
-  }
+  const responseText = await response.text();
+  return responseText.length === 0 ? {status: 123} : JSON.parse(responseText);
 }
-
-export default new UserService();

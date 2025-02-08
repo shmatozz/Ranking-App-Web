@@ -22,7 +22,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   className,
   ...props
 }) => {
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(props.checked);
   const [showTooltip, setShowTooltip] = React.useState(false);
 
   const themeClass = {
@@ -54,7 +54,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           <Icon name={"info"} size={16} color={"#C6C6C6"}/>
           {showTooltip && (
             <div
-              className="absolute left-0 top-6 w-48 bg-base-90 text-white text-caption_regular select-none p-2 rounded shadow-md">
+              className="absolute right-0 top-6 w-48 bg-base-90 text-white text-caption_regular select-none p-2 rounded shadow-md">
               {tooltipText}
             </div>
           )}

@@ -10,3 +10,4 @@ export {FloatingCircles} from "./Illustrations/FloatingCircles";
 export {TextInput} from "./Text/TextInput";
 export {NumberHolder} from "./Text/NumberHolder";
 export {CodeInput} from "./Text/CodeInput";
+export {InfoField} from "./Text/InfoField";

@@ -13,7 +13,7 @@ export const SignIn = async () => {
   return (
     <div
       className={clsx(
-        "flex flex-col items-center gap-4",
+        "flex flex-col self-center items-center gap-4",
         "w-full max-w-[31.25rem] h-fit rounded-3xl px-[3.25rem] py-8",
         "bg-base-0 shadow-md"
       )}

@@ -2,22 +2,33 @@ import React from "react";
 import clsx from "clsx";
 import {Icon, IconButton, TextInput} from "@/shared/ui";
 
-interface UserInfoFieldProps {
+interface InfoFieldProps {
   title: string;
-  value: string;
+  value: string | undefined;
   editable?: boolean;
   onSubmit?: () => void;
+  isLoading?: boolean;
   className?: string;
 }
 
-export const UserInfoField: React.FC<UserInfoFieldProps> = ({
+export const InfoField: React.FC<InfoFieldProps> = ({
   title,
   value,
   editable = false,
   onSubmit = () => console.log("submit placeholder called"),
+  isLoading = false,
   className
 }) => {
   const [editing, setEditing] = React.useState(false);
+
+  if (isLoading || !value) {
+    return (
+      <div className={clsx("flex flex-col", className)}>
+        <p className={"text-bodyS_regular text-base-40"}>{title}</p>
+        <div className={"w-fit px-8 text-bodyM_regular text-base-5 bg-base-5 rounded-md animate-pulse"}>{title}</div>
+      </div>
+    )
+  }
 
   return (
     <div className={"flex flex-row w-full justify-between items-center"}>
@@ -35,7 +46,7 @@ export const UserInfoField: React.FC<UserInfoFieldProps> = ({
       )}
 
       {!editing && (
-        <div className={clsx("flex flex-col gap", className)}>
+        <div className={clsx("flex flex-col", className)}>
           <p className={"text-bodyS_regular text-base-40"}>{title}</p>
           <p className={"text-bodyM_regular text-base-95"}>{value}</p>
         </div>
