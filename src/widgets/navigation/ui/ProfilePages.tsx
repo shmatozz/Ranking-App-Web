@@ -61,7 +61,7 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
         </IconButton>
 
         <IconButton
-          icon={page == "results" ? "podium" : "members"}
+          icon={role == "organization" ? "members" : "podium"}
           size={"M"} variant={(page == "results" || page == "members") ? "primary" : "tertiary"}
           className={"w-full"}
           onClick={() => setPage(role == "organization" ? "members" : "results")}

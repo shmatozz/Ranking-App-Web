@@ -65,28 +65,28 @@ export const Header = () => {
 
       {/* Desktop Navigation */}
       <nav className="hidden lg-md:flex w-full max-w-[56.25rem] h-full gap-4">
-        <NavLinks isActive={isActive} />
+        <NavLinks isActive={isActive}/>
       </nav>
 
       <div className={"flex flex-row gap-4"}>
         {/* Icons */}
         <div className="flex flex-row gap-4 justify-end">
-          <IconLink href="/profile" icon="account" isActive={isActive} />
+          <IconLink href="/profile" icon="account" isActive={isActive}/>
           <div className={"hidden xs:flex items-center justify-center h-full w-[3.25rem] relative group"}>
-            <Icon name="bell" size={30} color="white" />
+            <Icon name="bell" size={30} color="white"/>
           </div>
         </div>
 
         {/* Бургер-меню для мобильных */}
         <button className="h-full w-[3.25rem] flex items-center justify-center lg-md:hidden" onClick={toggleMenu}>
-          <Icon name={isMenuOpen ? "close" : "menu"} size={32} color="white" />
+          <Icon name={isMenuOpen ? "close" : "menu"} size={32} color="white"/>
         </button>
       </div>
 
       {/* Мобильное меню */}
       {isMenuOpen && (
         <div
-          className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 shadow-md flex flex-col items-center py-4 lg-md:hidden">
+          className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 bg-opacity-75 shadow-md flex flex-col items-center py-4 lg-md:hidden rounded-bl-2xl">
           <NavLinks isActive={isActive}/>
           <div className={clsx(
             "flex items-center justify-center w-full relative transition-colors text-base-0",
