@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Radio, TextInput} from "@/shared/ui";
 import {signUp} from "@/shared/lib";
 import {useRouter} from "next/navigation";
@@ -37,6 +37,10 @@ export const SignUpUserForm = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "Регистрация";
+  }, []);
 
   return (
     <form

@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, {useEffect} from "react";
 import {Competitions, CompetitionsCreate, Info, Members, Results} from "@/widgets/profile";
 import {Subpages} from "@/entities/user";
 import {ProfilePages} from "@/widgets/navigation";
@@ -13,6 +13,10 @@ export const Profile: React.FC<ProfileProps> = ({
   organization
 }) => {
   const [subpage, setSubpage] = React.useState<Subpages>("info");
+
+  useEffect(() => {
+    document.title = 'Профиль';
+  }, []);
 
   return (
     <div className={"flex flex-row h-full w-[1100px] w-max-[1100px] gap-[50px] text-wrap bg-base-0 rounded-3xl shadow-md px-[52px] py-8"}>

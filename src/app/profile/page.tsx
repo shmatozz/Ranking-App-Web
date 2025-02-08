@@ -2,6 +2,7 @@ import React from "react";
 import {Profile, whoAmI} from "@/screens/profile";
 import {auth} from "@/shared/lib";
 import {redirect} from "next/navigation";
+import {SessionProvider} from "next-auth/react";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -9,5 +10,9 @@ export default async function ProfilePage() {
 
   const res = await whoAmI(session.user.token);
 
-  return <Profile organization={res.organization}/>
+  return (
+    <SessionProvider>
+      <Profile organization={res.organization}/>
+    </SessionProvider>
+  )
 }

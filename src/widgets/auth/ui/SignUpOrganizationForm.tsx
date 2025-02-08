@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Checkbox, TextInput} from "@/shared/ui";
 import {signUpOrganization} from "@/shared/lib";
 import {useRouter} from "next/navigation";
@@ -35,6 +35,10 @@ export const SignUpOrganizationForm = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "Регистрация организации";
+  }, []);
 
   return (
     <form
