@@ -3,7 +3,7 @@
 import React, {useEffect} from "react";
 import {Button, TextInput} from "@/shared/ui";
 import {useMembersStore} from "@/widgets/profile";
-import {UserParticipantCard} from "@/entities/user/ui/UserParticipantCard";
+import {UserParticipantCard} from "@/entities/user";
 
 export const Members: React.FC = ({
 }) => {

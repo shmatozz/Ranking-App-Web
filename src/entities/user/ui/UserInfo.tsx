@@ -16,6 +16,7 @@ export const UserInfo: React.FC<UserInfoProps> = (
   const getUserInfo = useUserStore((state) => state.getUserInfo);
   const isLoading = useUserStore((state) => state.isLoading);
   const hasError = useUserStore((state) => state.hasError);
+  const updateEmail = useUserStore((state) => state.updateEmail);
 
   useEffect(() => {
     if (!user) {
@@ -37,7 +38,9 @@ export const UserInfo: React.FC<UserInfoProps> = (
       <InfoField title={"Имя"} value={user?.firstName} isLoading={isLoading}/>
       <InfoField title={"Отчество"} value={user?.middleName} isLoading={isLoading}/>
       <InfoField title={"Дата рождения"} value={user?.birthDate} isLoading={isLoading}/>
-      <InfoField title={"Email"} value={user?.email} isLoading={isLoading} editable/>
+      <InfoField title={"Email"} value={user?.email} isLoading={isLoading} type={"email"} editable onSubmit={(email: string) => {
+        updateEmail(email, session.data!.user.token);
+      }}/>
       {/*<InfoField title={"Номер телефона"} value={user?.phone} isLoading={isLoading} editable/>*/}
       <InfoField title={"Экстренный телефон"} value={user?.emergencyPhone} isLoading={isLoading}/>
       <InfoField title={"Пол"} value={user?.gender == "MALE" ? "Мужской" : (user?.gender == "FEMALE" ? "Женский" : undefined)} isLoading={isLoading}/>

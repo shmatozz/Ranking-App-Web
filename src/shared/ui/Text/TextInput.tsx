@@ -64,6 +64,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       {/* Input Field */}
       <div className="relative w-full">
         <input
+          id={props.id}
           name={props.name}
           type={type == "password" ? (showPassword ? "text" : "password") : type}
           onFocus={(e) => {

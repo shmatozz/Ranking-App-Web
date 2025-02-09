@@ -1,4 +1,4 @@
-import React from "react";
+import React, {HTMLInputTypeAttribute} from "react";
 import clsx from "clsx";
 import {Icon, IconButton, TextInput} from "@/shared/ui";
 
@@ -6,7 +6,8 @@ interface InfoFieldProps {
   title: string;
   value: string | undefined;
   editable?: boolean;
-  onSubmit?: () => void;
+  type?: HTMLInputTypeAttribute;
+  onSubmit?: (value: string) => void;
   isLoading?: boolean;
   className?: string;
 }
@@ -15,7 +16,8 @@ export const InfoField: React.FC<InfoFieldProps> = ({
   title,
   value,
   editable = false,
-  onSubmit = () => console.log("submit placeholder called"),
+  onSubmit = (value: string) => console.log("submit placeholder called", value),
+  type= "text",
   isLoading = false,
   className
 }) => {
@@ -36,10 +38,10 @@ export const InfoField: React.FC<InfoFieldProps> = ({
         <div
           className={"flex flex-row w-full gap-2 items-center"}
         >
-          <TextInput title={title} animatedLabel={false}/>
+          <TextInput id={"new-value-input"} title={title} type={type} animatedLabel={false}/>
 
           <IconButton size={"S"} icon={"submit"} className={"w-12"} onClick={() => {
-            onSubmit();
+            onSubmit((document.getElementById("new-value-input") as HTMLInputElement)!.value);
           }}/>
           <IconButton size={"S"} icon={"close"} className={"w-12"} variant={"tertiary"} palette={"gray"} onClick={() => setEditing(false)}/>
         </div>
