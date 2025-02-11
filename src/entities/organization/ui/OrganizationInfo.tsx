@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import clsx from "clsx";
 import {Button, ChangePasswordForm, Checkbox, InfoField} from "@/shared/ui";
-import {useSession} from "next-auth/react";
 import {updateOrganizationPassword, useOrganizationStore} from "@/entities/organization";
 
 interface OrganizationInfoProps {
@@ -11,9 +10,9 @@ interface OrganizationInfoProps {
 export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   props
 ) => {
-  const session = useSession();
   const organization = useOrganizationStore((state) => state.organization);
   const getOrganizationShortInfo = useOrganizationStore((state) => state.getOrganizationShortInfo);
+  const updateOrganizationOpenStatus = useOrganizationStore((state) => state.updateOrganizationOpenStatus);
   const isLoading = useOrganizationStore((state) => state.isLoading);
   const hasError = useOrganizationStore((state) => state.hasError);
 
@@ -21,9 +20,9 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
 
   useEffect(() => {
     if (!organization) {
-      if (session.data) getOrganizationShortInfo(session.data.user.token);
+      getOrganizationShortInfo();
     }
-  }, [getOrganizationShortInfo, session, organization])
+  }, [getOrganizationShortInfo, organization])
 
   if (hasError) {
     return (
@@ -42,6 +41,7 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
         <Checkbox
           name={"isOpen"} text={"Открытая организация"} checked={organization?.isOpen}
           tooltipText={"Любой спортсмен сможет присоединиться к организации без подтверждения"}
+          onClick={updateOrganizationOpenStatus}
         />
       )}
 

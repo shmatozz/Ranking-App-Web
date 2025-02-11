@@ -25,7 +25,7 @@ export default function RootLayout({
         <FloatingCircles/>
 
         <main className="flex flex-col flex-grow py-[3.25rem] shadow-md scroll">
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col flex-grow justify-center">
             {children}
           </div>
         </main>

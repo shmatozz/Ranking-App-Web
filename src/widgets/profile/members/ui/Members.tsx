@@ -1,9 +1,10 @@
 "use client";
 
 import React, {useEffect} from "react";
-import {Button, TextInput} from "@/shared/ui";
+import {Button} from "@/shared/ui";
 import {useMembersStore} from "@/widgets/profile";
 import {UserParticipantCard} from "@/entities/user";
+import {SendInviteForm} from "@/features/organization-join";
 
 export const Members: React.FC = ({
 }) => {
@@ -15,7 +16,7 @@ export const Members: React.FC = ({
   useEffect(() => {
     getMembers();
   }, [getMembers]);
-  
+
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
       <label className={"text-h5_bold text-base-95 text-center"}>Участники</label>
@@ -63,16 +64,10 @@ export const Members: React.FC = ({
         )}
 
         {inputUserEmailVisible && (
-          <div className={"flex flex-col gap-3 w-full max-w-[350px]"}>
-            <TextInput title={"Email участника"} type={"email"} animatedLabel={false} inputSize={"S"} className={"w-full max-w-[350px]"}/>
-
-            <Button
-              size={"S"} variant={"primary"} className={"w-full max-w-[350px]"}
-              onClick={() => setInputUserEmailVisible(false)}
-            >
-              Отправить приглашение
-            </Button>
-          </div>
+          <SendInviteForm
+            onSuccess={() => setInputUserEmailVisible(false)}
+            onCancel={() => setInputUserEmailVisible(false)}
+          />
         )}
       </div>
     </div>

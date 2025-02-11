@@ -1,4 +1,4 @@
-export type Role = "sportsman" | "organization" | "USER";
+import {Role} from "@/shared/lib";
 
 export type User = {
   id: number;

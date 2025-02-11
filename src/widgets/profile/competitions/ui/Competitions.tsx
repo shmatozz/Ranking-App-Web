@@ -2,9 +2,10 @@ import React, {useEffect} from "react";
 import {useCompetitionsStore} from "@/widgets/profile";
 import {CompetitionCard} from "@/entities/competition";
 import {Button} from "@/shared/ui";
+import {Role} from "@/shared/lib";
 
 interface CompetitionsProps {
-  role: "sportsman" | "organization";
+  role: Role;
   onCreateCompetitionClick?: () => void;
 }
 
@@ -15,7 +16,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
   const passed = useCompetitionsStore((state) => state.passed);
   const upcoming = useCompetitionsStore((state) => state.upcoming);
   const getCompetitions = useCompetitionsStore((state) => state.getCompetitions);
-  
+
   useEffect(() => {
     getCompetitions();
   }, [getCompetitions])
@@ -25,7 +26,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
 
       <div className={"flex h-1 w-full bg-base-5"}/>
 
-      {role == "organization" && (
+      {role == "ORGANIZATION" && (
         <div className={"flex flex-col w-full gap-1"}>
           <div className={"flex flex-row w-full items-center gap-4"}>
             <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Проведено стартов</p>
@@ -48,7 +49,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
           <CompetitionCard key={comp.competitionUuid} competition={comp}/>
         ))}
 
-        {role == "organization" && (
+        {role == "ORGANIZATION" && (
           <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
                   onClick={onCreateCompetitionClick}>
             Добавить соревнование

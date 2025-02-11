@@ -33,15 +33,15 @@ export const Profile: React.FC<ProfileProps> = ({
         </div>
 
         {/* PROFILE NAVIGATION */}
-        <ProfilePages role={organization ? "organization" : "sportsman"} page={subpage} setPage={setSubpage}/>
+        <ProfilePages role={organization ? "ORGANIZATION" : "USER"} page={subpage} setPage={setSubpage}/>
       </div>
 
       {subpage == "info" && (
-        <Info role={organization ? "organization" : "sportsman"}/>
+        <Info role={organization ? "ORGANIZATION" : "USER"}/>
       )}
 
       {subpage == "comps" && (
-        <Competitions role={organization ? "organization" : "sportsman"} onCreateCompetitionClick={organization ? () => setSubpage("comps-create") : undefined}/>
+        <Competitions role={organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={organization ? () => setSubpage("comps-create") : undefined}/>
       )}
 
       {subpage == "comps-create" && organization && (

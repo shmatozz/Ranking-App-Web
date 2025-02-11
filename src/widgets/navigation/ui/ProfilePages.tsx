@@ -1,6 +1,6 @@
 import React from "react";
-import {Role, Subpages} from "@/entities/user";
-import {quit} from "@/shared/lib";
+import {Subpages} from "@/entities/user";
+import {quit, Role} from "@/shared/lib";
 import {Button, IconButton} from "@/shared/ui";
 
 interface ProfilePageProps {
@@ -35,9 +35,9 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
         <Button
           size={"M"} variant={(page == "results" || page == "members") ? "primary" : "tertiary"}
           className={"w-full"}
-          onClick={() => setPage(role == "organization" ? "members" : "results")}
+          onClick={() => setPage(role == "ORGANIZATION" ? "members" : "results")}
         >
-          {role == "organization" ? "Мои участники" : "Мои результаты"}
+          {role == "ORGANIZATION" ? "Мои участники" : "Мои результаты"}
         </Button>
       </div>
 
@@ -61,12 +61,12 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
         </IconButton>
 
         <IconButton
-          icon={role == "organization" ? "members" : "podium"}
+          icon={role == "ORGANIZATION" ? "members" : "podium"}
           size={"M"} variant={(page == "results" || page == "members") ? "primary" : "tertiary"}
           className={"w-full"}
-          onClick={() => setPage(role == "organization" ? "members" : "results")}
+          onClick={() => setPage(role == "ORGANIZATION" ? "members" : "results")}
         >
-          {role == "organization" ? "Мои участники" : "Мои результаты"}
+          {role == "ORGANIZATION" ? "Мои участники" : "Мои результаты"}
         </IconButton>
       </div>
 

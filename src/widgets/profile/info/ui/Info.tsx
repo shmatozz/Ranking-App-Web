@@ -1,9 +1,10 @@
 import React from "react";
 import {UserInfo} from "@/entities/user";
 import {OrganizationInfo} from "@/entities/organization";
+import {Role} from "@/shared/lib";
 
 interface InfoProps {
-  role: "sportsman" | "organization";
+  role: Role;
 }
 
 export const Info: React.FC<InfoProps> = ({
@@ -15,11 +16,11 @@ export const Info: React.FC<InfoProps> = ({
 
       <div className={"flex h-1 w-full bg-base-5"}/>
 
-      {role == "sportsman" && (
+      {role == "USER" && (
         <UserInfo/>
       )}
 
-      {role == "organization" && (
+      {role == "ORGANIZATION" && (
         <OrganizationInfo/>
       )}
     </div>

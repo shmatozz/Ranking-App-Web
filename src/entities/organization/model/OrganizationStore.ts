@@ -1,5 +1,5 @@
 import { create } from "zustand/react";
-import {Organization} from "@/entities/organization";
+import {Organization, updateOrganizationOpenStatus} from "@/entities/organization";
 import {getOrganizationInfo, getOrganizationShortInfo} from "@/entities/organization/api/OrganizationService";
 
 type OrganizationState = {
@@ -9,36 +9,47 @@ type OrganizationState = {
 }
 
 type OrganizationActions = {
-  getOrganizationInfo: (token: string) => void;
-  getOrganizationShortInfo: (token: string) => void;
+  getOrganizationInfo: () => void;
+  getOrganizationShortInfo: () => void;
+  updateOrganizationOpenStatus: () => void;
 }
 
-export const useOrganizationStore = create<OrganizationState & OrganizationActions>((set) => ({
+export const useOrganizationStore = create<OrganizationState & OrganizationActions>((set, get) => ({
   organization: undefined,
   isLoading: false,
   hasError: false,
 
-  getOrganizationInfo: (token) => {
+  getOrganizationInfo: () => {
     set({ isLoading: true, hasError: false })
 
-    getOrganizationInfo(token)
+    getOrganizationInfo()
       .then((organization) => {
-        console.log(organization)
         set({organization: organization})
       })
       .catch(() => set({ hasError: true }))
       .finally(() => set({ isLoading: false }))
   },
 
-  getOrganizationShortInfo: (token) => {
+  getOrganizationShortInfo: () => {
     set({ isLoading: true, hasError: false })
 
-    getOrganizationShortInfo(token)
+    getOrganizationShortInfo()
       .then((organization) => {
-        console.log(organization)
         set({organization: organization})
       })
       .catch(() => set({ hasError: true }))
       .finally(() => set({ isLoading: false }))
+  },
+
+  updateOrganizationOpenStatus: () => {
+    const isOpen = get().organization!.isOpen;
+
+    updateOrganizationOpenStatus({ isOpen: !isOpen  })
+      .then(() => set((state) => {
+        return ({
+          organization: ({ ...state.organization, isOpen: !isOpen }) as Organization
+        })
+      }))
+      .catch((e) => console.log(e.message));
   }
 }))

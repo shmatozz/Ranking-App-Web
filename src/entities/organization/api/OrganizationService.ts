@@ -1,40 +1,47 @@
 'use server';
 
-import {Organization, OrganizationShort} from "@/entities/organization";
-import {updatePasswordParams} from "@/entities/organization";
+import {
+  OrganizationShort, Organization,
+  OrganizationShortResponse,OrganizationResponse,
+  updateOpenStatusParams, updatePasswordParams
+} from "@/entities/organization";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
+import {auth} from "@/shared/lib";
 
-export async function getOrganizationInfo(token: string): Promise<Organization> {
-  const response = await fetch("http://localhost:9000/api/v1/organization/full-info", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-  });
+export async function getOrganizationInfo(): Promise<Organization> {
+  console.log("Send GET organization FULL info request");
+  const session = await auth();
 
-  console.log(response)
+  const response: OrganizationResponse = await axiosInstance.get(
+    "/organization/short-info",
+    {
+      headers: {
+        Authorization: `Bearer ${session?.user.token}`,
+      },
+    });
 
-  const responseText = await response.json();
-  return responseText.length === 0 ? {status: 123} : JSON.parse(responseText);
+  return response.data;
 }
 
-export async function getOrganizationShortInfo(token: string): Promise<OrganizationShort> {
-  const response = await fetch("http://localhost:9000/api/v1/organization/short-info", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-  });
+export async function getOrganizationShortInfo(): Promise<OrganizationShort> {
+  console.log("Send GET organization short info request");
+  const session = await auth();
 
-  const responseText = await response.text();
-  return responseText.length === 0 ? {status: 123} : JSON.parse(responseText);
+  const response: OrganizationShortResponse = await axiosInstance.get(
+    "/organization/short-info",
+    {
+      headers: {
+        Authorization: `Bearer ${session?.user.token}`,
+      },
+    });
+
+  return response.data;
 }
 
-export async function updateOrganizationPassword(params: updatePasswordParams, token: string) {
+export async function updateOrganizationPassword(params: updatePasswordParams) {
   console.log("Send POST update user password request")
+  const session = await auth();
 
   try {
     await axiosInstance.post(
@@ -42,7 +49,7 @@ export async function updateOrganizationPassword(params: updatePasswordParams, t
       params,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.user.token}`,
         },
       });
   } catch (e) {
@@ -52,3 +59,25 @@ export async function updateOrganizationPassword(params: updatePasswordParams, t
     }
   }
 }
+
+export async function updateOrganizationOpenStatus(params: updateOpenStatusParams) {
+  console.log("Send POST update open status request");
+  const session = await auth();
+
+  try {
+    await axiosInstance.post(
+      "/organization/update-open-status",
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      console.error(e.response!.data.msg);
+      throw new Error(e.response!.data.msg);
+    }
+  }
+}
+

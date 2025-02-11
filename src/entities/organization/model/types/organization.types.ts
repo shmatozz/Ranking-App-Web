@@ -1,11 +1,12 @@
-import {Role, User} from "@/entities/user";
+import {User} from "@/entities/user";
 import {Competition} from "@/entities/competition";
+import {Role} from "@/shared/lib";
 
 export type OrganizationShort = {
   id: number;
   email: string;
   name: string;
-  role?: Role;
+  role: Role;
   isOpen: boolean;
 }
 
