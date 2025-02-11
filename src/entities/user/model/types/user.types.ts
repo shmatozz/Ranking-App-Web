@@ -1,4 +1,4 @@
-export type Role = "sportsman" | "organization";
+export type Role = "sportsman" | "organization" | "USER";
 
 export type User = {
   id: number;

@@ -1,6 +1,8 @@
+'use client';
+
 import { create } from "zustand/react";
 import {
-  getUserInfo,
+  fetchUserInfo,
   updateUserPassword,
   User,
   updatePasswordParams,
@@ -25,11 +27,15 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
   hasError: false,
 
   getUserInfo: (token) => {
+    console.log("123");
     set({ isLoading: true, hasError: false })
 
-    getUserInfo(token)
-      .then((user) => set({ user: user }))
-      .catch(() => set({ hasError: true }))
+    fetchUserInfo(token)
+      .then((user) => set({user: user}))
+      .catch((e) => {
+        console.log(e);
+        set({hasError: true})
+      })
       .finally(() => set({ isLoading: false }))
   },
 

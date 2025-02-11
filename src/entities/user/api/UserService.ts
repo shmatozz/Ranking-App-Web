@@ -1,33 +1,40 @@
 'use server';
 
-import {User} from "@/entities/user";
+import {User, UserResponse} from "@/entities/user";
 import {updateEmailParams, updatePasswordParams} from "@/entities/user/model/types/api.types";
+import axiosInstance from "@/shared/api/AxiosConfig";
+import {AxiosError} from "axios";
 
-export async function getUserInfo(token: string): Promise<User> {
-  const response = await fetch("http://localhost:9000/api/v1/user/info", {
-    method: "GET",
+export async function fetchUserInfo(token: string): Promise<User> {
+  console.log("Send GET user info request")
+
+  const response: UserResponse = await axiosInstance.get("/user/info", {
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`,
+    }
   });
 
-  const responseText = await response.text();
-  return responseText.length === 0 ? {status: 123} : JSON.parse(responseText);
+  return response.data;
 }
 
-export async function updateUserPassword(params: updatePasswordParams, token: string): Promise<User> {
-  const response = await fetch("http://localhost:9000/api/v1/user/update-password", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-    body: JSON.stringify(params)
-  });
+export async function updateUserPassword(params: updatePasswordParams, token: string) {
+  console.log("Send POST update user password request")
 
-  const responseText = await response.text();
-  return responseText.length === 0 ? {status: 123} : JSON.parse(responseText);
+  try {
+   await axiosInstance.post(
+      "/user/update-password",
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      console.error(e.response!.data.msg);
+      throw new Error(e.response!.data.msg);
+    }
+  }
 }
 
 

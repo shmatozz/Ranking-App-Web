@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import clsx from "clsx";
-import {Checkbox, InfoField} from "@/shared/ui";
+import {Button, ChangePasswordForm, Checkbox, InfoField} from "@/shared/ui";
 import {useSession} from "next-auth/react";
-import {useOrganizationStore} from "@/entities/organization";
+import {updateOrganizationPassword, useOrganizationStore} from "@/entities/organization";
 
 interface OrganizationInfoProps {
   className?: string;
@@ -16,6 +16,8 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   const getOrganizationShortInfo = useOrganizationStore((state) => state.getOrganizationShortInfo);
   const isLoading = useOrganizationStore((state) => state.isLoading);
   const hasError = useOrganizationStore((state) => state.hasError);
+
+  const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
 
   useEffect(() => {
     if (!organization) {
@@ -32,7 +34,7 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   }
 
   return (
-    <div className={clsx("flex flex-col w-full max-w-[500px] gap-4", props.className)}>
+    <div className={clsx("flex flex-col w-full max-w-[500px] gap-4 items-center", props.className)}>
       <InfoField title={"Название организации"} value={organization?.name} isLoading={isLoading}/>
       <InfoField title={"Email"} value={organization?.email} isLoading={isLoading} editable/>
 
@@ -41,6 +43,19 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
           name={"isOpen"} text={"Открытая организация"} checked={organization?.isOpen}
           tooltipText={"Любой спортсмен сможет присоединиться к организации без подтверждения"}
         />
+      )}
+
+      {!inputPasswordVisible && (
+        <Button
+          size={"S"} variant={"tertiary"} className={"w-full max-w-[350px]"}
+          onClick={() => setInputPasswordVisible(true)}
+        >
+          Сменить пароль
+        </Button>
+      )}
+
+      {inputPasswordVisible && (
+        <ChangePasswordForm onSubmit={updateOrganizationPassword} onSuccess={() => setInputPasswordVisible(false)}/>
       )}
     </div>
   )

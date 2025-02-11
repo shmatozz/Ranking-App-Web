@@ -3,6 +3,8 @@ export {IconButton} from "./Button/IconButton";
 export {Radio} from "./Button/Radio";
 export {Checkbox} from "./Button/Checkbox";
 
+export {ChangePasswordForm} from "./Forms/ChangePasswordForm";
+
 export {Icon, icons} from "./Icons/Icon";
 export {Logo} from "./Illustrations/Logo";
 export {FloatingCircles} from "./Illustrations/FloatingCircles";
