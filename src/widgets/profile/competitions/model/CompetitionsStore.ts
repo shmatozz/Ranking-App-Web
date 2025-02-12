@@ -1,9 +1,13 @@
 import { create } from "zustand/react";
 import {Competition} from "@/entities/competition";
+import {useOrganizationStore} from "@/entities/organization";
+import {sortCompetitions} from "@/shared/lib";
 
 type CompetitionsState = {
-  passed: Competition[];
-  upcoming: Competition[];
+  passed: Competition[] | undefined;
+  upcoming: Competition[] | undefined;
+  isLoading: boolean;
+  hasError: boolean;
 }
 
 type CompetitionsActions = {
@@ -11,53 +15,24 @@ type CompetitionsActions = {
 }
 
 export const useCompetitionsStore = create<CompetitionsState & CompetitionsActions>((set) => ({
-  passed: [],
-  upcoming: [],
+  passed: undefined,
+  upcoming: undefined,
+  isLoading: false,
+  hasError: false,
 
   getCompetitions: () => {
-    set({
-      passed: [{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "123"
-      },{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "1231"
-      },{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "1232"
-      },{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "1233"
-      },{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "1234"
-      }],
-      upcoming: [{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "123123"
-      },{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "1231234"
-      },{
-        name: "Название соревнования",
-        date: "15 февраля 2025",
-        location: "НН",
-        maxParticipants: 1, competitionType: "ds", competitionUuid: "1231245"
-      }]
-    })
+    const org = useOrganizationStore.getState().organization;
+
+    if (org && org.competitions) {
+      set(sortCompetitions(org.competitions));
+    } else {
+      set({ isLoading: true, hasError: false })
+
+      useOrganizationStore.getState().getOrganizationInfo(() => {
+        const org = useOrganizationStore.getState().organization;
+
+        set({...sortCompetitions(org!.competitions ? org!.competitions : []), isLoading: false, hasError: false});
+      })
+    }
   }
 }))

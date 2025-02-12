@@ -11,7 +11,7 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   props
 ) => {
   const organization = useOrganizationStore((state) => state.organization);
-  const getOrganizationShortInfo = useOrganizationStore((state) => state.getOrganizationShortInfo);
+  const getOrganizationInfo = useOrganizationStore((state) => state.getOrganizationInfo);
   const updateOrganizationOpenStatus = useOrganizationStore((state) => state.updateOrganizationOpenStatus);
   const isLoading = useOrganizationStore((state) => state.isLoading);
   const hasError = useOrganizationStore((state) => state.hasError);
@@ -20,9 +20,9 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
 
   useEffect(() => {
     if (!organization) {
-      getOrganizationShortInfo();
+      getOrganizationInfo();
     }
-  }, [getOrganizationShortInfo, organization])
+  }, [getOrganizationInfo, organization])
 
   if (hasError) {
     return (

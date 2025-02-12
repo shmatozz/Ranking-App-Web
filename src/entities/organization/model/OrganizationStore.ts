@@ -9,7 +9,7 @@ type OrganizationState = {
 }
 
 type OrganizationActions = {
-  getOrganizationInfo: (callback?: () => void) => void;
+  getOrganizationInfo: (callback?: (organization?: Organization) => void) => void;
   getOrganizationShortInfo: () => void;
   updateOrganizationOpenStatus: () => void;
 }
@@ -24,8 +24,8 @@ export const useOrganizationStore = create<OrganizationState & OrganizationActio
 
     getOrganizationInfo()
       .then((organization) => {
-        set({organization: organization})
-        if (callback) callback();
+        set({ organization: organization })
+        if (callback) callback(organization);
       })
       .catch(() => set({ hasError: true }))
       .finally(() => set({ isLoading: false }))

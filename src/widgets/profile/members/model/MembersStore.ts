@@ -20,8 +20,6 @@ export const useMembersStore = create<MembersState & MembersActions>((set) => ({
   getMembers: () => {
     const org = useOrganizationStore.getState().organization;
 
-    console.log(org);
-
     if (org && org.users) {
       set({ members: org.users });
     } else {

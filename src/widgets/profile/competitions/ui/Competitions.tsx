@@ -16,10 +16,12 @@ export const Competitions: React.FC<CompetitionsProps> = ({
   const passed = useCompetitionsStore((state) => state.passed);
   const upcoming = useCompetitionsStore((state) => state.upcoming);
   const getCompetitions = useCompetitionsStore((state) => state.getCompetitions);
+  const isLoading = useCompetitionsStore((state) => state.isLoading);
 
   useEffect(() => {
-    getCompetitions();
-  }, [getCompetitions])
+    if (!passed || !upcoming) getCompetitions();
+  }, [getCompetitions, passed, upcoming]);
+
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
       <label className={"text-h5_bold text-base-95 text-center"}>Соревнования</label>
@@ -29,42 +31,67 @@ export const Competitions: React.FC<CompetitionsProps> = ({
       {role == "ORGANIZATION" && (
         <div className={"flex flex-col w-full gap-1"}>
           <div className={"flex flex-row w-full items-center gap-4"}>
-            <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Проведено стартов</p>
+            <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Проведено
+              стартов</p>
             <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Среднее количество
               участников</p>
           </div>
 
-          <div className={"flex flex-row w-full gap-1"}>
-            <p className={"w-full text-h5_bold text-blue-80 text-center"}>10</p>
-            <p className={"w-full text-h5_bold text-blue-80 text-center"}>65</p>
-          </div>
+          {!isLoading && passed && (
+            <div className={"flex flex-row w-full gap-1"}>
+              <p className={"w-full text-h5_bold text-blue-80 text-center"}>{passed.length != 0 ? passed.length : "-"}</p>
+              <p className={"w-full text-h5_bold text-blue-80 text-center"}>{passed.length != 0 ? 65 : "-"}</p>
+            </div>
+          )}
+
+          {isLoading && (
+            <div className={"flex flex-row w-full gap-1 text-h5_bold text-base-5"}>
+              <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>50</p></div>
+              <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>65</p></div>
+            </div>
+          )}
         </div>
       )}
 
       {/* UPCOMING */}
-      <div className={"flex flex-col w-full gap-4 items-center"}>
-        <label className={"w-full text-bodyM_medium text-base-95"}>Предстоящие</label>
+      {upcoming && upcoming.length > 0 && (
+        <div className={"flex flex-col w-full gap-4 items-center"}>
+          <label className={"w-full text-bodyM_medium text-base-95"}>Предстоящие</label>
 
-        {upcoming.map((comp) => (
-          <CompetitionCard key={comp.competitionUuid} competition={comp}/>
-        ))}
+          {!isLoading && upcoming && upcoming.map((comp) => (
+            <CompetitionCard key={comp.competitionUuid} competition={comp}/>
+          ))}
 
-        {role == "ORGANIZATION" && (
-          <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
-                  onClick={onCreateCompetitionClick}>
-            Добавить соревнование
-          </Button>
-        )}
-      </div>
+          {isLoading && Array(1).fill(0).map((_comp, index) => (
+            <CompetitionCard key={index} isLoading={isLoading}/>
+          ))}
+        </div>
+      )}
+
+      {upcoming && upcoming.length == 0 && (
+        <p className={"flex flex-col w-full text-center text-bodyM_regular text-base-90"}>
+          Нет предстоящих соревнований
+        </p>
+      )}
+
+      {/* ADD NEW COMPETITION */}
+      {role == "ORGANIZATION" && (
+        <Button variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
+                onClick={onCreateCompetitionClick}>
+          Добавить соревнование
+        </Button>
+      )}
 
       {/* PASSED */}
-      <div className={"flex flex-col w-full gap-4"}>
-        <label className={"text-bodyM_medium text-base-95"}>Прошедшие</label>
+      {passed && passed.length > 0 && (
+        <div className={"flex flex-col w-full gap-4"}>
+          <label className={"text-bodyM_medium text-base-95"}>Прошедшие</label>
 
-        {passed.map((comp) => (
-          <CompetitionCard key={comp.competitionUuid} competition={comp}/>
-        ))}
-      </div>
+          {!isLoading && passed && passed.map((comp) => (
+            <CompetitionCard key={comp.competitionUuid} competition={comp}/>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
