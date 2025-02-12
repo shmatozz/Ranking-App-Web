@@ -1,8 +1,11 @@
 import { create } from "zustand/react";
 import {User} from "@/entities/user";
+import {useOrganizationStore} from "@/entities/organization";
 
 type MembersState = {
-  members: User[];
+  members: User[] | undefined;
+  isLoading: boolean;
+  hasError: boolean;
 }
 
 type MembersActions = {
@@ -10,26 +13,23 @@ type MembersActions = {
 }
 
 export const useMembersStore = create<MembersState & MembersActions>((set) => ({
-  members: [],
+  members: undefined,
+  isLoading: false,
+  hasError: false,
 
   getMembers: () => {
-    set({
-      members: [{
-        id: 0,
-        firstName: "Иван", lastName: "Иванов", middleName: "Иванович", email: "ivanov@mail.ru", birthDate: "25-01-2003", emergencyPhone: "", phone: "", gender: "MALE", role: "sportsman"
-      },{
-        id: 1,
-        firstName: "Иван", lastName: "Иванов", middleName: "Иванович", email: "ivanov@mail.ru", birthDate: "25-01-2003", emergencyPhone: "", phone: "", gender: "MALE", role: "sportsman"
-      },{
-        id: 2,
-        firstName: "Иван", lastName: "Иванов", middleName: "Иванович", email: "ivanov@mail.ru", birthDate: "25-01-2003", emergencyPhone: "", phone: "", gender: "MALE", role: "sportsman"
-      },{
-        id: 3,
-        firstName: "Иван", lastName: "Иванов", middleName: "Иванович", email: "ivanov@mail.ru", birthDate: "25-01-2003", emergencyPhone: "", phone: "", gender: "MALE", role: "sportsman"
-      },{
-        id: 4,
-        firstName: "Иван", lastName: "Иванов", middleName: "Иванович", email: "ivanov@mail.ru", birthDate: "25-01-2003", emergencyPhone: "", phone: "", gender: "MALE", role: "sportsman"
-      }]
-    })
+    const org = useOrganizationStore.getState().organization;
+
+    console.log(org);
+
+    if (org && org.users) {
+      set({ members: org.users });
+    } else {
+      set({ isLoading: true, hasError: false })
+
+      useOrganizationStore.getState().getOrganizationInfo(() => {
+        set({ members: useOrganizationStore.getState().organization?.users, isLoading: false, hasError: false });
+      })
+    }
   }
 }))

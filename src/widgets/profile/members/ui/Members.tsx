@@ -8,14 +8,13 @@ import {SendInviteForm} from "@/features/organization-join";
 
 export const Members: React.FC = ({
 }) => {
-  const members = useMembersStore((state) => state.members);
-  const getMembers = useMembersStore((state) => state.getMembers);
+  const { members, getMembers, isLoading} = useMembersStore();
 
   const [inputUserEmailVisible, setInputUserEmailVisible] = React.useState(false);
 
   useEffect(() => {
-    getMembers();
-  }, [getMembers]);
+    if (!members) getMembers();
+  }, [getMembers, members]);
 
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
@@ -31,11 +30,21 @@ export const Members: React.FC = ({
           <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Средняя активность</p>
         </div>
 
-        <div className={"flex flex-row w-full gap-1"}>
-          <p className={"w-full text-h5_bold text-blue-80 text-center"}>5</p>
-          <p className={"w-full text-h5_bold text-blue-80 text-center"}>1305</p>
-          <p className={"w-full text-h5_bold text-blue-80 text-center"}>25</p>
-        </div>
+        {!isLoading && members && (
+          <div className={"flex flex-row w-full gap-1"}>
+            <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? members.length : "-"}</p>
+            <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? 1305 : "-"}</p>
+            <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? 25 : "-"}</p>
+          </div>
+        )}
+
+        {isLoading && (
+          <div className={"flex flex-row w-full gap-1 text-h5_bold text-base-5"}>
+            <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>50</p></div>
+            <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>1305</p></div>
+            <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>25</p></div>
+          </div>
+        )}
       </div>
 
       {/* PARTICIPANTS */}
@@ -50,11 +59,19 @@ export const Members: React.FC = ({
 
         <div className={"h-[2px] w-full bg-base-5"}/>
 
-        {members.map((member) => (
+        {!isLoading && members && members.map((member) => (
           <UserParticipantCard key={member.id} user={member}/>
         ))}
 
-        {!inputUserEmailVisible && (
+        {!isLoading && members && members.length == 0 && (
+          <p className={"w-full h-[48px] text-center content-center text-bodyM_regular text-base-95"}>В вашей организации нет участников</p>
+        )}
+
+        {isLoading && Array(5).fill(0).map((_item, index) => (
+          <UserParticipantCard key={index} isLoading={isLoading}/>
+        ))}
+
+        {!inputUserEmailVisible && !isLoading && (
           <Button
             size={"S"} variant={"secondary"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
             onClick={() => setInputUserEmailVisible(true)}

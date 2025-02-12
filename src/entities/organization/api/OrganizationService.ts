@@ -14,7 +14,7 @@ export async function getOrganizationInfo(): Promise<Organization> {
   const session = await auth();
 
   const response: OrganizationResponse = await axiosInstance.get(
-    "/organization/short-info",
+    "/organization/full-info",
     {
       headers: {
         Authorization: `Bearer ${session?.user.token}`,

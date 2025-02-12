@@ -4,6 +4,7 @@ import {User, UserResponse} from "@/entities/user";
 import {updateEmailParams, updatePasswordParams} from "@/entities/user/model/types/api.types";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
+import {auth} from "@/shared/lib";
 
 export async function fetchUserInfo(token: string): Promise<User> {
   console.log("Send GET user info request")
@@ -17,8 +18,9 @@ export async function fetchUserInfo(token: string): Promise<User> {
   return response.data;
 }
 
-export async function updateUserPassword(params: updatePasswordParams, token: string) {
+export async function updateUserPassword(params: updatePasswordParams) {
   console.log("Send POST update user password request")
+  const session = await auth();
 
   try {
    await axiosInstance.post(
@@ -26,7 +28,7 @@ export async function updateUserPassword(params: updatePasswordParams, token: st
       params,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.user.token}`,
         },
       });
   } catch (e) {

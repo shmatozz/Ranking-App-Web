@@ -17,7 +17,7 @@ type UserState = {
 
 type UserActions = {
   getUserInfo: (token: string) => void;
-  updatePassword: (params: updatePasswordParams, token: string) => void;
+  updatePassword: (params: updatePasswordParams) => void;
   updateEmail: (email: string, token: string) => void;
 }
 
@@ -39,8 +39,8 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
       .finally(() => set({ isLoading: false }))
   },
 
-  updatePassword: (params: updatePasswordParams, token: string) => {
-    updateUserPassword(params, token)
+  updatePassword: (params: updatePasswordParams) => {
+    updateUserPassword(params)
       .then((response) => console.log(response))
   },
 
