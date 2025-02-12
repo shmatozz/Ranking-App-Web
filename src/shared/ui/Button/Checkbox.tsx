@@ -1,6 +1,6 @@
 'use client'
 
-import React, {InputHTMLAttributes} from "react";
+import React, {InputHTMLAttributes, useEffect} from "react";
 import {Icon} from "@/shared/ui";
 import clsx from "clsx";
 
@@ -24,6 +24,10 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 }) => {
   const [checked, setChecked] = React.useState(props.checked);
   const [showTooltip, setShowTooltip] = React.useState(false);
+
+  useEffect(() => {
+    setChecked(props.checked);
+  }, [props.checked]);
 
   const themeClass = {
     blue: "#5884DD",

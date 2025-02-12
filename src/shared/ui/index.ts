@@ -9,7 +9,8 @@ export {Icon, icons} from "./Icons/Icon";
 export {Logo} from "./Illustrations/Logo";
 export {FloatingCircles} from "./Illustrations/FloatingCircles";
 
-export {TextInput} from "./Text/TextInput";
-export {NumberHolder} from "./Text/NumberHolder";
-export {CodeInput} from "./Text/CodeInput";
-export {InfoField} from "./Text/InfoField";
+export {TextInput} from "./Input/TextInput";
+export {NumberHolder} from "./Input/NumberHolder";
+export {CodeInput} from "./Input/CodeInput";
+export {InfoField} from "./Input/InfoField";
+export {FileInput} from "./Input/FileInput";
