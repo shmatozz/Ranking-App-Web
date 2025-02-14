@@ -1,7 +1,7 @@
 'use client';
 
-import React, {useState} from "react";
-import {Button, TextInput} from "@/shared/ui";
+import React, {useEffect, useState} from "react";
+import {Button, Radio, TextInput} from "@/shared/ui";
 import {signUp} from "@/shared/lib";
 import {useRouter} from "next/navigation";
 
@@ -9,6 +9,7 @@ export const SignUpUserForm = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [gender, setGender] = useState<"MALE" | "FEMALE">("MALE");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
@@ -17,6 +18,7 @@ export const SignUpUserForm = () => {
     setError(null);
 
     const formData = new FormData(event.currentTarget);
+    formData.append("gender", gender);
 
     try {
       const res = await signUp(formData)
@@ -35,6 +37,10 @@ export const SignUpUserForm = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "Регистрация";
+  }, []);
 
   return (
     <form
@@ -81,7 +87,7 @@ export const SignUpUserForm = () => {
 
       <TextInput
         name={"emergencyPhone"} required
-        title={"Контактный (запасной) номер"}
+        title={"Экстренный номер"}
         type={"tel"}
       />
 
@@ -98,6 +104,20 @@ export const SignUpUserForm = () => {
         type={"password"}
         minLength={8} maxLength={256}
       />
+
+      <div className="flex flex-col w-full gap-[0px]">
+        <label
+          className={"flex flex-row gap-1 w-full text-bodyS_regular text-base-40"}
+        >
+          {"Пол"}
+          <p className={"text-red-50"}>*</p>
+        </label>
+
+        <div className={"flex flex-row w-full gap-8 justify-center"}>
+          <Radio checked={gender == "MALE"} onClick={() => setGender("MALE")} text={"Мужской"}/>
+          <Radio checked={gender == "FEMALE"} onClick={() => setGender("FEMALE")} text={"Женский"}/>
+        </div>
+      </div>
 
       <Button className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type={"submit"}>
         Далее

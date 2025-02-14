@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, TextInput,} from "@/shared/ui";
 import Link from "next/link";
 import {submit} from "@/shared/lib";
@@ -35,6 +35,10 @@ export const SignInUserForm = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "Вход";
+  }, []);
 
   return (
     <form

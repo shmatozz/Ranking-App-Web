@@ -45,6 +45,10 @@ export default {
           40: "#FF6B4E", 50: "#EE4E34", 60: "#D63420",
           70: "#B91E12", 80: "#981109", 90: "#750E05",
         },
+        gold: "#FFE79A",
+        silver: "#C6C6C6",
+        bronze: "#C6A791",
+        nonPrize: "#F3F3F3",
       },
       fontSize: {
         h4: ["26px", { lineHeight: "32px", fontWeight: "600" }],

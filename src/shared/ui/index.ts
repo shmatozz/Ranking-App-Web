@@ -1,10 +1,16 @@
 export {Button} from "./Button/Button";
 export {IconButton} from "./Button/IconButton";
+export {Radio} from "./Button/Radio";
+export {Checkbox} from "./Button/Checkbox";
+
+export {ChangePasswordForm} from "./Forms/ChangePasswordForm";
 
 export {Icon, icons} from "./Icons/Icon";
 export {Logo} from "./Illustrations/Logo";
 export {FloatingCircles} from "./Illustrations/FloatingCircles";
 
-export {TextInput} from "./Text/TextInput";
-export {NumberHolder} from "./Text/NumberHolder";
-export {CodeInput} from "./Text/CodeInput";
+export {TextInput} from "./Input/TextInput";
+export {NumberHolder} from "./Input/NumberHolder";
+export {CodeInput} from "./Input/CodeInput";
+export {InfoField} from "./Input/InfoField";
+export {FileInput} from "./Input/FileInput";
