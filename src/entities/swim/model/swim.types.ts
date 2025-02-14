@@ -6,7 +6,7 @@ export type Swim = {
   maxPoints: number,
   startTime: string,
   endTime: string,
-  competitionUUID: string
+  competitionUUID?: string
 }
 
 export type SwimResult = {

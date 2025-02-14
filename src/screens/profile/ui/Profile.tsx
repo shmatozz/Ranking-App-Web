@@ -45,7 +45,7 @@ export const Profile: React.FC<ProfileProps> = ({
       )}
 
       {subpage == "comps-create" && organization && (
-        <CompetitionsCreate onCancel={() => setSubpage("comps")}/>
+        <CompetitionsCreate onCancel={() => setSubpage("comps")} onSuccess={() => setSubpage("comps")}/>
       )}
 
       {subpage == "results" && (

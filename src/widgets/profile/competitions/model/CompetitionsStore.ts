@@ -11,7 +11,7 @@ type CompetitionsState = {
 }
 
 type CompetitionsActions = {
-  getCompetitions: () => void;
+  getCompetitions: (update?: boolean) => void;
 }
 
 export const useCompetitionsStore = create<CompetitionsState & CompetitionsActions>((set) => ({
@@ -20,10 +20,10 @@ export const useCompetitionsStore = create<CompetitionsState & CompetitionsActio
   isLoading: false,
   hasError: false,
 
-  getCompetitions: () => {
+  getCompetitions: (update) => {
     const org = useOrganizationStore.getState().organization;
 
-    if (org && org.competitions) {
+    if (org && org.competitions && !update) {
       set(sortCompetitions(org.competitions));
     } else {
       set({ isLoading: true, hasError: false })

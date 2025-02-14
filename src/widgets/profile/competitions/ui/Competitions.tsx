@@ -3,6 +3,7 @@ import {useCompetitionsStore} from "@/widgets/profile";
 import {CompetitionCard} from "@/entities/competition";
 import {Button} from "@/shared/ui";
 import {Role} from "@/shared/lib";
+import {useRouter} from "next/navigation";
 
 interface CompetitionsProps {
   role: Role;
@@ -13,14 +14,15 @@ export const Competitions: React.FC<CompetitionsProps> = ({
   role,
   onCreateCompetitionClick = () => console.log("onCreateCompetitionClick called"),
 }) => {
+  const router = useRouter();
   const passed = useCompetitionsStore((state) => state.passed);
   const upcoming = useCompetitionsStore((state) => state.upcoming);
   const getCompetitions = useCompetitionsStore((state) => state.getCompetitions);
   const isLoading = useCompetitionsStore((state) => state.isLoading);
 
   useEffect(() => {
-    if (!passed || !upcoming) getCompetitions();
-  }, [getCompetitions, passed, upcoming]);
+    if ((!passed || !upcoming) && role == "ORGANIZATION") getCompetitions();
+  }, [getCompetitions, passed, role, upcoming]);
 
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
@@ -61,16 +63,25 @@ export const Competitions: React.FC<CompetitionsProps> = ({
           {!isLoading && upcoming && upcoming.map((comp) => (
             <CompetitionCard key={comp.competitionUuid} competition={comp}/>
           ))}
-
-          {isLoading && Array(1).fill(0).map((_comp, index) => (
-            <CompetitionCard key={index} isLoading={isLoading}/>
-          ))}
         </div>
       )}
 
-      {upcoming && upcoming.length == 0 && (
-        <p className={"flex flex-col w-full text-center text-bodyM_regular text-base-90"}>
+      {isLoading && Array(1).fill(0).map((_comp, index) => (
+        <CompetitionCard key={index} isLoading={isLoading}/>
+      ))}
+
+      {((upcoming && upcoming.length == 0) || (!isLoading && !upcoming)) && (
+        <p className={"flex flex-col w-full text-center items-center text-bodyM_regular text-base-90 gap-1"}>
           Нет предстоящих соревнований
+
+          {role == "USER" && (
+            <Button
+              variant={"tertiary"} size={"S"}
+              onClick={() => router.push("/calendar")}
+            >
+              Подобрать
+            </Button>
+          )}
         </p>
       )}
 

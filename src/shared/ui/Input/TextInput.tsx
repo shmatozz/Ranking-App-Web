@@ -32,7 +32,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   const isError = !!errorMessage;
 
   useEffect(() => {
-    if (props.value) setHasText(props.value.toString().length != 0)
+    if (props.value != undefined) setHasText(props.value.toString().length != 0)
   }, [props.value]);
 
   const sizeClass = {

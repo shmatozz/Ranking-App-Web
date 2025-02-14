@@ -24,11 +24,11 @@ export const IconButton: React.FC<ButtonProps> = ({
   className,
   ...props
 }) => {
-  const baseClass = "flex items-center justify-center focus:outline-none gap-3";
+  const baseClass = "flex items-center justify-center focus:outline-none";
 
   /* Size styles */
   const sizeClass = {
-    S: "h-[40px] w-[40px] rounded-xl",
+    S: "h-[40px] min-w-[40px] rounded-xl",
     M: "h-[3.25rem] w-[3.25rem] rounded-2xl",
   }[size];
 
