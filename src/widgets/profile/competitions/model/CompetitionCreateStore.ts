@@ -2,7 +2,7 @@ import { create } from "zustand/react";
 import {useOrganizationStore} from "@/entities/organization";
 import {Swim} from "@/entities/swim";
 import {useCompetitionsStore, useSwimCreateStore} from "@/widgets/profile";
-import {createCompetition} from "@/features/create-competition";
+import {createCompetition} from "@/features/competition/create";
 
 type CompetitionsCreateState = {
   name: string;

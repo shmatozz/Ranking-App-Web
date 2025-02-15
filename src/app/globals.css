@@ -12,3 +12,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.loader {
+  @apply w-fit px-8 text-bodyM_regular text-base-5 bg-base-5 rounded-md animate-pulse;
+}

@@ -1,4 +1,5 @@
-import {SwimResult} from "@/entities/swim";
+import {Swim, SwimResult} from "@/entities/swim";
+import {OrganizationShort} from "@/entities/organization";
 
 export type Competition = {
   name: string;
@@ -13,4 +14,9 @@ export type CompetitionResult = {
   competitionUuid: string;
   name: string;
   swimsResults: SwimResult[]
+};
+
+export type CompetitionFull = Competition & {
+  events: Swim[];
+  organizationInfo: Omit<OrganizationShort, "role" | "id">;
 };

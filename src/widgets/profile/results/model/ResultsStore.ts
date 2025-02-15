@@ -21,7 +21,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 100, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "123", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 1,
           time: "00:21.32",
@@ -29,7 +29,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 300, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "123", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 2,
           time: "00:32.22",
@@ -37,7 +37,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 500, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "123", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 5,
           time: "00:52.12",
@@ -49,7 +49,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 100, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "1231", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 1,
           time: "00:21.32",
@@ -57,7 +57,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 300, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "1231", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 4,
           time: "00:32.22",
@@ -65,7 +65,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 500, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "1231", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 1,
           time: "00:52.12",
@@ -77,7 +77,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 100, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "1232", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 2,
           time: "00:21.32",
@@ -85,7 +85,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 300, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "1232", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 1,
           time: "00:32.22",
@@ -93,7 +93,7 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
           swim: {
             distance: 500, style: "sqwds", gender: "MALE", ageCategory: "18-21",
             competitionUUID: "1232", maxPoints: 500,
-            startTime: "2025-02-08", endTime: "2025-02-08",
+            startTime: "2025-02-08"
           },
           place: 3,
           time: "00:52.12",

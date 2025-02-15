@@ -61,7 +61,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
           <label className={"w-full text-bodyM_medium text-base-95"}>Предстоящие</label>
 
           {!isLoading && upcoming && upcoming.map((comp) => (
-            <CompetitionCard key={comp.competitionUuid} competition={comp}/>
+            <CompetitionCard key={comp.competitionUuid} competition={comp} onClick={() => router.push(`/calendar/competition?id=${comp.competitionUuid}`)} />
           ))}
         </div>
       )}

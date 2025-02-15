@@ -10,7 +10,7 @@ export const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname.startsWith(href);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
