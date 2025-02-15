@@ -17,9 +17,7 @@ export const CompetitionPage = () => {
   }, [competitionUUID, getCompetition]);
 
   return (
-    <div
-      className={"flex flex-col w-full max-w-[1100px] h-fit bg-base-0 place-self-center px-8 py-4 rounded-3xl gap-4"}
-    >
+    <div className={"content-container flex-col gap-4"}>
       <CompetitionHeader/>
 
       <CompetitionContent/>

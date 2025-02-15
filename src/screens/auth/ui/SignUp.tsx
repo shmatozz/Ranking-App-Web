@@ -14,7 +14,7 @@ export const SignUp = () => {
       className={clsx(
         "flex flex-col self-center items-center gap-3",
         "w-full max-w-[31.25rem] h-fit rounded-3xl px-[3.25rem] py-8",
-        "bg-base-0 shadow-md"
+        "bg-base-0 container-shadow"
       )}
     >
       <p className={"text-h4 text-base-95 text-center"}>
