@@ -40,28 +40,23 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
         />
       </div>
 
-      <div className="flex flex-col w-full gap-[0px]">
-        <label
-          className={"flex flex-row gap-1 w-full text-bodyS_regular text-base-40"}
-        >
-          {"Пол"}
-        </label>
+      <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8 items-center"}>
+        <div className="flex flex-col w-full gap-[0px]">
+          <label
+            className={"flex flex-row gap-1 w-full text-bodyS_regular text-base-40"}
+          >
+            {"Пол"}
+          </label>
 
-        <div className={"flex flex-row w-full gap-8 justify-center"}>
-          <Radio checked={state.gender == "MALE"} onClick={() => state.setGender("MALE")} text={"Мужской"}/>
-          <Radio checked={state.gender == "FEMALE"} onClick={() => state.setGender("FEMALE")} text={"Женский"}/>
+          <div className={"flex flex-row w-full gap-8 justify-center"}>
+            <Radio checked={state.gender == "MALE"} onClick={() => state.setGender("MALE")} text={"Мужской"}/>
+            <Radio checked={state.gender == "FEMALE"} onClick={() => state.setGender("FEMALE")} text={"Женский"}/>
+          </div>
         </div>
-      </div>
 
-      <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
         <TextInput
           value={state.startTime} onChange={(e) => state.setStartTime(e.target.value)}
           title={"Время начала"} type={"time"}
-        />
-
-        <TextInput
-          value={state.endTime} onChange={(e) => state.setEndTime(e.target.value)}
-          title={"Время конца"} type={"time"}
         />
       </div>
 
@@ -74,7 +69,10 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
         </Button>
 
         <Button
-          onClick={() => { props.onSubmit(); state.clearForm(); }}
+          onClick={() => {
+            props.onSubmit();
+            state.clearForm();
+          }}
           variant={"primary"} size={"S"} className={"w-full"} disabled={!state.isFormValid}
         >
           Создать заплыв

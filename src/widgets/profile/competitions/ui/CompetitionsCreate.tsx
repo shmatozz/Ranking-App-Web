@@ -39,7 +39,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
         <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
           <TextInput
             value={state.date} onChange={(e) => state.setDate(e.target.value)}
-            inputSize={"M"} title={"Дата"} type={"date"}
+            inputSize={"M"} title={"Дата"} type={"date"} min={new Date().toISOString().split("T")[0]}
           />
 
           <TextInput

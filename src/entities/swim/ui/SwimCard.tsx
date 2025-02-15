@@ -1,6 +1,7 @@
 import React from "react";
 import {Swim} from "@/entities/swim";
 import clsx from "clsx";
+import {getTime} from "@/shared/utils";
 
 interface SwimCardProps {
   swim: Swim;
@@ -26,7 +27,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
         </p>
 
         <p className={"text-bodyM_regular text-base-95"}>
-          {`${props.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, макс. очков: ${props.swim.maxPoints}, ${props.swim.startTime}-${props.swim.endTime}`}
+          {`${props.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, макс. очков: ${props.swim.maxPoints}, ${getTime(new Date(props.swim.startTime))}`}
         </p>
       </div>
 

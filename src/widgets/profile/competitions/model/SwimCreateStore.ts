@@ -8,7 +8,6 @@ type SwimCreateState = {
   ageCategory: string;
   maxPoints: number;
   startTime: string;
-  endTime: string;
   isFormValid: boolean;
 };
 
@@ -19,7 +18,6 @@ type SwimCreateActions = {
   setAgeCategory: (ageCategory: string) => void;
   setMaxPoints: (maxPoints: number) => void;
   setStartTime: (startTime: string) => void;
-  setEndTime: (endTime: string) => void;
   checkFormValid: () => void;
   getSwim: () => Swim;
   clearForm: () => void;
@@ -32,7 +30,6 @@ const initialState: SwimCreateState = {
   ageCategory: "",
   maxPoints: 0,
   startTime: "",
-  endTime: "",
   isFormValid: false,
 }
 
@@ -44,7 +41,7 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
       isFormValid:
         state.distance > 0 && state.style.trim() !== "" &&
         state.ageCategory.trim() !== "" && state.maxPoints > 0 &&
-        state.startTime.trim() !== "" && state.endTime.trim() !== ""
+        state.startTime.trim() !== ""
     }));
   },
 
@@ -54,7 +51,6 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
   setAgeCategory: (ageCategory) =>  { set({ ageCategory }); get().checkFormValid(); },
   setMaxPoints: (maxPoints) =>  { set({ maxPoints }); get().checkFormValid(); },
   setStartTime: (startTime) =>  { set({ startTime }); get().checkFormValid(); },
-  setEndTime: (endTime) =>  { set({ endTime }); get().checkFormValid(); },
 
   getSwim: () => {
     const swimData = get();
@@ -63,7 +59,7 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
       distance: swimData.distance, style: swimData.style,
       gender: swimData.gender, ageCategory: swimData.ageCategory,
       maxPoints: swimData.maxPoints,
-      startTime: "2025-02-27", endTime: "2025-02-27",
+      startTime: swimData.startTime,
     }
   },
 
