@@ -1,4 +1,4 @@
-export function formatDate(dateStr: string | undefined): string | undefined{
+export function formatDate(dateStr: string | undefined): string | undefined {
   if (!dateStr) return undefined
 
   const date = new Date(dateStr);
@@ -21,3 +21,11 @@ export function formatDate(dateStr: string | undefined): string | undefined{
 
   return `${date.getDate()} ${month} ${date.getFullYear()}`
 }
+
+export function getTime(date: Date): string | undefined {
+  const dateHours = date.getUTCHours();
+  const dateMinutes = date.getUTCMinutes();
+
+  return `${dateHours}:${dateMinutes < 10 ? "0" + dateMinutes : dateMinutes}`;
+}
+

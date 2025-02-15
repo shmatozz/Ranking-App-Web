@@ -24,6 +24,10 @@ export const Competitions: React.FC<CompetitionsProps> = ({
     if ((!passed || !upcoming) && role == "ORGANIZATION") getCompetitions();
   }, [getCompetitions, passed, role, upcoming]);
 
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
+
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
       <label className={"text-h5_bold text-base-95 text-center"}>Соревнования</label>
@@ -61,7 +65,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
           <label className={"w-full text-bodyM_medium text-base-95"}>Предстоящие</label>
 
           {!isLoading && upcoming && upcoming.map((comp) => (
-            <CompetitionCard key={comp.competitionUuid} competition={comp}/>
+            <CompetitionCard key={comp.competitionUuid} competition={comp} onClick={() => router.push(`/calendar/competition?id=${comp.competitionUuid}`)} />
           ))}
         </div>
       )}
@@ -99,7 +103,7 @@ export const Competitions: React.FC<CompetitionsProps> = ({
           <label className={"text-bodyM_medium text-base-95"}>Прошедшие</label>
 
           {!isLoading && passed && passed.map((comp) => (
-            <CompetitionCard key={comp.competitionUuid} competition={comp}/>
+            <CompetitionCard key={comp.competitionUuid} competition={comp} onClick={() => router.push(`/calendar/competition?id=${comp.competitionUuid}`)}/>
           ))}
         </div>
       )}

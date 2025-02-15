@@ -1,6 +1,6 @@
 import { create } from "zustand/react";
 import {Competition} from "@/entities/competition";
-import {useOrganizationStore} from "@/entities/organization";
+import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
 import {sortCompetitions} from "@/shared/lib";
 
 type CompetitionsState = {
@@ -28,11 +28,12 @@ export const useCompetitionsStore = create<CompetitionsState & CompetitionsActio
     } else {
       set({ isLoading: true, hasError: false })
 
-      useOrganizationStore.getState().getOrganizationInfo(() => {
-        const org = useOrganizationStore.getState().organization;
-
-        set({...sortCompetitions(org!.competitions ? org!.competitions : []), isLoading: false, hasError: false});
-      })
+      getOrganizationInfo()
+        .then((organization) => {
+          set({...sortCompetitions(organization.competitions ? organization.competitions : [])});
+        })
+        .catch(() => set({ hasError: true }))
+        .finally(() => set({ isLoading: false }))
     }
   }
 }))

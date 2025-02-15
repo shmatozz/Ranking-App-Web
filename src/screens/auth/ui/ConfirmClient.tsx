@@ -35,12 +35,11 @@ const ConfirmClient: React.FC<{email: string}> = ({email}) => {
   };
 
   return (
-
     <div
       className={clsx(
-        "flex flex-col self-center items-center gap-4",
+        "flex flex-col m-auto items-center gap-4",
         "w-full max-w-[40rem] h-fit rounded-3xl px-[3.25rem] py-8",
-        "bg-base-0 shadow-md"
+        "bg-base-0 container-shadow"
       )}
     >
       <p className={"text-h4 text-base-95 text-center"}>Подтверждение</p>

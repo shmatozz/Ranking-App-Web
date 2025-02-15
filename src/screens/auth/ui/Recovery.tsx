@@ -35,7 +35,7 @@ export const Recovery = () => {
   }, [params]);
 
   // Form input handler
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -65,7 +65,7 @@ export const Recovery = () => {
   }, [state, form, params, router]);
 
   return (
-    <div className={clsx("flex flex-col self-center items-center gap-4", "w-full max-w-[40rem] h-fit rounded-3xl px-[3.25rem] py-8", "bg-base-0 shadow-md")}>
+    <div className={clsx("flex flex-col m-auto items-center gap-4", "w-full max-w-[40rem] h-fit rounded-3xl px-[3.25rem] py-8", "bg-base-0 container-shadow")}>
       <p className="text-h4 text-base-95 text-center">Восстановление пароля</p>
 
       {feedback.error && <div className="px-6 py-2 rounded-2xl bg-red-5 text-center text-red-70">{feedback.error}</div>}

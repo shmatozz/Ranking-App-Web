@@ -16,9 +16,9 @@ type UserState = {
 }
 
 type UserActions = {
-  getUserInfo: (token: string) => void;
+  getUserInfo: () => void;
   updatePassword: (params: updatePasswordParams) => void;
-  updateEmail: (email: string, token: string) => void;
+  updateEmail: (email: string) => void;
 }
 
 export const useUserStore = create<UserState & UserActions>((set) => ({
@@ -26,11 +26,11 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
   isLoading: false,
   hasError: false,
 
-  getUserInfo: (token) => {
+  getUserInfo: () => {
     console.log("123");
     set({ isLoading: true, hasError: false })
 
-    fetchUserInfo(token)
+    fetchUserInfo()
       .then((user) => set({user: user}))
       .catch((e) => {
         console.log(e);
@@ -44,8 +44,8 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
       .then((response) => console.log(response))
   },
 
-  updateEmail: (email: string, token: string) => {
-    updateUserEmail({email: email}, token)
+  updateEmail: (email: string) => {
+    updateUserEmail({email: email})
       .then((response) => console.log(response))
   }
 }))

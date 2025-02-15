@@ -1,0 +1,58 @@
+'use client';
+
+import React from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import clsx from "clsx";
+import {Info, Swims, Participants} from "./content";
+
+type Tab = "info" | "swims" | "participants" | "live" | "results";
+const TABS: Tab[] = ["info", "swims", "participants", "live", "results"];
+
+export const CompetitionContent = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const rowTab = searchParams.get("tab");
+  const activeTab: Tab = rowTab && TABS.includes(rowTab as Tab) ? rowTab as Tab : "info";
+
+  const handleTabChange = (tab: string) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("tab", tab);
+    router.push(`?${newParams.toString()}`, { scroll: false });
+  };
+
+  const isActive = (tab: string) => activeTab == tab;
+
+  const Tab = ({ href, label }: { href: Tab; label: string; }) => (
+    <div
+      className={"relative w-full h-full text-center content-center group select-none"}
+      onClick={() => handleTabChange(href)}
+    >
+      {label}
+      <div className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isActive(href) ? "h-1 bg-blue-50" : "h-0 bg-base-10")}/>
+    </div>
+  );
+
+  const Content = ({ href }: { href: Tab }) => {
+    switch (href) {
+      case "info": return <Info/>
+      case "swims": return <Swims/>
+      case "participants": return <Participants/>
+    }
+  }
+
+  return (
+    <div className={"flex flex-col"}>
+      <div
+        className={"flex flex-row w-full h-[36px] gap-4"}
+      >
+        <Tab href={"info"} label={"Информация"}/>
+        <Tab href={"swims"} label={"Заплывы"}/>
+        <Tab href={"participants"} label={"Участники"}/>
+        <Tab href={"live"} label={"Трансляция"}/>
+        <Tab href={"results"} label={"Результаты"}/>
+      </div>
+
+      <Content href={activeTab}/>
+    </div>
+  )
+}

@@ -2,7 +2,7 @@ import { create } from "zustand/react";
 import {useOrganizationStore} from "@/entities/organization";
 import {Swim} from "@/entities/swim";
 import {useCompetitionsStore, useSwimCreateStore} from "@/widgets/profile";
-import {createCompetition} from "@/features/create-competition";
+import {createCompetition} from "@/features/competition/create";
 
 type CompetitionsCreateState = {
   name: string;
@@ -50,7 +50,8 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
         state.name.trim() != "" && state.location.trim() !== "" &&
         state.date.trim() !== "" && state.maxParticipants > 0 &&
         state.description.trim() !== "" && state.contact.trim() !== "" &&
-        state.swims.length > 0
+        state.swims.length > 0 &&
+        new Date(state.date).getTime() >= new Date(new Date().toISOString().split("T")[0]).getTime()
     }));
   },
 
@@ -76,6 +77,8 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
 
   addSwim: () => {
     const swimData = useSwimCreateStore.getState().getSwim();
+    swimData.startTime = `${get().date}T${swimData.startTime}Z`;
+
     set((state) => ({ swims: [...state.swims, swimData] }));
     get().checkFormValid();
   },
@@ -93,12 +96,13 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       competitionLocation: competition.location,
       competitionDate: competition.date,
       maxParticipants: competition.maxParticipants,
-      competitionType: "123",
+      competitionType: "соревнование",
       events: competition.swims
     })
       .then(() => {
         useCompetitionsStore.getState().getCompetitions(true);
-        onSuccess()
+        onSuccess();
+        get().clearForm();
       })
       .catch((e) => console.log(e.message));
   },

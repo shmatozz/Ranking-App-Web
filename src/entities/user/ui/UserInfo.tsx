@@ -3,7 +3,6 @@
 import React, {useEffect} from "react";
 import {Button, ChangePasswordForm, InfoField} from "@/shared/ui";
 import clsx from "clsx";
-import {useSession} from "next-auth/react";
 import {updateUserPassword, useUserStore} from "@/entities/user";
 import {formatDate} from "@/shared/utils";
 
@@ -14,7 +13,6 @@ interface UserInfoProps {
 export const UserInfo: React.FC<UserInfoProps> = (
   props
 ) => {
-  const session = useSession();
   const user = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
   const isLoading = useUserStore((state) => state.isLoading);
@@ -25,9 +23,9 @@ export const UserInfo: React.FC<UserInfoProps> = (
 
   useEffect(() => {
     if (!hasError && !isLoading && user == undefined) {
-      if (session.data) getUserInfo(session.data.user.token);
+      getUserInfo();
     }
-  }, [getUserInfo, hasError, isLoading, session, user])
+  }, [getUserInfo, hasError, isLoading, user])
 
   if (hasError) {
     return (
@@ -36,8 +34,6 @@ export const UserInfo: React.FC<UserInfoProps> = (
       </div>
     )
   }
-
-  if (!session.data) return null;
 
   return (
     <div className={clsx("flex flex-col w-full max-w-[500px] gap-4 items-center", props.className)}>

@@ -1,6 +1,6 @@
 'use server';
 
-import {CreateCompetitionParams} from "@/features/create-competition";
+import {CreateCompetitionParams} from "@/features/competition/create";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
 import {auth} from "@/shared/lib";
