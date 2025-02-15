@@ -6,12 +6,13 @@ import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
 import {auth} from "@/shared/lib";
 
-export async function fetchUserInfo(token: string): Promise<User> {
+export async function fetchUserInfo(): Promise<User> {
   console.log("Send GET user info request")
+  const session = await auth();
 
   const response: UserResponse = await axiosInstance.get("/user/info", {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${session?.user.token}`,
     }
   });
 
@@ -40,12 +41,15 @@ export async function updateUserPassword(params: updatePasswordParams) {
 }
 
 
-export async function updateUserEmail(params: updateEmailParams, token: string) {
+export async function updateUserEmail(params: updateEmailParams) {
+  console.log("Send POST update user email request")
+  const session = await auth();
+
   const response = await fetch("http://localhost:9000/api/v1/user/update-email", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      "Authorization": `Bearer ${session?.user.token}`,
     },
     body: JSON.stringify(params)
   });

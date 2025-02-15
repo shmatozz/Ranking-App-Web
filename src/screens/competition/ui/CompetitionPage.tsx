@@ -16,6 +16,10 @@ export const CompetitionPage = () => {
     getCompetition(competitionUUID);
   }, [competitionUUID, getCompetition]);
 
+  useEffect(() => {
+    document.title = "Соревнование";
+  }, []);
+
   return (
     <div className={"content-container flex-col gap-4"}>
       <CompetitionHeader/>

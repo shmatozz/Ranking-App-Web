@@ -4,15 +4,46 @@ import React, {useEffect} from "react";
 import {Competitions, CompetitionsCreate, Info, Members, Results} from "@/widgets/profile";
 import {Subpages} from "@/entities/user";
 import {ProfilePages} from "@/widgets/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 interface ProfileProps {
   organization: boolean;
 }
 
+const TABS: Subpages[] = ["info", "comps", "comps-create", "members", "results"];
+
 export const Profile: React.FC<ProfileProps> = ({
   organization
 }) => {
-  const [subpage, setSubpage] = React.useState<Subpages>("info");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const rowTab = searchParams.get("p");
+  const activeTab: Subpages = rowTab && TABS.includes(rowTab as Subpages) ? rowTab as Subpages : "info";
+
+  const handleSubpageChange = (tab: Subpages) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("p", tab);
+    router.push(`?${newParams.toString()}`, { scroll: false });
+  };
+
+  const Content = ({ href }: { href: Subpages }) => {
+    switch (href) {
+      case "info": return <Info role={organization ? "ORGANIZATION" : "USER"}/>
+      case "comps": return <Competitions role={organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={organization ? () => handleSubpageChange("comps-create") : undefined}/>
+      case "comps-create": {
+        if (organization) return <CompetitionsCreate onCancel={() => handleSubpageChange("comps")} onSuccess={() => handleSubpageChange("comps")}/>
+        else return <Competitions role={organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={organization ? () => handleSubpageChange("comps-create") : undefined}/>
+      }
+      case "members": {
+        if (organization) return <Members/>
+        else return <Results/>
+      }
+      case "results": {
+        if (!organization) return <Results/>
+        else return <Members/>
+      }
+    }
+  }
 
   useEffect(() => {
     document.title = 'Профиль';
@@ -31,28 +62,10 @@ export const Profile: React.FC<ProfileProps> = ({
         </div>
 
         {/* PROFILE NAVIGATION */}
-        <ProfilePages role={organization ? "ORGANIZATION" : "USER"} page={subpage} setPage={setSubpage}/>
+        <ProfilePages role={organization ? "ORGANIZATION" : "USER"} page={activeTab} setPage={handleSubpageChange}/>
       </div>
 
-      {subpage == "info" && (
-        <Info role={organization ? "ORGANIZATION" : "USER"}/>
-      )}
-
-      {subpage == "comps" && (
-        <Competitions role={organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={organization ? () => setSubpage("comps-create") : undefined}/>
-      )}
-
-      {subpage == "comps-create" && organization && (
-        <CompetitionsCreate onCancel={() => setSubpage("comps")} onSuccess={() => setSubpage("comps")}/>
-      )}
-
-      {subpage == "results" && (
-        <Results/>
-      )}
-
-      {subpage == "members" && (
-        <Members/>
-      )}
+      <Content href={activeTab}/>
     </div>
   )
 }

@@ -1,10 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useCompetitionStore} from "@/features/competition/get";
 import {getDistances} from "@/shared/lib";
 
 export const Info = () => {
   const competition = useCompetitionStore((state) => state.competition);
   const isLoading = useCompetitionStore((state) => state.isLoading);
+
+  useEffect(() => {
+    if (competition) document.title = competition.name
+  }, [competition]);
 
   if (!competition || isLoading) return <InfoLoading/>
 

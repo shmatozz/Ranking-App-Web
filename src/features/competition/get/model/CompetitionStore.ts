@@ -28,7 +28,6 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
 
     getCompetitionByID({ uuid: id })
       .then((competition) => {
-        console.log(competition);
         set({ competition })
       })
       .catch((e) => {
