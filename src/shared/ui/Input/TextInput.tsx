@@ -84,6 +84,7 @@ export const TextInput: React.FC<TextInputProps> = ({
           <input
             id={props.id}
             name={props.name}
+            value={props.value}
             type={type == "password" ? (showPassword ? "text" : "password") : type}
             onFocus={(e) => {
               setIsFocused(true);

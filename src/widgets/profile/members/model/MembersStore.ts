@@ -25,9 +25,7 @@ export const useMembersStore = create<MembersState & MembersActions>((set) => ({
     } else {
       set({ isLoading: true, hasError: false })
 
-      useOrganizationStore.getState().getOrganizationInfo(() => {
-        set({ members: useOrganizationStore.getState().organization?.users, isLoading: false, hasError: false });
-      })
+      useOrganizationStore.getState().getOrganizationInfo()
     }
   }
 }))
