@@ -11,6 +11,7 @@ type FiltersState = {
   date?: string,
   minParticipants?: number,
   maxParticipants?: number,
+  page?: number;
 }
 
 type FiltersActions = {
@@ -22,6 +23,9 @@ type FiltersActions = {
 
 type CalendarState = {
   competitions?: Competition[];
+  page?: number;
+  totalPages?: number;
+  totalResults?: number;
   arrange: ArrangeFilter;
   filters: FiltersState;
   isLoading: boolean;
@@ -30,6 +34,7 @@ type CalendarState = {
 
 type CalendarActions = {
   setArrange: (item: ArrangeFilter) => void;
+  setPage: (page: number) => void,
   filtersActions: FiltersActions;
   clearFilters: () => void;
   getCompetitions: () => void;
@@ -37,6 +42,9 @@ type CalendarActions = {
 
 const initialState: CalendarState = {
   competitions: undefined,
+  page: 0,
+  totalPages: 0,
+  totalResults: 0,
   arrange: { id: "date-closer", name: "Дата (ближе)"},
   filters: {},
   isLoading: false,
@@ -61,13 +69,18 @@ export const useCalendarStore = create<CalendarState & CalendarActions>((set,get
     }),
   },
 
+  setPage: (page: number) => set({ page }),
+
   clearFilters: () => set({ filters: {} }),
 
   getCompetitions: () => {
-    getCompetitionsByFilter(get().filters)
-      .then((competitions: Competition[]) => {
-        set({ competitions: sortCompetitions(competitions, get().arrange.id) })
+    set({ isLoading: true, hasError: false })
+
+    getCompetitionsByFilter({...get().filters, page: get().page})
+      .then((data) => {
+        set({ competitions: sortCompetitions(data.content, get().arrange.id), totalPages: data.totalPages, totalResults: data.totalElements })
       })
       .catch((e) => console.log(e.message))
+      .finally(() => set({ isLoading: false }))
   }
 }));

@@ -1,6 +1,8 @@
 import {Competition} from "@/entities/competition";
 
-export type FilterCompetitionsParams = {
+export type FilterCompetitionsParams = Filters & Pages
+
+export type Filters = {
   name?: string;
   location?: string;
   date?: string;
@@ -9,11 +11,20 @@ export type FilterCompetitionsParams = {
   competitionType?: string;
 }
 
+export type Pages = {
+  page?: number,
+  size?: number
+}
+
+
 export type FilterCompetitionsResponse = {
   status: number;
-  data: {
-    totalElements: number;
-    totalPages: number;
-    content: Competition[];
-  }
+  data: FilterCompetitionsResponseData
 }
+
+export type FilterCompetitionsResponseData = {
+  totalElements: number;
+  totalPages: number;
+  content: Competition[];
+}
+

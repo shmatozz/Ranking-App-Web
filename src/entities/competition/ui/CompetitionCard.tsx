@@ -37,7 +37,7 @@ export const CompetitionCard: React.FC<CompetitionCardProps> = (
       }
       onClick={props.onClick}
     >
-      <label className={"text-bodyM_medium text-blue-90 z-[2] xs:text-h5"}>{props.competition.name}</label>
+      <label className={"text-bodyM_medium text-blue-90 z-[2] xs:text-h5 cursor-pointer"}>{props.competition.name}</label>
       <p className={"text-bodyS_regular text-base-80 z-[2] xs:text-bodyM_regular"}>{formatDate(props.competition.date)}</p>
 
       <div className="absolute right-4 top-1/2 transition-transform -translate-y-1/2 z-[1] opacity-75 xs:opacity-100">

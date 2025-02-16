@@ -8,10 +8,15 @@ import {ArrangeOption} from "@/shared/lib";
 export const FiltersHeader = () => {
   const state = useCalendarStore();
   const getCompetitions = useCalendarStore((state) => state.getCompetitions);
+  const setPage = useCalendarStore((state) => state.setPage);
 
   useEffect(() => {
     getCompetitions();
-  }, [getCompetitions, state.filters]);
+  }, [getCompetitions, state.filters, state.page]);
+
+  useEffect(() => {
+    setPage(0);
+  }, [setPage, state.filters]);
 
   useEffect(() => {
     document.title = "Календарь"
@@ -19,11 +24,11 @@ export const FiltersHeader = () => {
 
   return (
     <div className={"flex flex-col gap-4"}>
-      <div className={"flex flex-row justify-between"}>
+      <div className={"flex flex-col justify-between gap-1 lg-md:flex-row"}>
         <label className={"text-h4 text-base-100"}>Календарь стартов</label>
 
-        <div className={"flex flex-row w-[400px] gap-2 items-center"}>
-          <p className={"text-bodyM_regular text-base-95 select-none text-nowrap"}>Упорядочить по</p>
+        <div className={"flex flex-row w-full gap-2 items-center lg-md:w-[400px]"}>
+          <p className={"text-bodyS_regular text-base-95 select-none text-nowrap xs:text-bodyM_regular"}>Упорядочить по</p>
 
           <Dropdown
             items={arrangeFilters}
@@ -34,7 +39,7 @@ export const FiltersHeader = () => {
         </div>
       </div>
 
-      <div className={"flex flex-row w-full gap-3"}>
+      <div className={"flex flex-col w-full gap-3 lg-md:flex-row"}>
         <TextInput
           title={"Название"}
           value={state.filters.name ? state.filters.name : ""} onChange={(e) => state.filtersActions.setName(e.target.value)}
@@ -51,7 +56,7 @@ export const FiltersHeader = () => {
         />
       </div>
 
-      <div className={"flex flex-row w-full gap-3"}>
+      <div className={"flex flex-col w-full gap-3 lg-md:flex-row"}>
         <TextInput
           title={"Участники (от)"}
           value={state.filters.minParticipants ? state.filters.minParticipants : ""} onChange={(e) => state.filtersActions.setMinParticipants(Number(e.target.value))}

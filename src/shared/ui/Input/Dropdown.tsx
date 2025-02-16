@@ -38,15 +38,15 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
   return (
     <div ref={dropdownRef} className={clsx("flex flex-col w-full relative", props.className)}>
       <div
-        className={"flex justify-between h-[40px] w-full bg-base-5 rounded-[8px] px-4 py-2 cursor-pointer z-[10]"}
+        className={"flex justify-between items-center h-[40px] w-full bg-base-5 rounded-[8px] px-4 py-2 cursor-pointer z-[10]"}
         onClick={() => setOpen(!opened)}
       >
         {props.selectedItems.length === 0 && (
-          <p className={"text-bodyM_regular text-base-70 select-none"}>{props.placeholder}</p>
+          <p className={"text-bodyS_regular text-base-70 select-none xs:text-bodyM_regular"}>{props.placeholder}</p>
         )}
 
         {props.selectedItems.length > 0 && (
-          <p className={"text-bodyM_regular text-base-90 select-none"}>{props.selectedItems.map((item) => item.name).join(", ")}</p>
+          <p className={"text-bodyS_regular text-base-90 select-none text-nowrap xs:text-bodyM_regular"}>{props.selectedItems.map((item) => item.name).join(", ")}</p>
         )}
 
         <Icon name={"chevronDown"} size={24} className={"text-base-60"} />

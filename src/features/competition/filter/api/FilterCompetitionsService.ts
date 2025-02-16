@@ -1,11 +1,14 @@
 "use server";
 
-import {Competition} from "@/entities/competition";
-import {FilterCompetitionsParams, FilterCompetitionsResponse} from "@/features/competition/filter";
+import {
+  FilterCompetitionsParams,
+  FilterCompetitionsResponse,
+  FilterCompetitionsResponseData
+} from "@/features/competition/filter";
 import {auth} from "@/shared/lib";
 import axiosInstance from "@/shared/api/AxiosConfig";
 
-export async function getCompetitionsByFilter(params: FilterCompetitionsParams): Promise<Competition[]> {
+export async function getCompetitionsByFilter(params: FilterCompetitionsParams): Promise<FilterCompetitionsResponseData> {
   console.log("Send GET competition by filters request");
   const session = await auth();
 
@@ -26,5 +29,5 @@ export async function getCompetitionsByFilter(params: FilterCompetitionsParams):
       }
     });
 
-  return response.data.content;
+  return response.data;
 }
