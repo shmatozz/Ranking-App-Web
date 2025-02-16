@@ -1,9 +1,6 @@
 import React from "react";
+import {CalendarPage} from "@/screens/calendar";
 
-export default function Home() {
-  return (
-    <div className="content-container text-h4 text-base-100">
-      КАЛЕНДАРЬ
-    </div>
-  )
+export default function Calendar() {
+  return <CalendarPage/>
 }

@@ -14,3 +14,4 @@ export {NumberHolder} from "./Input/NumberHolder";
 export {CodeInput} from "./Input/CodeInput";
 export {InfoField} from "./Input/InfoField";
 export {FileInput} from "./Input/FileInput";
+export {Dropdown} from "./Input/Dropdown";

@@ -33,7 +33,7 @@ export const CompetitionCard: React.FC<CompetitionCardProps> = (
   return (
     <div
       className={
-        "relative flex flex-col w-full h-fit gap-1 px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group"
+        "relative flex flex-col w-full h-fit gap-1 px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl overflow-hidden cursor-pointer hover:shadow-[1px_4px_16px_4px_rgba(0,0,0,0.08)] transition-shadow group"
       }
       onClick={props.onClick}
     >

@@ -63,5 +63,20 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: (utilities: {
+        ".scrollbar-hide::-webkit-scrollbar": { display: string };
+        ".scrollbar-hide": { "scrollbar-width": string; "-ms-overflow-style": string }
+      }) => void }) {
+      addUtilities({
+        ".scrollbar-hide": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+        ".scrollbar-hide::-webkit-scrollbar": {
+          display: "none",
+        },
+      });
+    },
+  ],
 } satisfies Config;
