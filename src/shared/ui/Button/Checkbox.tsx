@@ -22,11 +22,11 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   className,
   ...props
 }) => {
-  const [checked, setChecked] = React.useState(props.checked);
+  const [checked, setChecked] = React.useState(props.checked ? props.checked : false);
   const [showTooltip, setShowTooltip] = React.useState(false);
 
   useEffect(() => {
-    setChecked(props.checked);
+    setChecked(props.checked ? props.checked : false);
   }, [props.checked]);
 
   const themeClass = {

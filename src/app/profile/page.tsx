@@ -10,6 +10,6 @@ export default async function ProfilePage() {
   const res = await whoAmI(session.user.token);
 
   return (
-    <Profile organization={res.organization}/>
+    <Profile isOrganization={res.organization}/>
   )
 }
