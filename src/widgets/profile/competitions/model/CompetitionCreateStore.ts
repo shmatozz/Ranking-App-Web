@@ -1,8 +1,9 @@
 import { create } from "zustand/react";
-import {useOrganizationStore} from "@/entities/organization";
+import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
 import {Swim} from "@/entities/swim";
 import {useCompetitionsStore, useSwimCreateStore} from "@/widgets/profile";
 import {createCompetition} from "@/features/competition/create";
+import {splitCompetitions} from "@/shared/lib";
 
 type CompetitionsCreateState = {
   name: string;
@@ -100,9 +101,12 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       events: competition.swims
     })
       .then(() => {
-        useCompetitionsStore.getState().getCompetitions(true);
-        onSuccess();
-        get().clearForm();
+        getOrganizationInfo()
+          .then((org) => {
+            useCompetitionsStore.setState({ ...splitCompetitions(org.competitions ? org.competitions : [])  });
+            onSuccess();
+            get().clearForm();
+          })
       })
       .catch((e) => console.log(e.message));
   },

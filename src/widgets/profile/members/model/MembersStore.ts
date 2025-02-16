@@ -1,6 +1,6 @@
 import { create } from "zustand/react";
 import {User} from "@/entities/user";
-import {useOrganizationStore} from "@/entities/organization";
+import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
 
 type MembersState = {
   members: User[] | undefined;
@@ -25,7 +25,12 @@ export const useMembersStore = create<MembersState & MembersActions>((set) => ({
     } else {
       set({ isLoading: true, hasError: false })
 
-      useOrganizationStore.getState().getOrganizationInfo()
+      getOrganizationInfo()
+        .then((organization) => {
+          set({ members: organization.users })
+        })
+        .catch(() => set({ hasError: true }))
+        .finally(() => set({ isLoading: false }))
     }
   }
 }))

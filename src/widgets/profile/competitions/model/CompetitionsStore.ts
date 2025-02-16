@@ -1,3 +1,5 @@
+"use client"
+
 import { create } from "zustand/react";
 import {Competition} from "@/entities/competition";
 import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
@@ -30,7 +32,7 @@ export const useCompetitionsStore = create<CompetitionsState & CompetitionsActio
 
       getOrganizationInfo()
         .then((organization) => {
-          set({...splitCompetitions(organization.competitions ? organization.competitions : [])});
+          set({...splitCompetitions(organization.competitions ? organization.competitions : [])})
         })
         .catch(() => set({ hasError: true }))
         .finally(() => set({ isLoading: false }))

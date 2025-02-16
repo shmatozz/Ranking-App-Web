@@ -1,3 +1,5 @@
+"use client";
+
 import React, {useEffect} from "react";
 import clsx from "clsx";
 import {Button, ChangePasswordForm, Checkbox, InfoField} from "@/shared/ui";
