@@ -59,10 +59,23 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
         )}
         style={{ maxHeight: opened ? '300px' : '0px' }}
       >
-        {props.items.map((item, index) => (
+        {props.selectedItems.map((item, index) => (
           <p
             key={index}
-            className={"text-bodyM_regular text-base-70 select-none px-4 py-2 hover:bg-gray-100 cursor-pointer"}
+            className={"text-bodyM_regular text-base-70 select-none px-4 py-2 bg-base-5 cursor-pointer"}
+            onClick={() => {
+              props.onItemSelected(item);
+              if (!props.multiple) setOpen(false)
+            }}
+          >
+            {item.name}
+          </p>
+        ))}
+
+        {props.items.filter((value) => !props.selectedItems.some((v) => v.id == value.id)).map((item, index) => (
+          <p
+            key={index}
+            className={"text-bodyM_regular text-base-70 select-none px-4 py-2 hover:bg-base-5 cursor-pointer"}
             onClick={() => {
               props.onItemSelected(item);
               if (!props.multiple) setOpen(false)

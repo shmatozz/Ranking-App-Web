@@ -10,7 +10,7 @@ export const CompetitionPage = () => {
   const competitionUUID = searchParams.get("id");
   if (!competitionUUID) redirect("/calendar");
 
-  const { getCompetition } = useCompetitionStore();
+  const { getCompetition, hasError, errorMessage} = useCompetitionStore();
 
   useEffect(() => {
     getCompetition(competitionUUID);
@@ -19,6 +19,14 @@ export const CompetitionPage = () => {
   useEffect(() => {
     document.title = "Соревнование";
   }, []);
+
+  if (hasError) {
+    return (
+      <div className={"content-container text-center text-h5 flex-col"}>
+        <p>{errorMessage}</p>
+      </div>
+    )
+  }
 
   return (
     <div className={"content-container flex-col gap-4"}>

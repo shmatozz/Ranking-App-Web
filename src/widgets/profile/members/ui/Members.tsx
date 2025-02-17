@@ -5,16 +5,18 @@ import {Button} from "@/shared/ui";
 import {useMembersStore} from "@/widgets/profile";
 import {UserParticipantCard} from "@/entities/user";
 import {SendInviteForm} from "@/features/organization-join";
+import {useOrganizationStore} from "@/entities/organization";
 
 export const Members: React.FC = ({
 }) => {
   const { members, getMembers, isLoading} = useMembersStore();
+  const isOrgLoading = useOrganizationStore((state) => state.isLoading);
 
   const [inputUserEmailVisible, setInputUserEmailVisible] = React.useState(false);
 
   useEffect(() => {
-    if (!members) getMembers();
-  }, [getMembers, members]);
+    if (!members && !isLoading && !isOrgLoading) getMembers();
+  }, [getMembers, isLoading, isOrgLoading, members]);
 
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
