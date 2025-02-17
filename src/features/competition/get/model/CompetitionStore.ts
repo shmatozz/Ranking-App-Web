@@ -8,6 +8,7 @@ type CompetitionState = {
   competition?: CompetitionFull;
   isLoading: boolean;
   hasError: boolean;
+  errorMessage?: string;
 }
 
 type CompetitionActions = {
@@ -31,8 +32,7 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
         set({ competition })
       })
       .catch((e) => {
-        console.log(e.message);
-        set({ hasError: true })
+        set({ hasError: true, errorMessage: e.message })
       })
       .finally(() => set({ isLoading: false }));
   }

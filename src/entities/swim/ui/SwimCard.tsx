@@ -4,7 +4,8 @@ import clsx from "clsx";
 import {getTime} from "@/shared/utils";
 
 interface SwimCardProps {
-  swim: Swim;
+  swim?: Swim;
+  isLoading?: boolean;
   className?: string;
   children?: React.ReactNode;
 }
@@ -12,6 +13,21 @@ interface SwimCardProps {
 export const SwimCard: React.FC<SwimCardProps> = (
   props
 ) => {
+  if (!props.swim || props.isLoading) {
+    return (
+      <div
+        className={clsx(
+          "flex flex-row w-full h-fit px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4", props.className
+        )}
+      >
+        <div className={"flex flex-col w-full gap-1"}>
+          <p className={"loader"}>{"Дистанция заплыва м, возраст"}</p>
+          <p className={"loader"}>{"Доп. информация про заплыв"}</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className={clsx(
@@ -19,9 +35,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
         props.className
       )}
     >
-      <div
-        className={"flex flex-col w-full"}
-      >
+      <div className={"flex flex-col w-full"}>
         <p className={"text-bodyM_medium text-base-95"}>
           {`${props.swim.distance}м, ${props.swim.ageCategory}`}
         </p>

@@ -3,8 +3,7 @@ import {useCompetitionStore} from "@/features/competition/get";
 import {getDistances} from "@/shared/lib";
 
 export const Info = () => {
-  const competition = useCompetitionStore((state) => state.competition);
-  const isLoading = useCompetitionStore((state) => state.isLoading);
+  const {competition, isLoading} = useCompetitionStore();
 
   useEffect(() => {
     if (competition) document.title = competition.name
@@ -20,13 +19,9 @@ export const Info = () => {
   )
 
   return (
-    <div
-      className={"flex flex-col w-full p-4 gap-6"}
-    >
+    <div className={"flex flex-col w-full p-4 gap-6"}>
       {/* DESCRIPTION */}
-      <div
-        className={"flex flex-col w-full gap-1"}
-      >
+      <div className={"flex flex-col w-full gap-1"}>
         <p className={"text-bodyM_medium text-base-95"}>Описание</p>
         <p className={"text-bodyM_regular text-base-95"}>Тут должно быть описание</p>
       </div>

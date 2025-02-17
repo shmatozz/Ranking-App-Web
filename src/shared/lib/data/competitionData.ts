@@ -9,3 +9,15 @@ export function getDistances(swims: Swim[]): string {
 
   return `${minDistance}-${maxDistance}`;
 }
+
+export function isPassed(competitionDate?: string): boolean {
+  if (!competitionDate) return false;
+
+  const competition = new Date(competitionDate);
+  const today = new Date();
+
+  competition.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return competition < today;
+}

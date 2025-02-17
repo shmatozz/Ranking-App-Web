@@ -3,7 +3,9 @@
 import React from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import clsx from "clsx";
-import {Info, Swims, Participants} from "./content";
+import {Info, Swims, Participants, Results, Live} from "./content";
+import {isPassed} from "@/shared/lib";
+import {useCompetitionStore} from "@/features/competition/get";
 
 type Tab = "info" | "swims" | "participants" | "live" | "results";
 const TABS: Tab[] = ["info", "swims", "participants", "live", "results"];
@@ -13,6 +15,7 @@ export const CompetitionContent = () => {
   const searchParams = useSearchParams();
   const rowTab = searchParams.get("tab");
   const activeTab: Tab = rowTab && TABS.includes(rowTab as Tab) ? rowTab as Tab : "info";
+  const competition = useCompetitionStore((state) => state.competition);
 
   const handleTabChange = (tab: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -24,11 +27,17 @@ export const CompetitionContent = () => {
 
   const Tab = ({ href, label }: { href: Tab; label: string; }) => (
     <div
-      className={"relative w-full h-full text-center content-center group select-none"}
-      onClick={() => handleTabChange(href)}
+      className={clsx(
+        "relative w-full h-full text-center content-center group select-none"
+      )}
+      onClick={(href == "results" && !isPassed(competition?.date)) || href == "live" ? undefined : () => handleTabChange(href)}
     >
-      {label}
-      <div className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isActive(href) ? "h-1 bg-blue-50" : "h-0 bg-base-10")}/>
+      <p className={clsx((href == "results" && !isPassed(competition?.date)) || href == "live" ? "text-base-50" : "text-base-95")}>{label}</p>
+      <div className={clsx(
+        "absolute bottom-0 w-full transition-all duration-200",
+        isActive(href) ? "h-1 bg-blue-50" : "h-0 bg-base-10",
+        (href == "results" && !isPassed(competition?.date)) || href == "live" ? "group-hover:h-0" : "group-hover:h-1"
+      )}/>
     </div>
   );
 
@@ -37,6 +46,8 @@ export const CompetitionContent = () => {
       case "info": return <Info/>
       case "swims": return <Swims/>
       case "participants": return <Participants/>
+      case "results": return <Results/>
+      case "live": return <Live/>
     }
   }
 
