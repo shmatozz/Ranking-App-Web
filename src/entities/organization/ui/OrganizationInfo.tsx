@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect} from "react";
+import React from "react";
 import clsx from "clsx";
 import {Button, ChangePasswordForm, Checkbox, InfoField} from "@/shared/ui";
 import {updateOrganizationPassword, useOrganizationStore} from "@/entities/organization";
@@ -13,18 +13,11 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   props
 ) => {
   const organization = useOrganizationStore((state) => state.organization);
-  const getOrganizationInfo = useOrganizationStore((state) => state.getOrganizationInfo);
   const updateOrganizationOpenStatus = useOrganizationStore((state) => state.updateOrganizationOpenStatus);
   const isLoading = useOrganizationStore((state) => state.isLoading);
   const hasError = useOrganizationStore((state) => state.hasError);
 
   const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
-
-  useEffect(() => {
-    if (!organization) {
-      getOrganizationInfo();
-    }
-  }, [getOrganizationInfo, organization])
 
   if (hasError) {
     return (
