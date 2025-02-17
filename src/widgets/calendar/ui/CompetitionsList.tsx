@@ -4,14 +4,13 @@ import React from "react";
 import {useCalendarStore} from "@/features/competition/filter";
 import {CompetitionCard} from "@/entities/competition";
 import {useRouter} from "next/navigation";
-import {Icon} from "@/shared/ui";
 import clsx from "clsx";
 
 export const CompetitionsList = () => {
   const router = useRouter();
   const {
     competitions, isLoading,
-    totalPages, page, setPage
+    totalPages, page, totalResults
   } = useCalendarStore();
 
   return (
@@ -33,25 +32,28 @@ export const CompetitionsList = () => {
       )}
 
       {competitions && competitions.length > 0 && totalPages && page != undefined && totalPages > 0 && (
-        <div className={"flex flex-row w-full justify-center items-center gap-4"}>
-          <div className={"cursor-pointer"} onClick={page == 0 ? undefined : () => setPage(Math.max(0, page - 1))}>
-            <Icon name={"chevronLeft"} size={20} color={page == 0 ? "#868686" : "black"}/>
+        <div className={"flex flex-row w-full justify-between items-center gap-4"}>
+          <div className={"flex flex-row justify-center items-center gap-4"}>
+            {Array.from({length: totalPages}, (_, index) => (
+              <p
+                key={index} onClick={() => router.push("?p=" + index, { scroll: false })}
+                className={clsx(
+                  "cursor-pointer select-none px-4 rounded-full",
+                  index == page ? "text-h5_bold text-base-95 bg-base-5" : "text-h5 text-base-70",
+                )}
+              >
+                {index + 1}
+              </p>
+            ))}
+
+            <div className={"flex flex-row cursor-pointer items-center text-bodyS_medium"}
+                 onClick={page == totalPages - 1 ? undefined : () => router.push("?p=" + Math.min(totalPages - 1, page + 1), { scroll: false })}>
+              <p className={`select-none ${page == totalPages - 1 ? "text-base-40" : "text-base-95"}`}>дальше</p>
+            </div>
           </div>
 
-          {Array.from({length: totalPages}, (_, index) => (
-            <p
-              key={index} onClick={() => setPage(index)}
-              className={clsx(
-                "cursor-pointer select-none",
-                index == page ? "text-h5 text-base-95" : "text-h5 text-base-50",
-              )}
-            >
-              {index + 1}
-            </p>
-          ))}
-
-          <div className={"cursor-pointer"} onClick={page == totalPages - 1 ? undefined : () => setPage(Math.min(totalPages - 1, page + 1))}>
-            <Icon name={"chevronRight"} size={20} color={page == totalPages - 1 ? "#868686" : "black"}/>
+          <div className={"text-bodyS_medium text-base-90"}>
+            {`Всего найдено: ${totalResults}`}
           </div>
         </div>
       )}
