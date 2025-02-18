@@ -3,7 +3,8 @@
 import React from "react";
 import clsx from "clsx";
 import {Button, ChangePasswordForm, Checkbox, InfoField} from "@/shared/ui";
-import {updateOrganizationPassword, useOrganizationStore} from "@/entities/organization";
+import {useOrganizationStore} from "@/entities/organization";
+import {updatePassword} from "@/shared/api/common";
 
 interface OrganizationInfoProps {
   className?: string;
@@ -50,7 +51,7 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
       )}
 
       {inputPasswordVisible && (
-        <ChangePasswordForm onSubmit={updateOrganizationPassword} onSuccess={() => setInputPasswordVisible(false)}/>
+        <ChangePasswordForm onSubmit={updatePassword} onSuccess={() => setInputPasswordVisible(false)}/>
       )}
     </div>
   )

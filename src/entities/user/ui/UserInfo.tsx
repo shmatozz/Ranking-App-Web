@@ -3,8 +3,9 @@
 import React from "react";
 import {Button, ChangePasswordForm, InfoField} from "@/shared/ui";
 import clsx from "clsx";
-import {updateUserPassword, useUserStore} from "@/entities/user";
+import {useUserStore} from "@/entities/user";
 import {formatDate} from "@/shared/utils";
+import {updatePassword} from "@/shared/api/common";
 
 interface UserInfoProps {
   className?: string;
@@ -49,7 +50,7 @@ export const UserInfo: React.FC<UserInfoProps> = (
       )}
 
       {inputPasswordVisible && (
-        <ChangePasswordForm onSubmit={updateUserPassword} onSuccess={() => setInputPasswordVisible(false)}/>
+        <ChangePasswordForm onSubmit={updatePassword} onSuccess={() => setInputPasswordVisible(false)}/>
       )}
     </div>
   )

@@ -3,7 +3,7 @@
 import {
   OrganizationShort, Organization,
   OrganizationShortResponse,OrganizationResponse,
-  updateOpenStatusParams, updatePasswordParams
+  updateOpenStatusParams
 } from "@/entities/organization";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
@@ -37,27 +37,6 @@ export async function getOrganizationShortInfo(): Promise<OrganizationShort> {
     });
 
   return response.data;
-}
-
-export async function updateOrganizationPassword(params: updatePasswordParams) {
-  console.log("Send POST update user password request")
-  const session = await auth();
-
-  try {
-    await axiosInstance.post(
-      "/organization/update-password",
-      params,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.user.token}`,
-        },
-      });
-  } catch (e) {
-    if (e instanceof AxiosError) {
-      console.error(e.response!.data.msg);
-      throw new Error(e.response!.data.msg);
-    }
-  }
 }
 
 export async function updateOrganizationOpenStatus(params: updateOpenStatusParams) {

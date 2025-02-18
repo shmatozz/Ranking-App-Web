@@ -1,13 +1,9 @@
 'use client';
 
 import { create } from "zustand/react";
-import {
-  fetchUserInfo,
-  updateUserPassword,
-  User,
-  updatePasswordParams,
-  updateUserEmail
-} from "@/entities/user";
+import {fetchUserInfo, User, updateUserEmail} from "@/entities/user";
+import {updatePasswordParams} from "@/shared/api/types";
+import {updatePassword} from "@/shared/api/common";
 
 type UserState = {
   user: User | undefined;
@@ -27,7 +23,6 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
   hasError: false,
 
   getUserInfo: () => {
-    console.log("123");
     set({ isLoading: true, hasError: false })
 
     fetchUserInfo()
@@ -40,7 +35,7 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
   },
 
   updatePassword: (params: updatePasswordParams) => {
-    updateUserPassword(params)
+    updatePassword(params)
       .then((response) => console.log(response))
   },
 
