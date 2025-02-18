@@ -5,7 +5,8 @@ type SwimCreateState = {
   distance: number;
   style: string;
   gender: "MALE" | "FEMALE";
-  ageCategory: string;
+  ageFrom: number;
+  ageTo: number;
   maxPoints: number;
   startTime: string;
   isFormValid: boolean;
@@ -15,7 +16,8 @@ type SwimCreateActions = {
   setDistance: (distance: number) => void;
   setStyle: (style: string) => void;
   setGender: (gender: "MALE" | "FEMALE") => void;
-  setAgeCategory: (ageCategory: string) => void;
+  setAgeFrom: (ageFrom: number) => void;
+  setAgeTo: (ageTo: number) => void;
   setMaxPoints: (maxPoints: number) => void;
   setStartTime: (startTime: string) => void;
   checkFormValid: () => void;
@@ -27,7 +29,7 @@ const initialState: SwimCreateState = {
   distance: 0,
   style: "",
   gender: "MALE",
-  ageCategory: "",
+  ageFrom: 0, ageTo: 0,
   maxPoints: 0,
   startTime: "",
   isFormValid: false,
@@ -40,7 +42,7 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
     set((state) => ({
       isFormValid:
         state.distance > 0 && state.style.trim() !== "" &&
-        state.ageCategory.trim() !== "" && state.maxPoints > 0 &&
+        state.ageFrom <= state.ageTo && state.ageTo > 0 && state.maxPoints > 0 &&
         state.startTime.trim() !== ""
     }));
   },
@@ -48,7 +50,8 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
   setDistance: (distance) => { set({ distance }); get().checkFormValid(); },
   setStyle: (style) =>  { set({ style }); get().checkFormValid(); },
   setGender: (gender) =>  { set({ gender }); get().checkFormValid(); },
-  setAgeCategory: (ageCategory) =>  { set({ ageCategory }); get().checkFormValid(); },
+  setAgeFrom: (ageFrom) =>  { set({ ageFrom }); get().checkFormValid(); },
+  setAgeTo: (ageTo) =>  { set({ ageTo }); get().checkFormValid(); },
   setMaxPoints: (maxPoints) =>  { set({ maxPoints }); get().checkFormValid(); },
   setStartTime: (startTime) =>  { set({ startTime }); get().checkFormValid(); },
 
@@ -57,7 +60,8 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
 
     return {
       distance: swimData.distance, style: swimData.style,
-      gender: swimData.gender, ageCategory: swimData.ageCategory,
+      gender: swimData.gender,
+      ageFrom: swimData.ageFrom, ageTo: swimData.ageTo,
       maxPoints: swimData.maxPoints,
       startTime: swimData.startTime,
     }

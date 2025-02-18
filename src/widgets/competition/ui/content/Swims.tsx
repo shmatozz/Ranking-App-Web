@@ -19,7 +19,7 @@ export const Swims = () => {
   return (
     <div className={"flex flex-col w-full p-4 gap-6"}>
       {competition.events.map((swim) => (
-        <SwimCard key={swim.competitionUUID + swim.ageCategory + swim.distance + swim.startTime} swim={swim}>
+        <SwimCard key={swim.competitionUUID! + swim.distance + swim.startTime} swim={swim}>
           <Button size={"S"} variant={"tertiary"} rightIcon={"link"}>Регистрация</Button>
         </SwimCard>
       ))}

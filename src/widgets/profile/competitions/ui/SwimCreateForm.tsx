@@ -23,8 +23,13 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
         />
 
         <TextInput
-          value={state.ageCategory} onChange={(e) => state.setAgeCategory(e.target.value)}
-          title={"Возрастная категория"} type={"text"}
+          value={state.ageFrom} onChange={(e) => state.setAgeFrom(Number(e.target.value))}
+          title={"Возраст (от)"} type={"text"}
+        />
+
+        <TextInput
+          value={state.ageTo} onChange={(e) => state.setAgeTo(Number(e.target.value))}
+          title={"Возраст (до)"} type={"text"}
         />
       </div>
 

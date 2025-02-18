@@ -2,6 +2,7 @@ import React from "react";
 import {Swim} from "@/entities/swim";
 import clsx from "clsx";
 import {getTime} from "@/shared/utils";
+import {getAgeRange} from "@/shared/lib";
 
 interface SwimCardProps {
   swim?: Swim;
@@ -37,7 +38,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
     >
       <div className={"flex flex-col w-full"}>
         <p className={"text-bodyM_medium text-base-95"}>
-          {`${props.swim.distance}м, ${props.swim.ageCategory}`}
+          {`${props.swim.distance}м, ${getAgeRange(props.swim)}`}
         </p>
 
         <p className={"text-bodyM_regular text-base-95"}>
