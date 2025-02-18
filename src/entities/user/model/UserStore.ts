@@ -4,6 +4,7 @@ import { create } from "zustand/react";
 import {fetchUserInfo, User, updateUserEmail} from "@/entities/user";
 import {updatePasswordParams} from "@/shared/api/types";
 import {updatePassword} from "@/shared/api/common";
+import {useCompetitionsStore} from "@/widgets/profile";
 
 type UserState = {
   user: User | undefined;
@@ -26,7 +27,10 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
     set({ isLoading: true, hasError: false })
 
     fetchUserInfo()
-      .then((user) => set({user: user}))
+      .then((user) => {
+        set({user: user})
+        useCompetitionsStore.setState({passed: [], upcoming: []})
+      })
       .catch((e) => {
         console.log(e);
         set({hasError: true})

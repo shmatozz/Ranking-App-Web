@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, ChangePasswordForm, InfoField} from "@/shared/ui";
 import clsx from "clsx";
 import {useUserStore} from "@/entities/user";
@@ -14,12 +14,17 @@ interface UserInfoProps {
 export const UserInfo: React.FC<UserInfoProps> = (
   props
 ) => {
-  const user = useUserStore((state) => state.user);
   const isLoading = useUserStore((state) => state.isLoading);
   const hasError = useUserStore((state) => state.hasError);
   //const updateEmail = useUserStore((state) => state.updateEmail);
 
+  const { user, getUserInfo } = useUserStore();
+
   const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
+
+  useEffect(() => {
+    if (!user) getUserInfo();
+  }, [getUserInfo, user]);
 
   if (hasError) {
     return (
