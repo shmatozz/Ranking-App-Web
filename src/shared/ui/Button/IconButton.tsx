@@ -11,6 +11,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean;
   icon: keyof typeof icons;
   onClick?: () => void;
+  isLoading?: boolean;
   className?: string;
 };
 
@@ -21,6 +22,7 @@ export const IconButton: React.FC<ButtonProps> = ({
   disabled = false,
   icon,
   onClick,
+  isLoading,
   className,
   ...props
 }) => {
@@ -61,7 +63,13 @@ export const IconButton: React.FC<ButtonProps> = ({
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
     >
-      <Icon name={icon} size={size == "M" ? 32 : 24}/>
+      {
+        isLoading ? (
+          <div className="h-6 w-6 border-4 border-transparent border-r-inherit rounded-full animate-spin"/>
+        ) : (
+          <Icon name={icon} size={size == "M" ? 32 : 24}/>
+        )
+      }
     </button>
   );
 };

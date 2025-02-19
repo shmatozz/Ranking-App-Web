@@ -1,1 +1,1 @@
-export * from "./password.types";
+export * from "./auth.types";

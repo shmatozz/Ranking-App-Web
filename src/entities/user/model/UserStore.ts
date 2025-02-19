@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from "zustand/react";
-import {fetchUserInfo, User, updateUserEmail} from "@/entities/user";
+import {fetchUserInfo, User} from "@/entities/user";
 import {updatePasswordParams} from "@/shared/api/types";
 import {updatePassword} from "@/shared/api/common";
 import {useCompetitionsStore} from "@/widgets/profile";
@@ -15,7 +15,6 @@ type UserState = {
 type UserActions = {
   getUserInfo: () => void;
   updatePassword: (params: updatePasswordParams) => void;
-  updateEmail: (email: string) => void;
 }
 
 export const useUserStore = create<UserState & UserActions>((set) => ({
@@ -42,9 +41,4 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
     updatePassword(params)
       .then((response) => console.log(response))
   },
-
-  updateEmail: (email: string) => {
-    updateUserEmail({email: email})
-      .then((response) => console.log(response))
-  }
 }))

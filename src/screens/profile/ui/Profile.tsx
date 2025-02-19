@@ -36,31 +36,31 @@ export const Profile: React.FC<ProfileProps> = ({
     router.push(`?${newParams.toString()}`, { scroll: false });
   };
 
-  const Content = ({ href }: { href: Subpages }) => {
-    switch (href) {
-      case "info": return <Info role={whoAmI?.organization ? "ORGANIZATION" : "USER"}/>
-      case "comps": return <Competitions role={whoAmI?.organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={whoAmI?.organization ? () => handleSubpageChange("comps-create") : undefined}/>
-      case "comps-create": {
-        if (whoAmI?.organization) return <CompetitionsCreate onCancel={() => handleSubpageChange("comps")} onSuccess={() => handleSubpageChange("comps")}/>
-        else return <Competitions role={whoAmI?.organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={whoAmI?.organization ? () => handleSubpageChange("comps-create") : undefined}/>
-      }
-      case "members": {
-        if (whoAmI?.organization) return <Members/>
-        else return <Results/>
-      }
-      case "results": {
-        if (!whoAmI?.organization) return <Results/>
-        else return <Members/>
-      }
-    }
-  }
-
   if (isLoading || !whoAmI) return (
     <div
       className="content-container justify-center">
       <div className="h-7 w-7 border-4 border-transparent border-r-inherit rounded-full animate-spin"/>
     </div>
   );
+
+  const Content = ({ href }: { href: Subpages }) => {
+    switch (href) {
+      case "info": return <Info role={whoAmI.organization ? "ORGANIZATION" : "USER"}/>
+      case "comps": return <Competitions role={whoAmI.organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={whoAmI.organization ? () => handleSubpageChange("comps-create") : undefined}/>
+      case "comps-create": {
+        if (whoAmI.organization) return <CompetitionsCreate onCancel={() => handleSubpageChange("comps")} onSuccess={() => handleSubpageChange("comps")}/>
+        else return <Competitions role={whoAmI.organization ? "ORGANIZATION" : "USER"} onCreateCompetitionClick={whoAmI.organization ? () => handleSubpageChange("comps-create") : undefined}/>
+      }
+      case "members": {
+        if (whoAmI.organization) return <Members/>
+        else return <Results/>
+      }
+      case "results": {
+        if (!whoAmI.organization) return <Results/>
+        else return <Members/>
+      }
+    }
+  }
 
   return (
     <div className={"content-container flex-col lg-md:flex-row gap-[50px] text-wrap"}>

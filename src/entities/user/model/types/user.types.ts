@@ -1,7 +1,6 @@
 import {Role} from "@/shared/lib";
 
 export type User = {
-  id: number;
   email: string;
   phone?: string;
   emergencyPhone?: string;

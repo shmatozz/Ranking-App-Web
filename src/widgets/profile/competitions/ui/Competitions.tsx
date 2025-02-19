@@ -25,14 +25,8 @@ export const Competitions: React.FC<CompetitionsProps> = ({
 
   useEffect(() => {
     if (role == "ORGANIZATION") {
-      if (!organization) {
-        console.log("!organization")
-        getOrganizationInfo();
-      }
-      else {
-        console.log("else")
-        getCompetitions(role);
-      }
+      if (!organization) getOrganizationInfo()
+      else getCompetitions(role);
     } else if (role == "USER") {
       if (!user) getUserInfo();
       else getCompetitions(role);
