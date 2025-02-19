@@ -54,6 +54,7 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
           </label>
 
           <div className={"flex flex-row w-full gap-8 justify-center"}>
+            <Radio checked={state.gender == "MIXED"} onClick={() => state.setGender("MIXED")} text={"Все"}/>
             <Radio checked={state.gender == "MALE"} onClick={() => state.setGender("MALE")} text={"Мужской"}/>
             <Radio checked={state.gender == "FEMALE"} onClick={() => state.setGender("FEMALE")} text={"Женский"}/>
           </div>

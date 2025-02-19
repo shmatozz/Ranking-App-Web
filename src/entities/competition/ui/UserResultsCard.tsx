@@ -42,7 +42,7 @@ export const UserResultsCard: React.FC<UserResultsCardProps> = (
             />
 
             <p className="text-bodyM_regular text-base-80 w-full relative z-10">
-              {`${swim.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, ${getAgeRange(swim.swim)}, ${swim.swim.maxPoints} очков, ${swim.swim.distance}м`}
+              {`${swim.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, ${getAgeRange(swim.swim.ageFrom, swim.swim.ageTo)}, ${swim.swim.maxPoints} очков, ${swim.swim.distance}м`}
             </p>
 
             <p className="text-bodyM_regular text-base-95 relative z-10">{swim.time}</p>

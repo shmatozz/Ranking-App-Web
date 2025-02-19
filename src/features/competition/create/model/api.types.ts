@@ -4,7 +4,9 @@ export type CreateCompetitionParams = {
   competitionName: string,
   competitionLocation: string,
   competitionDate: string,
+  description: string,
+  contactLink: string,
   maxParticipants: number,
   competitionType: string,
-  events: Swim[],
+  events: Omit<Swim, "eventUuid">[],
 }

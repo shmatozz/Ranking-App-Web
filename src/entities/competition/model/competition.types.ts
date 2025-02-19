@@ -6,6 +6,8 @@ export type Competition = {
   location: string;
   date: string;
   maxParticipants: number;
+  description: string;
+  contactLink: string,
   competitionType: string;
   competitionUuid: string;
 };

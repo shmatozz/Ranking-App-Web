@@ -4,7 +4,7 @@ import {Swim} from "@/entities/swim";
 type SwimCreateState = {
   distance: number;
   style: string;
-  gender: "MALE" | "FEMALE";
+  gender: "MALE" | "FEMALE" | "MIXED";
   ageFrom: number;
   ageTo: number;
   maxPoints: number;
@@ -15,20 +15,20 @@ type SwimCreateState = {
 type SwimCreateActions = {
   setDistance: (distance: number) => void;
   setStyle: (style: string) => void;
-  setGender: (gender: "MALE" | "FEMALE") => void;
+  setGender: (gender: "MALE" | "FEMALE" | "MIXED") => void;
   setAgeFrom: (ageFrom: number) => void;
   setAgeTo: (ageTo: number) => void;
   setMaxPoints: (maxPoints: number) => void;
   setStartTime: (startTime: string) => void;
   checkFormValid: () => void;
-  getSwim: () => Swim;
+  getSwim: () => Omit<Swim, "eventUuid">;
   clearForm: () => void;
 };
 
 const initialState: SwimCreateState = {
   distance: 0,
   style: "",
-  gender: "MALE",
+  gender: "MIXED",
   ageFrom: 0, ageTo: 0,
   maxPoints: 0,
   startTime: "",

@@ -5,7 +5,7 @@ import {getTime} from "@/shared/utils";
 import {getAgeRange} from "@/shared/lib";
 
 interface SwimCardProps {
-  swim?: Swim;
+  swim?: Swim | Omit<Swim, "eventUuid">;
   isLoading?: boolean;
   className?: string;
   children?: React.ReactNode;
@@ -32,13 +32,13 @@ export const SwimCard: React.FC<SwimCardProps> = (
   return (
     <div
       className={clsx(
-        "flex flex-row w-full h-fit px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4",
+        "flex flex-col w-full h-fit px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4 xs:flex-row",
         props.className
       )}
     >
       <div className={"flex flex-col w-full"}>
         <p className={"text-bodyM_medium text-base-95"}>
-          {`${props.swim.distance}м, ${getAgeRange(props.swim)}`}
+          {`${props.swim.distance}м, ${getAgeRange(props.swim.ageFrom, props.swim.ageTo)}`}
         </p>
 
         <p className={"text-bodyM_regular text-base-95"}>

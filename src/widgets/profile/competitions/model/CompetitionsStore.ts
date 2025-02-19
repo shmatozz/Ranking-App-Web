@@ -2,7 +2,7 @@
 
 import { create } from "zustand/react";
 import {Competition} from "@/entities/competition";
-import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
+import {getOrganizationInfo} from "@/entities/organization";
 import {Role, splitCompetitions} from "@/shared/lib";
 
 type CompetitionsState = {
@@ -22,28 +22,19 @@ export const useCompetitionsStore = create<CompetitionsState & CompetitionsActio
   isLoading: false,
   hasError: false,
 
-  getCompetitions: (role, update) => {
+  getCompetitions: (role) => {
     switch (role) {
       case "USER": {
         set({passed: [], upcoming: []});
         break;
       }
       case "ORGANIZATION": {
-        const org = useOrganizationStore.getState().organization;
-
-        if (org && org.competitions && !update) {
-          set(splitCompetitions(org.competitions));
-        } else {
-          set({ isLoading: true, hasError: false })
-
-          getOrganizationInfo()
-            .then((organization) => {
-              set({...splitCompetitions(organization.competitions ? organization.competitions : [])})
-            })
-            .catch(() => set({ hasError: true }))
-            .finally(() => set({ isLoading: false }))
-        }
-
+        getOrganizationInfo()
+          .then((organization) => {
+            set({...splitCompetitions(organization.competitions ? organization.competitions : [])})
+          })
+          .catch(() => set({ hasError: true }))
+          .finally(() => set({ isLoading: false }))
         break;
       }
       case "ADMIN": set({passed: [], upcoming: []});
