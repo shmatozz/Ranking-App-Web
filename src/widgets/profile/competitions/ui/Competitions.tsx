@@ -21,11 +21,11 @@ export const Competitions: React.FC<CompetitionsProps> = ({
     passed, upcoming, isLoading, getCompetitions
   } = useCompetitionsStore();
   const { organization, getOrganizationInfo } = useOrganizationStore();
-  const { user, getUserInfo } = useUserStore();
+  const { user, getUserShortInfo } = useUserStore();
 
   useEffect(() => {
     getCompetitions(role)
-  }, [getCompetitions, getOrganizationInfo, getUserInfo, organization, role, user]);
+  }, [getCompetitions, getOrganizationInfo, getUserShortInfo, organization, role, user]);
 
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>

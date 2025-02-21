@@ -24,13 +24,13 @@ export const UserInfo: React.FC<UserInfoProps> = (
   const hasChangeError = useChangeContactsStore(state => state.hasError);
   const isChangeLoading = useChangeContactsStore(state => state.isLoading);
 
-  const { user, getUserInfo } = useUserStore();
+  const { user, getUserShortInfo } = useUserStore();
 
   const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
 
   useEffect(() => {
-    if (!user) getUserInfo();
-  }, [getUserInfo, user]);
+    if (!user) getUserShortInfo();
+  }, [getUserShortInfo, user]);
 
   useEffect(() => {
     if (code === rightCode && !isChangeLoading) changeEmail("user");

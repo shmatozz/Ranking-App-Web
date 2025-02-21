@@ -1,9 +1,9 @@
 import { create } from "zustand/react";
-import {User} from "@/entities/user";
+import {UserShort} from "@/entities/user";
 import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
 
 type MembersState = {
-  members: User[] | undefined;
+  members: UserShort[] | undefined;
   isLoading: boolean;
   hasError: boolean;
 }

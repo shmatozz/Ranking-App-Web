@@ -1,15 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useCompetitionStore} from "@/features/competition/get";
 import {SwimCard} from "@/entities/swim/ui/SwimCard";
 import {Button, Modal} from "@/shared/ui";
 import {useSession} from "next-auth/react";
 import {SwimCreateForm} from "@/features/competition/create";
+import {useWhoAmIStore} from "@/features/who-am-i";
+import {useUserStore} from "@/entities/user";
 
 export const Swims = () => {
   const {
     competition, isLoading, isDeleting,
-    deleteSwim, addSwim, getSwimResultsTemplate
+    joinSwim, deleteSwim, addSwim, getSwimResultsTemplate
   } = useCompetitionStore();
+  const { whoAmI } = useWhoAmIStore();
+
+  const { user, getUserInfo } = useUserStore();
+
+  useEffect(() => {
+    if (!user) getUserInfo();
+  }, [getUserInfo, user]);
+
   const session = useSession();
 
   const [swimFormVisible, setSwimFormVisible] = React.useState(false);
@@ -32,7 +42,7 @@ export const Swims = () => {
 
         return (
           <SwimCard key={swim.eventUuid} swim={swim}>
-            {session.data?.user?.email == competition.organizationInfo.email ? (
+            {session.data && session.data.user.email == competition.organizationInfo.email && (
               <div className={"flex flex-row gap-1 w-fit"}>
                 <Button
                   size={"S"} variant={"tertiary"} palette={"blue"} className={"w-fit"}
@@ -58,8 +68,19 @@ export const Swims = () => {
                   </Modal>
                 )}
               </div>
-            ) : (
-              <Button size={"S"} variant={"tertiary"} rightIcon={"link"}>Регистрация</Button>
+            )}
+
+            {session.data && !(whoAmI && whoAmI.organization) && user?.userEvents != undefined && (
+              <Button
+                size={"S"} variant={"tertiary"}
+                rightIcon={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "submit" : "link"}
+                disabled={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) || swim.status != "CREATED"}
+                onClick={() => joinSwim(swim)}
+              >
+                <p className={"text-nowrap"}>
+                  {user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "Вы зарегестрированы" : "Регистрация"}
+                </p>
+              </Button>
             )}
           </SwimCard>
         )

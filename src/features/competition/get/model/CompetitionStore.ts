@@ -2,13 +2,16 @@
 
 import { create } from "zustand/react";
 import {CompetitionFull} from "@/entities/competition";
-import {deleteCompetitionByID, deleteSwimByID, getCompetitionByID} from "@/features/competition/get";
+import {deleteCompetitionByID, deleteSwimByID, getCompetitionByID, joinSwim} from "@/features/competition/get";
 import {generateResultsTemplate, uploadSwimResults} from "@/features/competition/get/api/SwimsResultsService";
 import {createSwimInCompetition} from "@/features/competition/create/api/CreateSwimService";
 import {useSwimCreateStore} from "@/features/competition/create";
+import {Swim} from "@/entities/swim";
+import {useUserStore} from "@/entities/user";
 
 type CompetitionState = {
   competition?: CompetitionFull;
+  isJoining: boolean;
   isDeleting: boolean;
   isLoading: boolean;
   hasError: boolean;
@@ -17,6 +20,7 @@ type CompetitionState = {
 
 type CompetitionActions = {
   getCompetition: (id: string) => void;
+  joinSwim: (swim: Swim) => void;
   getSwimResultsTemplate: (id: string) => void;
   uploadSwimResults: (swimId: string, file: File) => void;
   addSwim: (id: string) => void;
@@ -26,6 +30,7 @@ type CompetitionActions = {
 
 const initialState: CompetitionState = {
   competition: undefined,
+  isJoining: false,
   isDeleting: false,
   isLoading: false,
   hasError: false,
@@ -45,6 +50,21 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
         set({ hasError: true, errorMessage: e.message })
       })
       .finally(() => set({ isLoading: false }));
+  },
+
+  joinSwim: (swim: Swim) => {
+    set({ isJoining: true })
+
+    joinSwim({ uuid: swim.eventUuid })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error.message })
+        } else {
+          useUserStore.getState().getUserInfo();
+        }
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message }))
+      .finally(() => set({ isJoining: false }))
   },
 
   getSwimResultsTemplate: (id: string) => {
