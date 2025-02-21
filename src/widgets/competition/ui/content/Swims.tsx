@@ -3,12 +3,15 @@ import {useCompetitionStore} from "@/features/competition/get";
 import {SwimCard} from "@/entities/swim/ui/SwimCard";
 import {Button, Modal} from "@/shared/ui";
 import {useSession} from "next-auth/react";
+import {SwimCreateForm} from "@/features/competition/create";
 
 export const Swims = () => {
   const {
-    competition, isLoading, isDeleting, deleteSwim
+    competition, isLoading, isDeleting, deleteSwim, addSwim
   } = useCompetitionStore();
   const session = useSession();
+
+  const [swimFormVisible, setSwimFormVisible] = React.useState(false);
 
   if (!competition || isLoading) {
     return (
@@ -21,7 +24,7 @@ export const Swims = () => {
   }
 
   return (
-    <div className={"flex flex-col w-full p-4 gap-6"}>
+    <div className={"flex flex-col w-full p-4 gap-6 items-center"}>
       {competition.events.map((swim) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [isModalSwimOpen, setIsModalSwimOpen] = useState(false);
@@ -59,6 +62,22 @@ export const Swims = () => {
           </SwimCard>
         )
       })}
+
+      {swimFormVisible && (
+        <SwimCreateForm
+          onCancel={() => setSwimFormVisible(false)}
+          onSubmit={() => addSwim(competition.competitionUuid)}
+        />
+      )}
+
+      {!swimFormVisible && session.data?.user?.email === competition.organizationInfo.email && (
+        <Button
+          onClick={() => setSwimFormVisible(true)}
+          variant={"secondary"} size={"M"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
+        >
+          Добавить заплыв
+        </Button>
+      )}
     </div>
   )
 }

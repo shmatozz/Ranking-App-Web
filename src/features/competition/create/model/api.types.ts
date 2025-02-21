@@ -10,3 +10,8 @@ export type CreateCompetitionParams = {
   competitionType: string,
   events: Omit<Swim, "eventUuid">[],
 }
+
+export type CreateSwimInCompetitionParams = Omit<Swim, "eventUuid"> & {
+  competitionUUID: string,
+}
+

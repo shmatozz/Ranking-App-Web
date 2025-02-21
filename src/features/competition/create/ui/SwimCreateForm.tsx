@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Radio, TextInput} from "@/shared/ui";
-import {useSwimCreateStore} from "@/widgets/profile";
+import {useSwimCreateStore} from "@/features/competition/create";
 
 interface SwimCreateFormProps {
   onCancel: () => void;

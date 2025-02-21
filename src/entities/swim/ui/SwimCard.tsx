@@ -42,7 +42,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
         </p>
 
         <p className={"text-bodyM_regular text-base-95"}>
-          {`${props.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, макс. очков: ${props.swim.maxPoints}, ${getTime(new Date(props.swim.startTime))}`}
+          {`${props.swim.gender == "MALE" ? "Мужчины" : (props.swim.gender == "FEMALE" ? "Женщины" : "Общий")}, макс. очков: ${props.swim.maxPoints}, ${getTime(new Date(props.swim.startTime))}`}
         </p>
       </div>
 

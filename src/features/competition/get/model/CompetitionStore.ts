@@ -4,6 +4,8 @@ import { create } from "zustand/react";
 import {CompetitionFull} from "@/entities/competition";
 import {deleteCompetitionByID, deleteSwimByID, getCompetitionByID} from "@/features/competition/get";
 import {generateResultsTemplate} from "@/features/competition/get/api/SwimsResultsService";
+import {createSwimInCompetition} from "@/features/competition/create/api/CreateSwimService";
+import {useSwimCreateStore} from "@/features/competition/create";
 
 type CompetitionState = {
   competition?: CompetitionFull;
@@ -16,6 +18,7 @@ type CompetitionState = {
 type CompetitionActions = {
   getCompetition: (id: string) => void;
   getSwimResultsTemplate: (id: string) => void;
+  addSwim: (id: string) => void;
   deleteSwim: (id: string) => void;
   deleteCompetition: (id: string, callback?: () => void) => void;
 }
@@ -27,7 +30,7 @@ const initialState: CompetitionState = {
   hasError: false,
 }
 
-export const useCompetitionStore = create<CompetitionState & CompetitionActions>((set) => ({
+export const useCompetitionStore = create<CompetitionState & CompetitionActions>((set, get) => ({
   ...initialState,
 
   getCompetition: (id: string) => {
@@ -60,6 +63,23 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
           window.URL.revokeObjectURL(url);
         }
       })
+  },
+
+  addSwim: (id: string) => {
+    set({ isLoading: true, hasError: false })
+
+    const swim = useSwimCreateStore.getState().getSwim();
+    swim.startTime = `${get().competition!.date}T${swim.startTime}Z`;
+
+    createSwimInCompetition({ ...swim, competitionUUID: id })
+      .then((response) => {
+        if (response && response.error) {
+          console.log(response.error);
+        } else {
+          get().getCompetition(id)
+        }
+      })
+      .catch(() => set({ hasError: true, errorMessage: "Что-то пошло не так", isLoading: false }))
   },
 
   deleteSwim: (id: string) => {
