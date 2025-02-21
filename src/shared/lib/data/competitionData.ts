@@ -1,4 +1,5 @@
 import {Swim} from "@/entities/swim";
+import {DropdownItem} from "@/shared/ui/Input/Dropdown";
 
 export function getDistances(swims: Swim[]): string {
   if (swims.length === 0) return "-";
@@ -23,5 +24,16 @@ export function isPassed(competitionDate?: string): boolean {
   competition.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
 
-  return competition < today;
+  return competition <= today;
+}
+
+export function getSwimsDropDown(swims: Swim[]): DropdownItem[] {
+  const shortInfo: DropdownItem[] = Array(swims.length).fill({});
+
+  swims.forEach((swim, index) => {
+    shortInfo[index].id = swim.eventUuid;
+    shortInfo[index].name = `${swim.distance}м, ${getAgeRange(swim.ageFrom, swim.ageTo)}, ${swim.maxPoints} очков`;
+  })
+
+  return shortInfo;
 }

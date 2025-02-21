@@ -7,7 +7,8 @@ import {SwimCreateForm} from "@/features/competition/create";
 
 export const Swims = () => {
   const {
-    competition, isLoading, isDeleting, deleteSwim, addSwim
+    competition, isLoading, isDeleting,
+    deleteSwim, addSwim, getSwimResultsTemplate
   } = useCompetitionStore();
   const session = useSession();
 
@@ -35,6 +36,7 @@ export const Swims = () => {
               <div className={"flex flex-row gap-1 w-fit"}>
                 <Button
                   size={"S"} variant={"tertiary"} palette={"blue"} className={"w-fit"}
+                  onClick={() => getSwimResultsTemplate(swim.eventUuid)}
                 >
                   <p className={"text-nowrap"}>Шаблон результатов</p>
                 </Button>

@@ -3,7 +3,7 @@
 import { create } from "zustand/react";
 import {CompetitionFull} from "@/entities/competition";
 import {deleteCompetitionByID, deleteSwimByID, getCompetitionByID} from "@/features/competition/get";
-import {generateResultsTemplate} from "@/features/competition/get/api/SwimsResultsService";
+import {generateResultsTemplate, uploadSwimResults} from "@/features/competition/get/api/SwimsResultsService";
 import {createSwimInCompetition} from "@/features/competition/create/api/CreateSwimService";
 import {useSwimCreateStore} from "@/features/competition/create";
 
@@ -18,6 +18,7 @@ type CompetitionState = {
 type CompetitionActions = {
   getCompetition: (id: string) => void;
   getSwimResultsTemplate: (id: string) => void;
+  uploadSwimResults: (swimId: string, file: File) => void;
   addSwim: (id: string) => void;
   deleteSwim: (id: string) => void;
   deleteCompetition: (id: string, callback?: () => void) => void;
@@ -52,17 +53,22 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
         if (response) {
           console.log(response)
 
-          const url = window.URL.createObjectURL(new Blob([response]));
           const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download",  "template.xlsx");
+          link.href = window.URL.createObjectURL(response.blob);
+          link.setAttribute("download",  response.filename);
 
           document.body.appendChild(link);
           link.click();
+
           document.body.removeChild(link);
-          window.URL.revokeObjectURL(url);
+          URL.revokeObjectURL(link.href);
         }
       })
+  },
+
+  uploadSwimResults: (swimId: string, file: File) => {
+    uploadSwimResults({ uuid: swimId, file: file})
+      .then(() => console.log(123))
   },
 
   addSwim: (id: string) => {
