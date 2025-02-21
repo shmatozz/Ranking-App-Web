@@ -28,12 +28,18 @@ export function isPassed(competitionDate?: string): boolean {
 }
 
 export function getSwimsDropDown(swims: Swim[]): DropdownItem[] {
-  const shortInfo: DropdownItem[] = Array(swims.length).fill({});
+  const shortInfo: DropdownItem[] = [];
 
-  swims.forEach((swim, index) => {
-    shortInfo[index].id = swim.eventUuid;
-    shortInfo[index].name = `${swim.distance}м, ${getAgeRange(swim.ageFrom, swim.ageTo)}, ${swim.maxPoints} очков`;
+  swims.forEach((swim) => {
+    shortInfo.push({
+      id: swim.eventUuid,
+      name: getSwimShort(swim)
+    })
   })
 
   return shortInfo;
+}
+
+export function getSwimShort(swim: Swim): string {
+  return `${swim.distance}м, ${getAgeRange(swim.ageFrom, swim.ageTo)}, ${swim.maxPoints} очков`;
 }

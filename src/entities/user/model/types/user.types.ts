@@ -18,3 +18,10 @@ export type User = UserShort & {
   userEvents?: Swim[],
   userOrganizations?: Omit<OrganizationShort, "id" & "role">[],
 }
+
+export type Participant = UserShort & {
+  time?: string,
+  points?: number,
+  place?: number,
+  registrationDate: string
+}
