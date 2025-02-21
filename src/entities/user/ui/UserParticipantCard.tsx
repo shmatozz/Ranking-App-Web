@@ -1,8 +1,8 @@
 import React from "react";
-import {User} from "@/entities/user";
+import {UserShort} from "@/entities/user";
 
 interface UserParticipantCardProps {
-  user?: User;
+  user?: UserShort;
   isLoading?: boolean;
 }
 

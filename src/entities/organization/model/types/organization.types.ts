@@ -1,4 +1,4 @@
-import {User} from "@/entities/user";
+import {UserShort} from "@/entities/user";
 import {Competition} from "@/entities/competition";
 import {Role} from "@/shared/lib";
 
@@ -11,6 +11,6 @@ export type OrganizationShort = {
 }
 
 export type Organization = OrganizationShort & {
-  users?: User[],
+  users?: UserShort[],
   competitions?: Competition[],
 }

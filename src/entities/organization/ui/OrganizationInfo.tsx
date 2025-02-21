@@ -1,9 +1,11 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import clsx from "clsx";
-import {Button, ChangePasswordForm, Checkbox, InfoField} from "@/shared/ui";
-import {updateOrganizationPassword, useOrganizationStore} from "@/entities/organization";
+import {Button, ChangePasswordForm, Checkbox, CodeInput, InfoField} from "@/shared/ui";
+import {useOrganizationStore} from "@/entities/organization";
+import {updatePassword} from "@/shared/api/common";
+import {useChangeContactsStore} from "@/features/change-contacts";
 
 interface OrganizationInfoProps {
   className?: string;
@@ -12,12 +14,27 @@ interface OrganizationInfoProps {
 export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   props
 ) => {
-  const organization = useOrganizationStore((state) => state.organization);
   const updateOrganizationOpenStatus = useOrganizationStore((state) => state.updateOrganizationOpenStatus);
   const isLoading = useOrganizationStore((state) => state.isLoading);
   const hasError = useOrganizationStore((state) => state.hasError);
 
+  const { organization, getOrganizationInfo } = useOrganizationStore();
+  const {
+    isCodeSent, changeEmailRequested, errorMessage,
+    code, setCode, rightCode, changeEmail
+  } = useChangeContactsStore();
+  const hasChangeError = useChangeContactsStore(state => state.hasError);
+  const isChangeLoading = useChangeContactsStore(state => state.isLoading);
+
   const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
+
+  useEffect(() => {
+    if (!organization) getOrganizationInfo();
+  }, [getOrganizationInfo, organization]);
+
+  useEffect(() => {
+    if (code === rightCode && !isChangeLoading) changeEmail("organization");
+  }, [rightCode, code, changeEmail, isChangeLoading]);
 
   if (hasError) {
     return (
@@ -30,7 +47,17 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   return (
     <div className={clsx("flex flex-col w-full max-w-[500px] gap-4 items-center", props.className)}>
       <InfoField title={"Название организации"} value={organization?.name} isLoading={isLoading}/>
-      <InfoField title={"Email"} value={organization?.email} isLoading={isLoading} editable/>
+      <InfoField
+        title={"Email"} value={organization?.email} isLoading={isLoading}
+        editable onSubmit={changeEmailRequested} submitLoading={isChangeLoading}
+      />
+
+      {(isCodeSent || hasChangeError) && (
+        <div>
+          <CodeInput code={code} setCode={setCode}/>
+          {hasChangeError && <p className="text-red-50 text-center">{errorMessage}</p>}
+        </div>
+      )}
 
       {!isLoading && organization && (
         <Checkbox
@@ -50,7 +77,7 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
       )}
 
       {inputPasswordVisible && (
-        <ChangePasswordForm onSubmit={updateOrganizationPassword} onSuccess={() => setInputPasswordVisible(false)}/>
+        <ChangePasswordForm onSubmit={updatePassword} onSuccess={() => setInputPasswordVisible(false)}/>
       )}
     </div>
   )

@@ -1,6 +1,7 @@
 import React from "react";
 import {CompetitionResult} from "@/entities/competition";
 import clsx from "clsx";
+import {getAgeRange} from "@/shared/lib";
 
 interface UserResultsCardProps {
   result: CompetitionResult,
@@ -35,13 +36,13 @@ export const UserResultsCard: React.FC<UserResultsCardProps> = (
                   "from-gold to-transparent" :
                   (swim.place == 2 ?
                     "from-silver to-transparent" :
-                      (swim. place == 3 ? "from-bronze to-transparent" : "from-nonPrize to-transparent")
+                      (swim.place == 3 ? "from-bronze to-transparent" : "from-nonPrize to-transparent")
                   ),
               )}
             />
 
             <p className="text-bodyM_regular text-base-80 w-full relative z-10">
-              {`${swim.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, ${swim.swim.ageCategory}, ${swim.swim.maxPoints} очков, ${swim.swim.distance}м`}
+              {`${swim.swim.gender == "MALE" ? "Мужчины" : "Женщины"}, ${getAgeRange(swim.swim.ageFrom, swim.swim.ageTo)}, ${swim.swim.maxPoints} очков, ${swim.swim.distance}м`}
             </p>
 
             <p className="text-bodyM_regular text-base-95 relative z-10">{swim.time}</p>

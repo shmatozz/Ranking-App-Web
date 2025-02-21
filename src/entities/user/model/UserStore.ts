@@ -1,13 +1,11 @@
 'use client';
 
 import { create } from "zustand/react";
-import {
-  fetchUserInfo,
-  updateUserPassword,
-  User,
-  updatePasswordParams,
-  updateUserEmail
-} from "@/entities/user";
+import {getUserInfo, getUserShortInfo, User} from "@/entities/user";
+import {updatePasswordParams} from "@/shared/api/types";
+import {updatePassword} from "@/shared/api/common";
+import {useCompetitionsStore} from "@/widgets/profile";
+import {splitCompetitions} from "@/shared/lib";
 
 type UserState = {
   user: User | undefined;
@@ -16,9 +14,9 @@ type UserState = {
 }
 
 type UserActions = {
+  getUserShortInfo: () => void;
   getUserInfo: () => void;
   updatePassword: (params: updatePasswordParams) => void;
-  updateEmail: (email: string) => void;
 }
 
 export const useUserStore = create<UserState & UserActions>((set) => ({
@@ -26,12 +24,31 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
   isLoading: false,
   hasError: false,
 
-  getUserInfo: () => {
-    console.log("123");
+  getUserShortInfo: () => {
     set({ isLoading: true, hasError: false })
 
-    fetchUserInfo()
-      .then((user) => set({user: user}))
+    getUserShortInfo()
+      .then((user) => {
+        set({user: user})
+      })
+      .catch(() => {
+        set({hasError: true})
+      })
+      .finally(() => set({ isLoading: false }))
+  },
+
+  getUserInfo: () => {
+    set({ isLoading: true, hasError: false })
+
+    getUserInfo()
+      .then((response) => {
+        if (response && response.data) {
+          set({ user: response.data })
+          useCompetitionsStore.setState({ ...splitCompetitions(response.data.userCompetitions ? response.data.userCompetitions : [])})
+        } else if (response && response.error) {
+          set({ hasError: true })
+        }
+      })
       .catch((e) => {
         console.log(e);
         set({hasError: true})
@@ -40,12 +57,7 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
   },
 
   updatePassword: (params: updatePasswordParams) => {
-    updateUserPassword(params)
+    updatePassword(params)
       .then((response) => console.log(response))
   },
-
-  updateEmail: (email: string) => {
-    updateUserEmail({email: email})
-      .then((response) => console.log(response))
-  }
 }))

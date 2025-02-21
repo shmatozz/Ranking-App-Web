@@ -1,10 +1,12 @@
 'use client';
 
-import React from "react";
-import {Button, ChangePasswordForm, InfoField} from "@/shared/ui";
+import React, {useEffect} from "react";
+import {Button, ChangePasswordForm, CodeInput, InfoField} from "@/shared/ui";
 import clsx from "clsx";
-import {updateUserPassword, useUserStore} from "@/entities/user";
+import {useUserStore} from "@/entities/user";
 import {formatDate} from "@/shared/utils";
+import {updatePassword} from "@/shared/api/common";
+import {useChangeContactsStore} from "@/features/change-contacts";
 
 interface UserInfoProps {
   className?: string;
@@ -13,12 +15,26 @@ interface UserInfoProps {
 export const UserInfo: React.FC<UserInfoProps> = (
   props
 ) => {
-  const user = useUserStore((state) => state.user);
   const isLoading = useUserStore((state) => state.isLoading);
   const hasError = useUserStore((state) => state.hasError);
-  //const updateEmail = useUserStore((state) => state.updateEmail);
+  const {
+    isCodeSent, changeEmailRequested, errorMessage,
+    code, setCode, rightCode, changeEmail
+  } = useChangeContactsStore();
+  const hasChangeError = useChangeContactsStore(state => state.hasError);
+  const isChangeLoading = useChangeContactsStore(state => state.isLoading);
+
+  const { user, getUserShortInfo } = useUserStore();
 
   const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
+
+  useEffect(() => {
+    if (!user) getUserShortInfo();
+  }, [getUserShortInfo, user]);
+
+  useEffect(() => {
+    if (code === rightCode && !isChangeLoading) changeEmail("user");
+  }, [rightCode, code, changeEmail, isChangeLoading]);
 
   if (hasError) {
     return (
@@ -34,7 +50,19 @@ export const UserInfo: React.FC<UserInfoProps> = (
       <InfoField title={"Имя"} value={user?.firstName} isLoading={isLoading}/>
       <InfoField title={"Отчество"} value={user?.middleName} isLoading={isLoading}/>
       <InfoField title={"Дата рождения"} value={formatDate(user?.birthDate)} isLoading={isLoading}/>
-      <InfoField title={"Email"} value={user?.email} isLoading={isLoading} type={"email"} editable/>
+
+      <InfoField
+        title={"Email"} value={user?.email} isLoading={isLoading} type={"email"}
+        editable onSubmit={changeEmailRequested} submitLoading={isChangeLoading}
+      />
+
+      {(isCodeSent || hasChangeError) && (
+        <div>
+          <CodeInput code={code} setCode={setCode}/>
+          {hasChangeError && <p className="text-red-50 text-center">{errorMessage}</p>}
+        </div>
+      )}
+
       {/*<InfoField title={"Номер телефона"} value={user?.phone} isLoading={isLoading} editable/>*/}
       <InfoField title={"Экстренный телефон"} value={user?.emergencyPhone} isLoading={isLoading}/>
       <InfoField title={"Пол"} value={user?.gender == "MALE" ? "Мужской" : (user?.gender == "FEMALE" ? "Женский" : undefined)} isLoading={isLoading}/>
@@ -49,7 +77,7 @@ export const UserInfo: React.FC<UserInfoProps> = (
       )}
 
       {inputPasswordVisible && (
-        <ChangePasswordForm onSubmit={updateUserPassword} onSuccess={() => setInputPasswordVisible(false)}/>
+        <ChangePasswordForm onSubmit={updatePassword} onSuccess={() => setInputPasswordVisible(false)}/>
       )}
     </div>
   )

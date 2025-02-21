@@ -2,10 +2,17 @@
 
 import { create } from "zustand/react";
 import {CompetitionFull} from "@/entities/competition";
-import {getCompetitionByID} from "@/features/competition/get";
+import {deleteCompetitionByID, deleteSwimByID, getCompetitionByID, joinSwim} from "@/features/competition/get";
+import {generateResultsTemplate, uploadSwimResults} from "@/features/competition/get/api/SwimsResultsService";
+import {createSwimInCompetition} from "@/features/competition/create/api/CreateSwimService";
+import {useSwimCreateStore} from "@/features/competition/create";
+import {Swim} from "@/entities/swim";
+import {useUserStore} from "@/entities/user";
 
 type CompetitionState = {
   competition?: CompetitionFull;
+  isJoining: boolean;
+  isDeleting: boolean;
   isLoading: boolean;
   hasError: boolean;
   errorMessage?: string;
@@ -13,15 +20,23 @@ type CompetitionState = {
 
 type CompetitionActions = {
   getCompetition: (id: string) => void;
+  joinSwim: (swim: Swim) => void;
+  getSwimResultsTemplate: (id: string) => void;
+  uploadSwimResults: (swimId: string, file: File) => void;
+  addSwim: (id: string) => void;
+  deleteSwim: (id: string) => void;
+  deleteCompetition: (id: string, callback?: () => void) => void;
 }
 
 const initialState: CompetitionState = {
   competition: undefined,
+  isJoining: false,
+  isDeleting: false,
   isLoading: false,
   hasError: false,
 }
 
-export const useCompetitionStore = create<CompetitionState & CompetitionActions>((set) => ({
+export const useCompetitionStore = create<CompetitionState & CompetitionActions>((set, get) => ({
   ...initialState,
 
   getCompetition: (id: string) => {
@@ -35,5 +50,95 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
         set({ hasError: true, errorMessage: e.message })
       })
       .finally(() => set({ isLoading: false }));
+  },
+
+  joinSwim: (swim: Swim) => {
+    set({ isJoining: true })
+
+    joinSwim({ uuid: swim.eventUuid })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error.message })
+        } else {
+          useUserStore.getState().getUserInfo();
+        }
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message }))
+      .finally(() => set({ isJoining: false }))
+  },
+
+  getSwimResultsTemplate: (id: string) => {
+    generateResultsTemplate({ uuid: id })
+      .then((response) => {
+        if (response) {
+          console.log(response)
+
+          const link = document.createElement("a");
+          link.href = window.URL.createObjectURL(response.blob);
+          link.setAttribute("download",  response.filename);
+
+          document.body.appendChild(link);
+          link.click();
+
+          document.body.removeChild(link);
+          URL.revokeObjectURL(link.href);
+        }
+      })
+  },
+
+  uploadSwimResults: (swimId: string, file: File) => {
+    uploadSwimResults({ uuid: swimId, file: file})
+      .then(() => console.log(123))
+  },
+
+  addSwim: (id: string) => {
+    set({ isLoading: true, hasError: false })
+
+    const swim = useSwimCreateStore.getState().getSwim();
+    swim.startTime = `${get().competition!.date}T${swim.startTime}Z`;
+
+    createSwimInCompetition({ ...swim, competitionUUID: id })
+      .then((response) => {
+        if (response && response.error) {
+          console.log(response.error);
+        } else {
+          get().getCompetition(id)
+        }
+      })
+      .catch(() => set({ hasError: true, errorMessage: "Что-то пошло не так", isLoading: false }))
+  },
+
+  deleteSwim: (id: string) => {
+    set({ isDeleting: true, hasError: false })
+
+    deleteSwimByID({ uuid: id })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          set((state) => ({ competition: {...state.competition, events: state.competition!.events.filter(swim => swim.eventUuid != id)} as CompetitionFull }))
+        }
+      })
+      .catch((e) => {
+        set({ hasError: true, errorMessage: e.message })
+      })
+      .finally(() => set({ isDeleting: false }));
+  },
+
+  deleteCompetition: (id: string, callback) => {
+    set({ isDeleting: true, hasError: false })
+
+    deleteCompetitionByID({ uuid: id })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          if (callback) callback();
+        }
+      })
+      .catch((e) => {
+        set({ hasError: true, errorMessage: e.message })
+      })
+      .finally(() => set({ isDeleting: false }));
   }
 }))

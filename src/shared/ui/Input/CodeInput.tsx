@@ -47,10 +47,6 @@ export const CodeInput: React.FC<CodeInputProps> = ({
 
   return (
     <div className="flex flex-col w-full bg-base-0 gap-6" onClick={handleContainerClick} onPaste={handlePaste}>
-      <p className="text-h5 text-base-95 text-center">
-        Введите код, отправленный на указанную почту
-      </p>
-
       <div className="flex flex-row gap-4 py-2 items-center justify-center">
         {Array(6)
           .fill("")

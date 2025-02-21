@@ -7,16 +7,17 @@ import {UserParticipantCard} from "@/entities/user";
 import {SendInviteForm} from "@/features/organization-join";
 import {useOrganizationStore} from "@/entities/organization";
 
-export const Members: React.FC = ({
-}) => {
+export const Members= () => {
   const { members, getMembers, isLoading} = useMembersStore();
-  const isOrgLoading = useOrganizationStore((state) => state.isLoading);
+
+  const { organization, getOrganizationInfo } = useOrganizationStore();
 
   const [inputUserEmailVisible, setInputUserEmailVisible] = React.useState(false);
 
   useEffect(() => {
-    if (!members && !isLoading && !isOrgLoading) getMembers();
-  }, [getMembers, isLoading, isOrgLoading, members]);
+    if (!organization) getOrganizationInfo()
+    else getMembers();
+  }, [organization, getOrganizationInfo, getMembers]);
 
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
@@ -62,7 +63,7 @@ export const Members: React.FC = ({
         <div className={"h-[2px] w-full bg-base-5"}/>
 
         {!isLoading && members && members.map((member) => (
-          <UserParticipantCard key={member.id} user={member}/>
+          <UserParticipantCard key={member.email} user={member}/>
         ))}
 
         {!isLoading && members && members.length == 0 && (

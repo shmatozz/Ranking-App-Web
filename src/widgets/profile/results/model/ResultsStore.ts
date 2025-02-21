@@ -19,24 +19,24 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
         name: "Название соревнования",
         swimsResults: [{
           swim: {
-            distance: 100, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "123", maxPoints: 500,
+            distance: 100, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "123", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 1,
           time: "00:21.32",
         }, {
           swim: {
-            distance: 300, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "123", maxPoints: 500,
+            distance: 300, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "123", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 2,
           time: "00:32.22",
         }, {
           swim: {
-            distance: 500, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "123", maxPoints: 500,
+            distance: 500, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "123", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 5,
@@ -47,24 +47,24 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
         name: "Название соревнования",
         swimsResults: [{
           swim: {
-            distance: 100, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "1231", maxPoints: 500,
+            distance: 100, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "1231", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 1,
           time: "00:21.32",
         }, {
           swim: {
-            distance: 300, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "1231", maxPoints: 500,
+            distance: 300, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "1231", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 4,
           time: "00:32.22",
         }, {
           swim: {
-            distance: 500, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "1231", maxPoints: 500,
+            distance: 500, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "1231", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 1,
@@ -75,24 +75,24 @@ export const useResultsStore = create<ResultsState & ResultsActions>((set) => ({
         name: "Название соревнования",
         swimsResults: [{
           swim: {
-            distance: 100, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "1232", maxPoints: 500,
+            distance: 100, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "1232", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 2,
           time: "00:21.32",
         }, {
           swim: {
-            distance: 300, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "1232", maxPoints: 500,
+            distance: 300, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "1232", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 1,
           time: "00:32.22",
         }, {
           swim: {
-            distance: 500, style: "sqwds", gender: "MALE", ageCategory: "18-21",
-            competitionUUID: "1232", maxPoints: 500,
+            distance: 500, style: "sqwds", gender: "MALE", ageFrom: 18, ageTo: 21,
+            eventUuid: "1232", maxPoints: 500,
             startTime: "2025-02-08"
           },
           place: 3,

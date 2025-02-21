@@ -1,7 +1,8 @@
-import {Role} from "@/shared/lib";
+import {Competition} from "@/entities/competition";
+import {Swim} from "@/entities/swim";
+import {OrganizationShort} from "@/entities/organization";
 
-export type User = {
-  id: number;
+export type UserShort = {
   email: string;
   phone?: string;
   emergencyPhone?: string;
@@ -10,5 +11,17 @@ export type User = {
   firstName: string;
   lastName: string;
   middleName?: string;
-  role: Role;
+}
+
+export type User = UserShort & {
+  userCompetitions?: Competition[],
+  userEvents?: Swim[],
+  userOrganizations?: Omit<OrganizationShort, "id" & "role">[],
+}
+
+export type Participant = UserShort & {
+  time?: string,
+  points?: number,
+  place?: number,
+  registrationDate: string
 }

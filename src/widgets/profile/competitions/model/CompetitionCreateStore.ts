@@ -1,16 +1,15 @@
 import { create } from "zustand/react";
-import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
+import {useOrganizationStore} from "@/entities/organization";
 import {Swim} from "@/entities/swim";
-import {useCompetitionsStore, useSwimCreateStore} from "@/widgets/profile";
+import {useSwimCreateStore} from "@/features/competition/create";
 import {createCompetition} from "@/features/competition/create";
-import {splitCompetitions} from "@/shared/lib";
 
 type CompetitionsCreateState = {
   name: string;
   location: string; date: string; maxParticipants: number;
   description: string;
   contact: string; contactFromProfile: boolean;
-  swims: Swim[];
+  swims: Omit<Swim, "eventUuid">[];
   isLoading: boolean;
   hasError: boolean;
   isFormValid: boolean;
@@ -26,7 +25,7 @@ type CompetitionsCreateActions = {
   setContact: (newContact: string) => void;
   checkFormValid: () => void;
   addSwim: () => void;
-  deleteSwim: (swimToDelete: Swim) => void;
+  deleteSwim: (swimToDelete: Swim | Omit<Swim, "eventUuid">) => void;
   createCompetition: (onSuccess: () => void) => void;
   clearForm: () => void;
 }
@@ -69,6 +68,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
     } else {
       set({ contactFromProfile: false });
     }
+    get().checkFormValid();
   },
 
   setContact: (newContact: string) => {
@@ -96,17 +96,15 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       competitionName: competition.name,
       competitionLocation: competition.location,
       competitionDate: competition.date,
+      description: competition.description,
+      contactLink: competition.contact,
       maxParticipants: competition.maxParticipants,
       competitionType: "соревнование",
       events: competition.swims
     })
       .then(() => {
-        getOrganizationInfo()
-          .then((org) => {
-            useCompetitionsStore.setState({ ...splitCompetitions(org.competitions ? org.competitions : [])  });
-            onSuccess();
-            get().clearForm();
-          })
+        onSuccess();
+        get().clearForm();
       })
       .catch((e) => console.log(e.message));
   },

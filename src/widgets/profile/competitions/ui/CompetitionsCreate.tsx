@@ -1,7 +1,8 @@
 import React from "react";
 import {Button, Checkbox, FileInput, IconButton, TextInput} from "@/shared/ui";
-import {SwimCreateForm, useCompetitionsCreateStore} from "@/widgets/profile";
+import {useCompetitionsCreateStore} from "@/widgets/profile";
 import {SwimCard} from "@/entities/swim/ui/SwimCard";
+import {SwimCreateForm} from "@/features/competition/create";
 
 interface CompetitionsCreateProps {
   onCancel: () => void;

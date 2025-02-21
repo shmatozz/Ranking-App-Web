@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Radio, TextInput} from "@/shared/ui";
-import {useSwimCreateStore} from "@/widgets/profile";
+import {useSwimCreateStore} from "@/features/competition/create";
 
 interface SwimCreateFormProps {
   onCancel: () => void;
@@ -23,8 +23,13 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
         />
 
         <TextInput
-          value={state.ageCategory} onChange={(e) => state.setAgeCategory(e.target.value)}
-          title={"Возрастная категория"} type={"text"}
+          value={state.ageFrom} onChange={(e) => state.setAgeFrom(Number(e.target.value))}
+          title={"Возраст (от)"} type={"text"}
+        />
+
+        <TextInput
+          value={state.ageTo} onChange={(e) => state.setAgeTo(Number(e.target.value))}
+          title={"Возраст (до)"} type={"text"}
         />
       </div>
 
@@ -49,6 +54,7 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
           </label>
 
           <div className={"flex flex-row w-full gap-8 justify-center"}>
+            <Radio checked={state.gender == "MIXED"} onClick={() => state.setGender("MIXED")} text={"Все"}/>
             <Radio checked={state.gender == "MALE"} onClick={() => state.setGender("MALE")} text={"Мужской"}/>
             <Radio checked={state.gender == "FEMALE"} onClick={() => state.setGender("FEMALE")} text={"Женский"}/>
           </div>

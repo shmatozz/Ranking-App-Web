@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from "react";
 import clsx from "clsx";
 import {Button, CodeInput} from "@/shared/ui";
-import {sendCodeRequest} from "@/screens/auth/model/actions";
+import {sendCodeRequest} from "@/shared/api/common";
 import {redirect, RedirectType} from "next/navigation";
 
 const ConfirmClient: React.FC<{email: string}> = ({email}) => {
@@ -17,13 +17,12 @@ const ConfirmClient: React.FC<{email: string}> = ({email}) => {
       setRightCode(storedCode);
     } else {
       sessionStorage.setItem(`sentCode:${email}`, "true");
-      console.log(123);
       sendCodeRequest(email)
         .then((code) => {
-          setRightCode(code);
+          setRightCode(code!);
         })
-        .catch(() => {
-          setError("Что-то пошло не так. Попробуйте позже");
+        .catch((e) => {
+          setError(e.message);
         });
     }
   }, [email]);
@@ -45,6 +44,10 @@ const ConfirmClient: React.FC<{email: string}> = ({email}) => {
       <p className={"text-h4 text-base-95 text-center"}>Подтверждение</p>
 
       {error && <p className="text-red-500">{error}</p>}
+
+      <p className="text-h5 text-base-95 text-center">
+        Введите код, отправленный на указанную почту
+      </p>
 
       {/* Code Input */}
       <CodeInput

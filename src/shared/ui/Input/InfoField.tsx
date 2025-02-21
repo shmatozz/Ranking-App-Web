@@ -8,6 +8,7 @@ interface InfoFieldProps {
   editable?: boolean;
   type?: HTMLInputTypeAttribute;
   onSubmit?: (value: string) => void;
+  submitLoading?: boolean,
   isLoading?: boolean;
   className?: string;
 }
@@ -17,6 +18,7 @@ export const InfoField: React.FC<InfoFieldProps> = ({
   value,
   editable = false,
   onSubmit = (value: string) => console.log("submit placeholder called", value),
+  submitLoading,
   type= "text",
   isLoading = false,
   className
@@ -40,7 +42,7 @@ export const InfoField: React.FC<InfoFieldProps> = ({
         >
           <TextInput id={"new-value-input"} title={title} type={type} animatedLabel={false}/>
 
-          <IconButton size={"S"} icon={"submit"} className={"w-12"} onClick={() => {
+          <IconButton size={"S"} icon={"submit"} className={"w-12"} isLoading={submitLoading} onClick={() => {
             onSubmit((document.getElementById("new-value-input") as HTMLInputElement)!.value);
           }}/>
           <IconButton size={"S"} icon={"close"} className={"w-12"} variant={"tertiary"} palette={"gray"} onClick={() => setEditing(false)}/>

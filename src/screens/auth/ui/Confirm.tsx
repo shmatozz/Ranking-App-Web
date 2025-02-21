@@ -5,7 +5,6 @@ import ConfirmClient from "@/screens/auth/ui/ConfirmClient";
 
 export const Confirm = async () => {
   const session = await auth();
-  console.log(session);
   if (!session) redirect("/sign-up", RedirectType.replace);
 
   console.log("FROM CONFIRM", session.user);

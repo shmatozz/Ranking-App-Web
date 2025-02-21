@@ -1,6 +1,8 @@
 import { create } from "zustand/react";
 import {Organization, updateOrganizationOpenStatus} from "@/entities/organization";
 import {getOrganizationInfo, getOrganizationShortInfo} from "@/entities/organization/api/OrganizationService";
+import {useCompetitionsStore, useMembersStore} from "@/widgets/profile";
+import {splitCompetitions} from "@/shared/lib";
 
 type OrganizationState = {
   organization: Organization | undefined;
@@ -23,8 +25,10 @@ export const useOrganizationStore = create<OrganizationState & OrganizationActio
     set({ isLoading: true, hasError: false })
 
     getOrganizationInfo()
-      .then((organization) => {
-        set({ organization: organization })
+      .then((org) => {
+        set({ organization: org })
+        useCompetitionsStore.setState({ ...splitCompetitions(org.competitions ? org.competitions : [])})
+        useMembersStore.setState({ members: org.users })
       })
       .catch(() => set({ hasError: true }))
       .finally(() => set({ isLoading: false }))

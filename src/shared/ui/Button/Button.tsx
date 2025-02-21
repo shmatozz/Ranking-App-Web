@@ -67,17 +67,17 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={disabled || isLoading ? undefined : onClick}
       disabled={disabled}
     >
-      {leftIcon && <Icon name={leftIcon} size={size == "M" ? 32 : 24}/>}
-
       {
         isLoading ? (
           <div className="h-7 w-7 border-4 border-transparent border-r-inherit rounded-full animate-spin"/>
         ) : (
-         children
+          <>
+            {leftIcon && <Icon name={leftIcon} size={size == "M" ? 32 : 24}/>}
+            {children}
+            {rightIcon && <Icon name={rightIcon} size={size == "M" ? 32 : 24}/>}
+          </>
         )
       }
-
-      {rightIcon && <Icon name={rightIcon} size={size == "M" ? 32 : 24}/>}
     </button>
   );
 };

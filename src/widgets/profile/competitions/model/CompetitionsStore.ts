@@ -2,8 +2,9 @@
 
 import { create } from "zustand/react";
 import {Competition} from "@/entities/competition";
-import {getOrganizationInfo, useOrganizationStore} from "@/entities/organization";
-import {splitCompetitions} from "@/shared/lib";
+import {getOrganizationInfo} from "@/entities/organization";
+import {Role, splitCompetitions} from "@/shared/lib";
+import {getUserInfo} from "@/entities/user";
 
 type CompetitionsState = {
   passed: Competition[] | undefined;
@@ -13,7 +14,7 @@ type CompetitionsState = {
 }
 
 type CompetitionsActions = {
-  getCompetitions: (update?: boolean) => void;
+  getCompetitions: (role: Role, update?: boolean) => void;
 }
 
 export const useCompetitionsStore = create<CompetitionsState & CompetitionsActions>((set) => ({
@@ -22,20 +23,31 @@ export const useCompetitionsStore = create<CompetitionsState & CompetitionsActio
   isLoading: false,
   hasError: false,
 
-  getCompetitions: (update) => {
-    const org = useOrganizationStore.getState().organization;
-
-    if (org && org.competitions && !update) {
-      set(splitCompetitions(org.competitions));
-    } else {
-      set({ isLoading: true, hasError: false })
-
-      getOrganizationInfo()
-        .then((organization) => {
-          set({...splitCompetitions(organization.competitions ? organization.competitions : [])})
-        })
-        .catch(() => set({ hasError: true }))
-        .finally(() => set({ isLoading: false }))
+  getCompetitions: (role) => {
+    switch (role) {
+      case "USER": {
+        getUserInfo()
+          .then((response) => {
+            if (response && response.data) {
+              set({...splitCompetitions(response.data.userCompetitions ? response.data.userCompetitions  : [])})
+            } else if (response && response.error) {
+              set({ hasError: true })
+            }
+          })
+          .catch(() => set({ hasError: true }))
+          .finally(() => set({ isLoading: false }))
+        break;
+      }
+      case "ORGANIZATION": {
+        getOrganizationInfo()
+          .then((organization) => {
+            set({...splitCompetitions(organization.competitions ? organization.competitions : [])})
+          })
+          .catch(() => set({ hasError: true }))
+          .finally(() => set({ isLoading: false }))
+        break;
+      }
+      case "ADMIN": set({passed: [], upcoming: []});
     }
   }
 }))

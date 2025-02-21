@@ -20,6 +20,21 @@ export const submit = async (formData: FormData) => {
   }
 }
 
+export const updateSession = async (email: string, token: string) => {
+  try {
+    await signIn("credentials", {
+      redirect: false,
+      email: email,
+      token: token,
+    })
+  } catch (error) {
+    if (error instanceof CredentialsSignin) {
+      return error.message.split(" Read more at")[0];
+    }
+    return "Неизвестная ошибка";
+  }
+}
+
 export async function quit() { await signOut() }
 
 export async function signUp (formData: FormData) {

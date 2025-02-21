@@ -15,3 +15,4 @@ export {CodeInput} from "./Input/CodeInput";
 export {InfoField} from "./Input/InfoField";
 export {FileInput} from "./Input/FileInput";
 export {Dropdown} from "./Input/Dropdown";
+export {Modal} from "./Input/Modal";

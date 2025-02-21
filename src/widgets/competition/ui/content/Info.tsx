@@ -23,7 +23,7 @@ export const Info = () => {
       {/* DESCRIPTION */}
       <div className={"flex flex-col w-full gap-1"}>
         <p className={"text-bodyM_medium text-base-95"}>Описание</p>
-        <p className={"text-bodyM_regular text-base-95"}>Тут должно быть описание</p>
+        <p className={"text-bodyM_regular text-base-95"}>{competition.description ? competition.description : "Организатор не предоставил описания"}</p>
       </div>
 
       {/* ORGANIZATION */}
@@ -34,7 +34,7 @@ export const Info = () => {
 
         <div className={"flex flex-col w-full gap-[2px] bg-base-5"}>
           <InfoRow title={"Название"} info={competition.organizationInfo.name}/>
-          <InfoRow title={"Контакты"} info={competition.organizationInfo.email}/>
+          <InfoRow title={"Контакты"} info={competition.contactLink ? competition.contactLink : competition.organizationInfo.email}/>
         </div>
       </div>
 
