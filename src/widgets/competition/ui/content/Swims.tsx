@@ -13,12 +13,13 @@ export const Swims = () => {
     joinSwim, deleteSwim, addSwim, getSwimResultsTemplate
   } = useCompetitionStore();
   const { whoAmI } = useWhoAmIStore();
+  const isWhoAmILoading = useWhoAmIStore(state => state.isLoading);
 
   const { user, getUserInfo } = useUserStore();
 
   useEffect(() => {
-    if (!user) getUserInfo();
-  }, [getUserInfo, user]);
+    if (!user && whoAmI && !(whoAmI.organization) && !isWhoAmILoading) getUserInfo();
+  }, [getUserInfo, isWhoAmILoading, user, whoAmI]);
 
   const session = useSession();
 

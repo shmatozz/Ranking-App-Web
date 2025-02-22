@@ -8,6 +8,8 @@ import {createSwimInCompetition} from "@/features/competition/create/api/CreateS
 import {useSwimCreateStore} from "@/features/competition/create";
 import {Swim} from "@/entities/swim";
 import {useUserStore} from "@/entities/user";
+import {useParticipantsStore} from "@/widgets/competition";
+import {getSwimShort} from "@/shared/lib";
 
 type CompetitionState = {
   competition?: CompetitionFull;
@@ -44,7 +46,10 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
 
     getCompetitionByID({ uuid: id })
       .then((competition) => {
-        set({ competition })
+        if (competition) {
+          set({ competition });
+          useParticipantsStore.setState({ selectedSwim: { id: competition.events[0].eventUuid, name: getSwimShort(competition.events[0])} });
+        }
       })
       .catch((e) => {
         set({ hasError: true, errorMessage: e.message })

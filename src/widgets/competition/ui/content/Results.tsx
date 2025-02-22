@@ -6,7 +6,7 @@ import {useCompetitionStore} from "@/features/competition/get";
 import {getSwimsDropDown, isPassed} from "@/shared/lib";
 import {useSession} from "next-auth/react";
 import {Dropdown, FileInput} from "@/shared/ui";
-import {DropdownItem} from "@/shared/ui/Input/Dropdown";
+import {useParticipantsStore} from "@/widgets/competition";
 
 export const Results = () => {
   const session = useSession();
@@ -14,7 +14,7 @@ export const Results = () => {
   const competitionUUID = searchParams.get("id");
   const { competition, isLoading, uploadSwimResults } = useCompetitionStore();
 
-  const [selectedSwim, setSelectedSwim] = React.useState<DropdownItem>();
+  const { selectedSwim, setSelectedSwim } = useParticipantsStore();
 
   if (!competition || isLoading) {
     return null;

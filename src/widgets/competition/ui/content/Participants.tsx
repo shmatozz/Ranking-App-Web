@@ -11,12 +11,6 @@ export const Participants = () => {
   const isParticipantsLoading = useParticipantsStore(state => state.isLoading)
 
   useEffect(() => {
-    if (competition && !selectedSwim) {
-      setSelectedSwim(getSwimsDropDown(competition.events)[0])
-    }
-  }, [competition, selectedSwim, setSelectedSwim]);
-
-  useEffect(() => {
     if (selectedSwim) getParticipants(selectedSwim.id);
   }, [selectedSwim, getParticipants]);
 
