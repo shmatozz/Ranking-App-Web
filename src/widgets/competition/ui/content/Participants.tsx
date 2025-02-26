@@ -19,7 +19,7 @@ export const Participants = () => {
   }
 
   return (
-    <div className={"flex flex-col p-4 gap-4"}>
+    <div className={"flex flex-col px-1 py-4 gap-4 xs:px-4"}>
       <div className={"flex flex-col gap-2"}>
         <p className={"text-bodyM_medium text-base-95"}>Заплыв</p>
 

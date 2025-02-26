@@ -46,8 +46,8 @@ export const FiltersHeader = () => {
       <div className={"flex flex-col justify-between gap-1 lg-md:flex-row"}>
         <label className={"text-h4 text-base-100"}>Календарь стартов</label>
 
-        <div className={"flex flex-row w-full gap-2 items-center lg-md:w-[400px]"}>
-          <p className={"text-bodyS_regular text-base-95 select-none text-nowrap xs:text-bodyM_regular"}>Упорядочить по</p>
+        <div className={"flex flex-col w-full gap-0 items-center 2xs:flex-row 2xs:gap-2 lg-md:w-[400px]"}>
+          <p className={"w-full text-bodyS_regular text-base-95 select-none text-nowrap 2xs:w-fit fxs:text-bodyM_regular"}>Упорядочить по</p>
 
           <Dropdown
             items={arrangeFilters}
@@ -76,7 +76,7 @@ export const FiltersHeader = () => {
       </div>
 
       <div className={"flex flex-col w-full gap-3 lg-md:flex-row"}>
-        <div className={"flex flex-row w-1/2 gap-3"}>
+        <div className={"flex flex-row w-full gap-3 lg-md:w-1/2"}>
           <TextInput
             title={"Участники (от)"}
             value={state.filters.minParticipants ? state.filters.minParticipants : ""}
@@ -98,7 +98,7 @@ export const FiltersHeader = () => {
           />
         </div>
 
-        <div className={"flex flex-row gap-3 w-1/2"}>
+        <div className={"flex flex-col w-full gap-3 lg-md:w-1/2 2xs:flex-row"}>
           <Button
             variant={"primary"} palette={"blue"} size={"S"} className={"w-full"}
             onClick={state.getCompetitions}

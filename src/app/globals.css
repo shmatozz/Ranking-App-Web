@@ -18,7 +18,7 @@ body {
 }
 
 .content-container {
-  @apply flex h-full w-full max-w-[1100px] m-auto rounded-3xl container-shadow px-[24px] py-8 xs:px-[52px] bg-base-0;
+  @apply flex h-full w-full max-w-[1100px] m-auto rounded-3xl px-[24px] xs:px-[52px] bg-base-0 lg-md:shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] lg-md:py-8
 }
 
 .container-shadow {

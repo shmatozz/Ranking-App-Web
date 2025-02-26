@@ -32,7 +32,7 @@ export const CompetitionHeader = () => {
   };
 
   return (
-    <div className={"flex flex-row w-full gap-4 items-center"}>
+    <div className={"flex flex-col w-full gap-4 items-center xs:flex-row"}>
       <div className={"flex flex-col w-full gap-1"}>
         <label className={"text-h4 text-base-95"}>{competition.name}</label>
         <p className={"text-bodyM_regular text-base-95"}>{formatDate(competition.date)}</p>
