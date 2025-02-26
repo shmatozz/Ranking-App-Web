@@ -32,7 +32,7 @@ export const CompetitionsList = () => {
       )}
 
       {competitions && competitions.length > 0 && totalPages && page != undefined && totalPages > 0 && (
-        <div className={"flex flex-row w-full justify-between items-center gap-4"}>
+        <div className={"flex flex-col w-full justify-between items-center gap-4 xs:flex-row"}>
           <div className={"flex flex-row justify-center items-center gap-4"}>
             {Array.from({length: totalPages}, (_, index) => (
               <p

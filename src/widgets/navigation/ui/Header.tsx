@@ -52,12 +52,12 @@ export const Header = () => {
 
   return (
     <header
-      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-8 z-50 lg-md:justify-center"
+      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-4 z-50 lg-md:justify-center xs:px-8"
     >
       {/* Logo */}
       <Link href={"/"}>
         <div
-          className="flex px-[1.125rem] py-4 w-fit h-fit bg-base-0 rounded-b-2xl items-center justify-center transition-all duration-200 ease-in-out hover:pt-6"
+          className="flex px-[1.125rem] py-4 w-fit h-fit bg-base-0 rounded-b-2xl items-center justify-center transition-all duration-200 ease-in-out hover:pt-6 z-[51]"
         >
           <Logo/>
         </div>
@@ -68,7 +68,7 @@ export const Header = () => {
         <NavLinks isActive={isActive}/>
       </nav>
 
-      <div className={"flex flex-row gap-4"}>
+      <div className={"flex flex-row gap-2"}>
         {/* Icons */}
         <div className="flex flex-row gap-4 justify-end">
           <IconLink href="/profile" icon="account" isActive={isActive}/>
@@ -86,7 +86,7 @@ export const Header = () => {
       {/* Мобильное меню */}
       {isMenuOpen && (
         <div
-          className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 bg-opacity-75 shadow-md flex flex-col items-center py-4 lg-md:hidden rounded-bl-2xl">
+          className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 bg-opacity-85 shadow-md flex flex-col items-center py-4 lg-md:hidden rounded-bl-2xl -z-10">
           <NavLinks isActive={isActive}/>
           <div className={clsx(
             "flex items-center justify-center w-full relative transition-colors text-base-0",

@@ -18,7 +18,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
     return (
       <div
         className={clsx(
-          "flex flex-row w-full h-fit px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4", props.className
+          "flex flex-row w-full h-fit px-6 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 xs:px-8 items-center gap-4", props.className
         )}
       >
         <div className={"flex flex-col w-full gap-1"}>
@@ -32,7 +32,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
   return (
     <div
       className={clsx(
-        "flex flex-col w-full h-fit px-8 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4 xs:flex-row",
+        "flex flex-col w-full h-fit px-6 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4 xs:px-8 xs:flex-row",
         props.className
       )}
     >

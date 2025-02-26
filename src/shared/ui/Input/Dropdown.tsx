@@ -42,11 +42,13 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
         onClick={() => setOpen(!opened)}
       >
         {props.selectedItems.length === 0 && (
-          <p className={"text-bodyS_regular text-base-70 select-none xs:text-bodyM_regular"}>{props.placeholder}</p>
+          <p className={"text-bodyS_regular text-base-70 select-none text-clip xs:text-bodyM_regular"}>{props.placeholder}</p>
         )}
 
         {props.selectedItems.length > 0 && (
-          <p className={"text-bodyS_regular text-base-90 select-none text-nowrap xs:text-bodyM_regular"}>{props.selectedItems.map((item) => item.name).join(", ")}</p>
+          <p className={"text-bodyS_regular text-base-90 select-none truncate xs:text-bodyM_regular"}>
+            {props.selectedItems.map((item) => item.name).join(", ")}
+          </p>
         )}
 
         <Icon name={"chevronDown"} size={24} className={"text-base-60"} />

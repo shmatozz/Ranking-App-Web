@@ -36,7 +36,7 @@ export const Swims = () => {
   }
 
   return (
-    <div className={"flex flex-col w-full p-4 gap-6 items-center"}>
+    <div className={"flex flex-col w-full px-1 py-4 gap-6 items-center xs:px-4"}>
       {competition.events.map((swim) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [isModalSwimOpen, setIsModalSwimOpen] = useState(false);
@@ -44,7 +44,7 @@ export const Swims = () => {
         return (
           <SwimCard key={swim.eventUuid} swim={swim}>
             {session.data && session.data.user.email == competition.organizationInfo.email && (
-              <div className={"flex flex-row gap-1 w-fit"}>
+              <div className={"flex flex-col gap-1 items-center w-fit xs:flex-row"}>
                 <Button
                   size={"S"} variant={"tertiary"} palette={"blue"} className={"w-fit"}
                   onClick={() => getSwimResultsTemplate(swim.eventUuid)}
@@ -79,7 +79,7 @@ export const Swims = () => {
                 onClick={() => joinSwim(swim)}
               >
                 <p className={"text-nowrap"}>
-                  {user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "Вы зарегестрированы" : "Регистрация"}
+                  {user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "Вы зарегистрированы" : "Регистрация"}
                 </p>
               </Button>
             )}

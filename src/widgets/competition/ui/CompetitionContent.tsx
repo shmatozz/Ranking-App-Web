@@ -6,6 +6,7 @@ import clsx from "clsx";
 import {Info, Swims, Participants, Results, Live} from "./content";
 import {isPassed} from "@/shared/lib";
 import {useCompetitionStore} from "@/features/competition/get";
+import {Icon} from "@/shared/ui";
 
 type Tab = "info" | "swims" | "participants" | "live" | "results";
 const TABS: Tab[] = ["info", "swims", "participants", "live", "results"];
@@ -25,6 +26,16 @@ export const CompetitionContent = () => {
 
   const isActive = (tab: string) => activeTab == tab;
 
+  const getIcon = (tab: Tab): "info" | "swim" | "members" | "live" | "podium" => {
+    switch (tab) {
+      case "info": return "info";
+      case "swims": return "swim";
+      case "participants": return "members";
+      case "results": return "podium";
+      case "live": return "live";
+    }
+  }
+
   const Tab = ({ href, label }: { href: Tab; label: string; }) => (
     <div
       className={clsx(
@@ -32,7 +43,22 @@ export const CompetitionContent = () => {
       )}
       onClick={(href == "results" && !isPassed(competition?.date)) || href == "live" ? undefined : () => handleTabChange(href)}
     >
-      <p className={clsx((href == "results" && !isPassed(competition?.date)) || href == "live" ? "text-base-50" : "text-base-95")}>{label}</p>
+      <p className={clsx(
+        (href == "results" && !isPassed(competition?.date)) || href == "live" ? "text-base-50" : "text-base-95",
+        "hidden xs:block"
+        )}
+      >
+        {label}
+      </p>
+
+      <div className={"w-full flex flex-row justify-center xs:hidden"}>
+        <Icon
+          name={getIcon(href)}
+          className={(href == "results" && !isPassed(competition?.date)) || href == "live" ?
+            "text-base-40" : (isActive(href) ? "text-blue-50" : "text-base-70")}
+        />
+      </div>
+
       <div className={clsx(
         "absolute bottom-0 w-full transition-all duration-200",
         isActive(href) ? "h-1 bg-blue-50" : "h-0 bg-base-10",

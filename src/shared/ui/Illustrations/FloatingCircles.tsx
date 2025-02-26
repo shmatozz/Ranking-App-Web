@@ -76,7 +76,7 @@ export const FloatingCircles: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-blue-10 bg-opacity-50 blur-3xl">
+    <div className="fixed hidden inset-0 -z-10 overflow-hidden bg-blue-10 bg-opacity-50 blur-3xl lg-md:flex">
       {circles.map((circle) => (
         <div
           key={circle.id}

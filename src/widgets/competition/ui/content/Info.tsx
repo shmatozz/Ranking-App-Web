@@ -12,14 +12,14 @@ export const Info = () => {
   if (!competition || isLoading) return <InfoLoading/>
 
   const InfoRow = ({title, info} : { title: string, info: string | number }) => (
-    <div className={"flex flex-row p-2 gap-4 items-center bg-base-0"}>
-      <p className={"text-bodyM_regular text-base-95 min-w-[200px]"}>{title}</p>
+    <div className={"flex flex-col p-2 bg-base-0 xs:flex-row xs:gap-4 xs:items-center"}>
+      <p className={"text-bodyM_regular text-base-90 xs:min-w-[200px]"}>{title}</p>
       <p className={"text-bodyM_regular text-blue-90"}>{info}</p>
     </div>
   )
 
   return (
-    <div className={"flex flex-col w-full p-4 gap-6"}>
+    <div className={"flex flex-col w-full px-1 py-4 gap-6 xs:px-4"}>
       {/* DESCRIPTION */}
       <div className={"flex flex-col w-full gap-1"}>
         <p className={"text-bodyM_medium text-base-95"}>Описание</p>
@@ -67,7 +67,7 @@ export const Info = () => {
 
 const InfoLoading = () => {
   const InfoRow = ({title} : { title: string }) => (
-    <div className={"flex flex-row p-2 gap-4 items-center bg-base-0"}>
+    <div className={"flex flex-col p-2 bg-base-0 xs:flex-row xs:gap-4 xs:items-center"}>
       <p className={"text-bodyM_regular text-base-95 min-w-[200px]"}>{title}</p>
       <p className={"text-bodyM_regular loader"}>Информация</p>
     </div>
