@@ -29,3 +29,18 @@ export function getTime(date: Date): string | undefined {
   return `${dateHours}:${dateMinutes < 10 ? "0" + dateMinutes : dateMinutes}`;
 }
 
+
+export function getAge(date: Date): string {
+  const today = new Date();
+  const birthDate = new Date(date);
+
+  let years = today.getFullYear() - birthDate.getFullYear();
+
+  const hasBirthdayPassed =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+  if (!hasBirthdayPassed) years--;
+
+  return `${years} ${years % 10 == 1 ? "год" : ((years % 10 >= 5 || years % 10 == 0) ? "лет" : "года")}`;
+}
