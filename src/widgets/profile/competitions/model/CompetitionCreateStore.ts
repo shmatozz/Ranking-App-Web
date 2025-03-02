@@ -8,7 +8,7 @@ type CompetitionsCreateState = {
   name: string;
   location: string; date: string; maxParticipants: number;
   description: string;
-  contact: string; contactFromProfile: boolean;
+  contacts: string[]; contactFromProfile: boolean;
   swims: Omit<Swim, "eventUuid">[];
   isLoading: boolean;
   hasError: boolean;
@@ -22,7 +22,7 @@ type CompetitionsCreateActions = {
   setDescription: (description: string) => void;
   setMaxParticipants: (maxParticipants: number) => void;
   setContactFromProfile: (state: boolean) => void;
-  setContact: (newContact: string) => void;
+  setContact: (index: number, newContact: string) => void;
   checkFormValid: () => void;
   addSwim: () => void;
   deleteSwim: (swimToDelete: Swim | Omit<Swim, "eventUuid">) => void;
@@ -34,7 +34,7 @@ const initialState: CompetitionsCreateState = {
   name: "",
   location: "", date: "", maxParticipants: 0,
   description: "",
-  contact: "", contactFromProfile: false,
+  contacts: ["", "", ""], contactFromProfile: false,
   swims: [],
   isLoading: false,
   hasError: false,
@@ -49,7 +49,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       isFormValid:
         state.name.trim() != "" && state.location.trim() !== "" &&
         state.date.trim() !== "" && state.maxParticipants > 0 &&
-        state.description.trim() !== "" && state.contact.trim() !== "" &&
+        state.description.trim() !== "" && state.contacts.some(contact => contact.trim() !== "")  &&
         state.swims.length > 0 &&
         new Date(state.date).getTime() >= new Date(new Date().toISOString().split("T")[0]).getTime()
     }));
@@ -62,17 +62,27 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
   setDescription: (description: string) => { set({ description }); get().checkFormValid(); },
   setMaxParticipants: (maxParticipants: number) => { set({ maxParticipants }); get().checkFormValid(); },
 
-  setContactFromProfile: (state: boolean) => {
+  setContactFromProfile: (state) => {
     if (state) {
-      set({ contact: useOrganizationStore.getState().organization?.email, contactFromProfile: true });
+      set({
+        contacts: [useOrganizationStore.getState().organization?.email || ""],
+        contactFromProfile: true
+      });
     } else {
       set({ contactFromProfile: false });
     }
     get().checkFormValid();
   },
 
-  setContact: (newContact: string) => {
-    set({ contact: newContact, contactFromProfile: newContact === useOrganizationStore.getState().organization?.email })
+  setContact: (index, newContact) => {
+    if (index < 0 || index > 2) return;
+
+    set((state) => {
+      const updatedContacts = [...state.contacts];
+      updatedContacts[index] = newContact;
+      return { contacts: updatedContacts };
+    });
+
     get().checkFormValid();
   },
 
@@ -97,7 +107,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       competitionLocation: competition.location,
       competitionDate: competition.date,
       description: competition.description,
-      contactLink: competition.contact,
+      contactLink: competition.contacts[0],
       maxParticipants: competition.maxParticipants,
       competitionType: "соревнование",
       events: competition.swims

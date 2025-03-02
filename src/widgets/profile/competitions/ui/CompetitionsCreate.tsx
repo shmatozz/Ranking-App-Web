@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Checkbox, FileInput, IconButton, TextInput} from "@/shared/ui";
+import React, {useState} from "react";
+import {Button, Checkbox, FileInput, Icon, IconButton, TextInput} from "@/shared/ui";
 import {useCompetitionsCreateStore} from "@/widgets/profile";
 import {SwimCard} from "@/entities/swim/ui/SwimCard";
 import {SwimCreateForm} from "@/features/competition/create";
@@ -16,6 +16,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
   const state = useCompetitionsCreateStore();
 
   const [swimFormVisible, setSwimFormVisible] = React.useState(false);
+  const [showAdditionalContacts, setShowAdditionalContacts] = useState(false);
 
   return (
     <div className={"flex flex-col w-full h-full gap-4 items-center"}>
@@ -51,20 +52,44 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
         <TextInput
           value={state.description} onChange={(e) => state.setDescription(e.target.value)}
-          inputSize={"M"} title={"Описание"} type={"area"} className={"h-[150px]"}
+          inputSize={"M"} title={"Описание"} type={"area"} className={"min-h-[120px]"}
         />
 
-        <div className={"flex flex-col gap-1"}>
+        <div className={"flex flex-col gap-2"}>
+          <p className={"text-bodyM_regular"}>Контакты</p>
+
           <TextInput
-            value={state.contact} onChange={(e) => state.setContact(e.target.value) }
-            inputSize={"M"} title={"Контакт"} type={"text"} icon={"forum"}
+            value={state.contacts[0]} onChange={(e) => state.setContact(0, e.target.value)}
+            inputSize={"M"} title={"Основной контакт"} type={"text"} icon={"forum"} animatedLabel={false}
           />
 
           <Checkbox
             checked={state.contactFromProfile}
             text={"Использовать контакт из профиля"}
-            onClick={() => { state.setContactFromProfile(!state.contactFromProfile) }}
+            onClick={() => {
+              state.setContactFromProfile(!state.contactFromProfile)
+            }}
           />
+
+          <div className={`flex w-full justify-center cursor-pointer transition-all ${showAdditionalContacts ? "rotate-180" : "rotate-0"}`} onClick={() => setShowAdditionalContacts(!showAdditionalContacts)}>
+            <Icon name="chevronDown" color="gray" />
+          </div>
+
+          <div
+            className={`flex flex-col gap-2 transition-all overflow-hidden ${
+              showAdditionalContacts ? "h-24 opacity-100" : "h-0 opacity-0"
+            }`}
+          >
+            <TextInput
+              value={state.contacts[1]} onChange={(e) => state.setContact(1, e.target.value)}
+              inputSize="M" title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
+            />
+
+            <TextInput
+              value={state.contacts[2]} onChange={(e) => state.setContact(2, e.target.value)}
+              inputSize="M" title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
+            />
+          </div>
         </div>
 
         <FileInput

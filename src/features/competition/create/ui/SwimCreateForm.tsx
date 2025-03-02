@@ -60,10 +60,18 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
           </div>
         </div>
 
-        <TextInput
-          value={state.startTime} onChange={(e) => state.setStartTime(e.target.value)}
-          title={"Время начала"} type={"time"}
-        />
+        <div className="flex flex-row w-full gap-2">
+          <TextInput
+            value={state.startTime} onChange={(e) => state.setStartTime(e.target.value)}
+            title={"Время начала"} type={"time"}
+          />
+
+          <TextInput
+            value={state.duration} onChange={(e) => state.setDuration(e.target.value)}
+            title={"Длительность"} type={"time"} step="1"
+            tooltipText={"Расчётное время за которое планируется провести заплыв"}
+          />
+        </div>
       </div>
 
       <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
