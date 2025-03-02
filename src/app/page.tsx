@@ -1,7 +1,6 @@
+import React from "react";
+import {MainPage} from "@/screens/main";
+
 export default function Home() {
-  return (
-    <div className={"content-container text-h4"}>
-      ГЛАВНАЯ
-    </div>
-  );
+  return <MainPage/>
 }
