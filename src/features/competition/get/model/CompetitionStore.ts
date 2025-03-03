@@ -13,6 +13,7 @@ import {getSwimShort} from "@/shared/lib";
 
 type CompetitionState = {
   competition?: CompetitionFull;
+  selectedSwim: Swim | undefined;
   isJoining: boolean;
   isDeleting: boolean;
   isLoading: boolean;
@@ -22,16 +23,18 @@ type CompetitionState = {
 
 type CompetitionActions = {
   getCompetition: (id: string) => void;
-  joinSwim: (swim: Swim) => void;
+  joinSwim: (swimId: string) => void;
   getSwimResultsTemplate: (id: string) => void;
   uploadSwimResults: (swimId: string, file: File) => void;
   addSwim: (id: string) => void;
   deleteSwim: (id: string) => void;
   deleteCompetition: (id: string, callback?: () => void) => void;
+  setSelectedSwim: (swimId: string) => void;
 }
 
 const initialState: CompetitionState = {
   competition: undefined,
+  selectedSwim: undefined,
   isJoining: false,
   isDeleting: false,
   isLoading: false,
@@ -57,10 +60,10 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
       .finally(() => set({ isLoading: false }));
   },
 
-  joinSwim: (swim: Swim) => {
+  joinSwim: (swimId) => {
     set({ isJoining: true })
 
-    joinSwim({ uuid: swim.eventUuid })
+    joinSwim({ uuid: swimId })
       .then((response) => {
         if (response && response.error) {
           set({ hasError: true, errorMessage: response.error.message })
@@ -94,6 +97,13 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
   uploadSwimResults: (swimId: string, file: File) => {
     uploadSwimResults({ uuid: swimId, file: file})
       .then(() => console.log(123))
+  },
+
+  setSelectedSwim: (swimId: string) => {
+    const comp = get().competition;
+    if (comp && comp.events.some((val) => val.eventUuid == swimId)) {
+      set({ selectedSwim: comp.events.find((val) => val.eventUuid == swimId) });
+    }
   },
 
   addSwim: (id: string) => {

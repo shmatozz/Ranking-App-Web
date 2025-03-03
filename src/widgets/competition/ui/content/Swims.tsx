@@ -6,24 +6,50 @@ import {useSession} from "next-auth/react";
 import {SwimCreateForm} from "@/features/competition/create";
 import {useWhoAmIStore} from "@/features/who-am-i";
 import {useUserStore} from "@/entities/user";
+import {useRouter, useSearchParams} from "next/navigation";
+import {usePaymentStore} from "@/features/participation-payment";
 
 export const Swims = () => {
+  const session = useSession();
+  const router = useRouter();
   const {
     competition, isLoading, isDeleting,
-    joinSwim, deleteSwim, addSwim, getSwimResultsTemplate
+    deleteSwim, addSwim, getSwimResultsTemplate, joinSwim, setSelectedSwim
   } = useCompetitionStore();
   const { whoAmI } = useWhoAmIStore();
   const isWhoAmILoading = useWhoAmIStore(state => state.isLoading);
-
   const { user, getUserInfo } = useUserStore();
+  const { payment, getPayment } = usePaymentStore();
+  const isPaymentLoading = usePaymentStore(state => state.isLoading);
+
+  const [swimFormVisible, setSwimFormVisible] = React.useState(false);
+
+  useEffect(() => {
+    const paymentID = localStorage.getItem("payment");
+    if (paymentID !== null && !isPaymentLoading) {
+      getPayment(paymentID);
+    }
+  }, [getPayment, isPaymentLoading]);
+
+  useEffect(() => {
+    if (payment && payment.status == "succeeded") {
+      const swimID = localStorage.getItem("swimID");
+      if (swimID) joinSwim(swimID);
+      localStorage.removeItem("swimID")
+      localStorage.removeItem("payment");
+    }
+  }, [joinSwim, payment]);
 
   useEffect(() => {
     if (!user && whoAmI && !(whoAmI.organization) && !isWhoAmILoading) getUserInfo();
   }, [getUserInfo, isWhoAmILoading, user, whoAmI]);
 
-  const session = useSession();
-
-  const [swimFormVisible, setSwimFormVisible] = React.useState(false);
+  const params = useSearchParams();
+  const goToRegistration = () => {
+    const newParams = new URLSearchParams(params);
+    newParams.set("tab", "swimsRegistration");
+    router.push(`?${newParams.toString()}`, { scroll: false });
+  };
 
   if (!competition || isLoading) {
     return (
@@ -76,7 +102,10 @@ export const Swims = () => {
                 size={"S"} variant={"tertiary"}
                 rightIcon={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "submit" : "link"}
                 disabled={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) || swim.status != "CREATED"}
-                onClick={() => joinSwim(swim)}
+                onClick={() => {
+                  setSelectedSwim(swim.eventUuid);
+                  goToRegistration();
+                }}
               >
                 <p className={"text-nowrap"}>
                   {user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "Вы зарегистрированы" : "Регистрация"}

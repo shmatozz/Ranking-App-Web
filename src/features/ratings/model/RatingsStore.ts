@@ -31,7 +31,7 @@ const initialState: RatingsState = {
   hasError: false,
 }
 
-export const useRatingsStore = create<RatingsState & RatingsActions>((set, get) => ({
+export const useRatingsStore = create<RatingsState & RatingsActions>((set) => ({
   ...initialState,
 
   getRatings: () => {
