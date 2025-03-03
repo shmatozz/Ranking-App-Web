@@ -5,6 +5,7 @@ export type Swim = {
   ageFrom: number,
   ageTo: number,
   maxPoints: number,
+  cost?: number,
   startTime: string,
   status?: "CREATED" | "IN PROGRESS" | "ENDED",
   eventUuid: string

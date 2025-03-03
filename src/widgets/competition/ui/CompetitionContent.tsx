@@ -3,13 +3,13 @@
 import React from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import clsx from "clsx";
-import {Info, Swims, Participants, Results, Live} from "./content";
+import {Info, Swims, Participants, Results, Live, Registration} from "./content";
 import {isPassed} from "@/shared/lib";
 import {useCompetitionStore} from "@/features/competition/get";
 import {Icon} from "@/shared/ui";
 
-type Tab = "info" | "swims" | "participants" | "live" | "results";
-const TABS: Tab[] = ["info", "swims", "participants", "live", "results"];
+type Tab = "info" | "swims" | "participants" | "live" | "results" | "swimsRegistration";
+const TABS: Tab[] = ["info", "swims", "participants", "live", "results", "swimsRegistration"];
 
 export const CompetitionContent = () => {
   const router = useRouter();
@@ -24,7 +24,7 @@ export const CompetitionContent = () => {
     router.push(`?${newParams.toString()}`, { scroll: false });
   };
 
-  const isActive = (tab: string) => activeTab == tab;
+  const isActive = (tab: string) => activeTab.startsWith(tab);
 
   const getIcon = (tab: Tab): "info" | "swim" | "members" | "live" | "podium" => {
     switch (tab) {
@@ -33,6 +33,7 @@ export const CompetitionContent = () => {
       case "participants": return "members";
       case "results": return "podium";
       case "live": return "live";
+      default: return "info"
     }
   }
 
@@ -74,6 +75,7 @@ export const CompetitionContent = () => {
       case "participants": return <Participants/>
       case "results": return <Results/>
       case "live": return <Live/>
+      case "swimsRegistration": return <Registration/>
     }
   }
 

@@ -12,6 +12,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & InputHTMLAttribute
   theme?: "blue" | "orange";
   errorMessage?: string;
   icon?: keyof typeof icons,
+  tooltipText?: string;
   className?: string
 };
 
@@ -22,12 +23,14 @@ export const TextInput: React.FC<TextInputProps> = ({
   inputSize = "M",
   theme = "blue",
   errorMessage,
+  tooltipText,
   className,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasText, setHasText] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const isError = !!errorMessage;
 
@@ -58,7 +61,7 @@ export const TextInput: React.FC<TextInputProps> = ({
           className={clsx(
             "flex flex-row h-fit transition-transform duration-300 select-none gap-1",
             "pointer-events-none",
-            isFocused || hasText || type == "date" ? "translate-y-0" : "translate-y-8",
+            isFocused || hasText || type == "date" || type == "time" ? "translate-y-0" : "translate-y-8",
             inputSize == "M" ? "text-bodyS_regular" : "text-caption_regular",
             isFocused ? themedTextClass : "text-base-40"
           )}
@@ -98,12 +101,12 @@ export const TextInput: React.FC<TextInputProps> = ({
               if (props.onBlur) props.onBlur(e);
             }}
             disabled={props.disabled}
-            placeholder={title}
+            placeholder={props.placeholder ? props.placeholder : title}
             className={clsx(
               sizeClass,
               themeClass,
               props.icon ? "border-t border-r border-b rounded-r-md" : "border rounded-md",
-              "placeholder-base-40 transition-opacity",
+              "placeholder-base-40 transition-opacity placeholder:overflow-visible",
               "block w-full z-[1] outline-none placeholder:italic focus:placeholder:opacity-0",
               props.disabled && "bg-base-5 cursor-not-allowed",
               isError ? "bg-red-5 border-red-70" : "bg-base-0 border-base-20",
@@ -160,6 +163,22 @@ export const TextInput: React.FC<TextInputProps> = ({
           >
             <Icon name={showPassword ? "eyeOff" : "eye"} size={inputSize == "S" ? 16 : 24} color={"gray"}/>
           </button>
+        )}
+
+        {tooltipText && (
+          <div
+            className="ml-2 relative flex items-center"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <Icon name={"info"} size={16} color={"#C6C6C6"}/>
+            {showTooltip && (
+              <div
+                className="absolute right-0 z-30 top-6 w-48 bg-base-90 text-white text-caption_regular select-none p-2 rounded shadow-md">
+                {tooltipText}
+              </div>
+            )}
+          </div>
         )}
       </div>
 

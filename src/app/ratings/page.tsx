@@ -1,9 +1,6 @@
 import React from "react";
+import {RatingPage} from "@/screens/rating";
 
 export default function Ratings() {
-  return (
-    <div className="content-container text-h4 text-base-100">
-      РЕЙТИНГИ
-    </div>
-  )
+  return <RatingPage/>
 }
