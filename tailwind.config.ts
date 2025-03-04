@@ -10,6 +10,7 @@ export default {
         '2xs': '330px',
         'xs': '660px',
         'lg-md': '950px',
+        'large': '1100px',
         '2xl': '1600px',
       },
       colors: {
