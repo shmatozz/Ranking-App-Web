@@ -8,7 +8,7 @@ type SwimCreateState = {
   ageFrom: number;
   ageTo: number;
   maxPoints: number;
-  cost: number;
+  price: number;
   startTime: string;
   duration: string;
   isFormValid: boolean;
@@ -21,7 +21,7 @@ type SwimCreateActions = {
   setAgeFrom: (ageFrom: number) => void;
   setAgeTo: (ageTo: number) => void;
   setMaxPoints: (maxPoints: number) => void;
-  setCost: (cost: number) => void;
+  setPrice: (price: number) => void;
   setStartTime: (startTime: string) => void;
   setDuration: (duration: string) => void;
   checkFormValid: () => void;
@@ -35,7 +35,7 @@ const initialState: SwimCreateState = {
   gender: "MIXED",
   ageFrom: 0, ageTo: 0,
   maxPoints: 0,
-  cost: 0,
+  price: 0,
   startTime: "",
   duration: "",
   isFormValid: false,
@@ -59,7 +59,7 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
   setAgeFrom: (ageFrom) =>  { set({ ageFrom }); get().checkFormValid(); },
   setAgeTo: (ageTo) =>  { set({ ageTo }); get().checkFormValid(); },
   setMaxPoints: (maxPoints) =>  { set({ maxPoints }); get().checkFormValid(); },
-  setCost: (cost) =>  { set({ cost }); get().checkFormValid(); },
+  setPrice: (price) =>  { set({ price }); get().checkFormValid(); },
   setStartTime: (startTime) =>  { set({ startTime }); get().checkFormValid(); },
   setDuration: (duration) =>  { set({ duration }); get().checkFormValid(); },
 
@@ -70,7 +70,7 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
       distance: swimData.distance, style: swimData.style,
       gender: swimData.gender,
       ageFrom: swimData.ageFrom, ageTo: swimData.ageTo,
-      maxPoints: swimData.maxPoints,
+      maxPoints: swimData.maxPoints, price: swimData.price,
       startTime: swimData.startTime,
     }
   },

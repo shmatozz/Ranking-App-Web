@@ -15,6 +15,21 @@ export type CreatePaymentResponse = {
   }
 }
 
+export type CreateWidgetPaymentRequest = {
+  paymentSum: number,
+  description: string
+}
+
+export type CreateWidgetPaymentResponse = {
+  status: number,
+  data: {
+    id: string,
+    status: string,
+    token: string
+  }
+}
+
+
 export type GetPaymentRequest = {
   paymentId: string
 }

@@ -48,7 +48,7 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
           />
 
           <TextInput
-            value={state.cost} onChange={(e) => state.setCost(Number(e.target.value))}
+            value={state.price} onChange={(e) => state.setPrice(Number(e.target.value))}
             title={"Стоимость"} type={"number"} min={0}
           />
         </div>

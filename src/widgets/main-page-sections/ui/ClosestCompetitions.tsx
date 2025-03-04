@@ -46,7 +46,7 @@ export const ClosestCompetitions = () => {
                 gender: "MALE",
                 ageFrom: 0,
                 ageTo: 99,
-                maxPoints: 100,
+                maxPoints: 100, price: 100,
                 startTime: "2025-02-22T12:00:00Z",
                 status: "CREATED",
                 eventUuid: "6e59ea23-88f9-4266-a672-0375313c5089"
@@ -57,7 +57,7 @@ export const ClosestCompetitions = () => {
                 gender: "MALE",
                 ageFrom: 0,
                 ageTo: 99,
-                maxPoints: 500,
+                maxPoints: 500, price: 100,
                 startTime: "2025-02-22T13:00:00Z",
                 status: "CREATED",
                 eventUuid: "583e2d18-6a6d-45c6-931c-d9748cb6dee9"
