@@ -36,8 +36,8 @@ export const ClosestCompetitions = () => {
             date: "2025-03-22",
             description: "",
             contactLink: "N/D",
-            maxParticipants: 100,
             competitionType: "соревнование",
+            participantsType: "AMATEURS",
             competitionUuid: "c9ee4e1b-4075-4341-a202-a7f829c7289c",
             events: [
               {
@@ -46,7 +46,7 @@ export const ClosestCompetitions = () => {
                 gender: "MALE",
                 ageFrom: 0,
                 ageTo: 99,
-                maxPoints: 100, price: 100,
+                maxPoints: 100, price: 100, maxParticipants: 100,
                 startTime: "2025-02-22T12:00:00Z",
                 status: "CREATED",
                 eventUuid: "6e59ea23-88f9-4266-a672-0375313c5089"
@@ -57,7 +57,7 @@ export const ClosestCompetitions = () => {
                 gender: "MALE",
                 ageFrom: 0,
                 ageTo: 99,
-                maxPoints: 500, price: 100,
+                maxPoints: 500, price: 100, maxParticipants: 100,
                 startTime: "2025-02-22T13:00:00Z",
                 status: "CREATED",
                 eventUuid: "583e2d18-6a6d-45c6-931c-d9748cb6dee9"

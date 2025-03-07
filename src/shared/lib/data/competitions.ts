@@ -33,14 +33,6 @@ export function sortCompetitions(
       // Сортировка по дате (от дальней к ближайшей)
       return competitions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }
-    case 'participants-more': {
-      // Сортировка по количеству участников (по возрастанию)
-      return competitions.sort((a, b) => a.maxParticipants - b.maxParticipants);
-    }
-    case 'participants-less': {
-      // Сортировка по количеству участников (по убыванию)
-      return competitions.sort((a, b) => b.maxParticipants - a.maxParticipants);
-    }
     case 'name': {
       // Сортировка по имени
       return competitions.sort((a, b) => a.name.localeCompare(b.name));

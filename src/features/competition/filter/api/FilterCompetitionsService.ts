@@ -5,12 +5,10 @@ import {
   FilterCompetitionsResponse,
   FilterCompetitionsResponseData
 } from "@/features/competition/filter";
-import {auth} from "@/shared/lib";
 import axiosInstance from "@/shared/api/AxiosConfig";
 
 export async function getCompetitionsByFilter(params: FilterCompetitionsParams): Promise<FilterCompetitionsResponseData> {
   console.log("Send GET competition by filters request");
-  const session = await auth();
 
   const urlParams = new URLSearchParams();
 
@@ -22,12 +20,8 @@ export async function getCompetitionsByFilter(params: FilterCompetitionsParams):
   });
 
   const response: FilterCompetitionsResponse = await axiosInstance.get(
-    `/competition/search?${urlParams.toString()}`,
-    {
-      headers: {
-        Authorization: `Bearer ${session?.user.token}`,
-      }
-    });
+    `/competition/search?${urlParams.toString()}`
+  );
 
   return response.data;
 }
