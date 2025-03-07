@@ -5,7 +5,7 @@ import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
 import {
   CreatePaymentRequest,
-  CreatePaymentResponse,
+  CreatePaymentResponse, CreateWidgetPaymentRequest, CreateWidgetPaymentResponse,
   GetPaymentRequest,
   GetPaymentResponse
 } from "@/features/participation-payment";
@@ -17,6 +17,29 @@ export async function createPayment(params: CreatePaymentRequest) {
   try {
     const response: CreatePaymentResponse = await axiosInstance.post(
       "/payment",
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`
+        }
+      }
+    )
+
+    return { data: response.data };
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      return { error: e.response!.data.msg };
+    }
+  }
+}
+
+export async function createWidgetPayment(params: CreateWidgetPaymentRequest) {
+  console.log("Send POST create widget payment request");
+  const session = await auth();
+
+  try {
+    const response: CreateWidgetPaymentResponse = await axiosInstance.post(
+      "/payment/widget",
       params,
       {
         headers: {

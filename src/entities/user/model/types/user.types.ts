@@ -11,6 +11,7 @@ export type UserShort = {
   firstName: string;
   lastName: string;
   middleName?: string;
+  rating: number;
 }
 
 export type User = UserShort & {
@@ -19,9 +20,10 @@ export type User = UserShort & {
   userOrganizations?: Omit<OrganizationShort, "id" & "role">[],
 }
 
-export type Participant = UserShort & {
-  time?: string,
-  points?: number,
-  place?: number,
-  registrationDate: string
+export type Participant = {
+  fullName: string,
+  gender: string,
+  age: number,
+  rating: number,
+  category: string,
 }

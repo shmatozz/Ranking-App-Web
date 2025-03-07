@@ -15,15 +15,16 @@ export const Header = () => {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   const NavLinks = ({ isActive }: { isActive: (href: string) => boolean }) => (
-    <div className="flex flex-col lg-md:flex-row gap-4">
+    <div className="flex flex-col large:flex-row gap-2">
       <NavLink href="/calendar" label="Календарь" isActive={isActive} />
       <NavLink href="/ratings" label="Рейтинг" isActive={isActive} />
       <NavLink href="/about" label="О нас" isActive={isActive} />
+      <NavLink href="/useful" label="Полезное" isActive={isActive} />
     </div>
   );
 
   const NavLink = ({ href, label, isActive }: { href: string; label: string; isActive: (href: string) => boolean }) => (
-    <Link href={href} onClick={toggleMenu} className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-14">
+    <Link href={href} onClick={toggleMenu} className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-[50px]">
       <div className={clsx(
         "flex items-center justify-center w-full relative transition-colors",
         isActive(href) ? "text-blue-10" : "text-base-0"
@@ -52,7 +53,7 @@ export const Header = () => {
 
   return (
     <header
-      className="flex flex-row h-14 bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-4 z-50 lg-md:justify-center xs:px-8"
+      className="flex flex-row h-[50px] bg-blue-50 sticky top-0 justify-between gap-4 drop-shadow-lg px-4 z-50 large:justify-center xs:px-8"
     >
       {/* Logo */}
       <Link href={"/"}>
@@ -64,7 +65,7 @@ export const Header = () => {
       </Link>
 
       {/* Desktop Navigation */}
-      <nav className="hidden lg-md:flex w-full max-w-[56.25rem] h-full gap-4">
+      <nav className="hidden large:flex w-full max-w-[56.25rem] h-full gap-4">
         <NavLinks isActive={isActive}/>
       </nav>
 
@@ -78,7 +79,7 @@ export const Header = () => {
         </div>
 
         {/* Бургер-меню для мобильных */}
-        <button className="h-full w-[3.25rem] flex items-center justify-center lg-md:hidden" onClick={toggleMenu}>
+        <button className="h-full w-[3.25rem] flex items-center justify-center large:hidden" onClick={toggleMenu}>
           <Icon name={isMenuOpen ? "close" : "menu"} size={32} color="white"/>
         </button>
       </div>
@@ -86,7 +87,7 @@ export const Header = () => {
       {/* Мобильное меню */}
       {isMenuOpen && (
         <div
-          className="absolute top-14 right-0 gap-4 w-fit bg-blue-50 bg-opacity-85 shadow-md flex flex-col items-center py-4 lg-md:hidden rounded-bl-2xl -z-10">
+          className="absolute top-[50px] right-0 gap-4 w-fit bg-blue-50 bg-opacity-85 shadow-md flex flex-col items-center py-4 large:hidden rounded-bl-2xl -z-10">
           <NavLinks isActive={isActive}/>
           <div className={clsx(
             "flex items-center justify-center w-full relative transition-colors text-base-0",

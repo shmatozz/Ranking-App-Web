@@ -66,7 +66,7 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
     joinSwim({ uuid: swimId })
       .then((response) => {
         if (response && response.error) {
-          set({ hasError: true, errorMessage: response.error.message })
+          set({ hasError: true, errorMessage: response.error.message, selectedSwim: undefined })
         } else {
           useUserStore.getState().getUserInfo();
         }

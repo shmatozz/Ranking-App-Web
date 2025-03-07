@@ -34,7 +34,15 @@ export const Info = () => {
 
         <div className={"flex flex-col w-full gap-[2px] bg-base-5"}>
           <InfoRow title={"Название"} info={competition.organizationInfo.name}/>
-          <InfoRow title={"Контакты"} info={competition.contactLink ? competition.contactLink : competition.organizationInfo.email}/>
+          <InfoRow title={"Основной контакт"} info={competition.contactLink ? competition.contactLink : competition.organizationInfo.email}/>
+
+          {competition.contactLink2 && (
+            <InfoRow title={"Доп. контакт"} info={competition.contactLink2}/>
+          )}
+
+          {competition.contactLink3 && (
+            <InfoRow title={"Доп. контакт"} info={competition.contactLink3}/>
+          )}
         </div>
       </div>
 
@@ -57,7 +65,6 @@ export const Info = () => {
 
         <div className={"flex flex-col w-full gap-[2px] bg-base-5"}>
           <InfoRow title={"Тип соревнования"} info={competition.competitionType}/>
-          <InfoRow title={"Макс. участников"} info={competition.maxParticipants}/>
           <InfoRow title={"Дистанции"} info={getDistances(competition.events)}/>
         </div>
       </div>
@@ -100,7 +107,6 @@ const InfoLoading = () => {
         <p className={"text-bodyM_medium text-base-95"}>Общая информация</p>
         <div className={"flex flex-col w-full gap-[2px] bg-base-5"}>
           <InfoRow title={"Тип соревнования"}/>
-          <InfoRow title={"Макс. участников"}/>
           <InfoRow title={"Дистанции"}/>
         </div>
       </div>

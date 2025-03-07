@@ -3,12 +3,14 @@ import {useOrganizationStore} from "@/entities/organization";
 import {Swim} from "@/entities/swim";
 import {useSwimCreateStore} from "@/features/competition/create";
 import {createCompetition} from "@/features/competition/create";
+import {Participants} from "@/entities/competition";
 
 type CompetitionsCreateState = {
   name: string;
-  location: string; date: string; maxParticipants: number;
+  location: string; date: string;
   description: string;
   contacts: string[]; contactFromProfile: boolean;
+  participants: { id: Participants, name: string };
   swims: Omit<Swim, "eventUuid">[];
   isLoading: boolean;
   hasError: boolean;
@@ -20,9 +22,9 @@ type CompetitionsCreateActions = {
   setLocation: (location: string) => void;
   setDate: (date: string) => void;
   setDescription: (description: string) => void;
-  setMaxParticipants: (maxParticipants: number) => void;
   setContactFromProfile: (state: boolean) => void;
   setContact: (index: number, newContact: string) => void;
+  setParticipants: (item: { id: string, name: string }) => void;
   checkFormValid: () => void;
   addSwim: () => void;
   deleteSwim: (swimToDelete: Swim | Omit<Swim, "eventUuid">) => void;
@@ -32,10 +34,11 @@ type CompetitionsCreateActions = {
 
 const initialState: CompetitionsCreateState = {
   name: "",
-  location: "", date: "", maxParticipants: 0,
+  location: "", date: "",
   description: "",
   contacts: ["", "", ""], contactFromProfile: false,
   swims: [],
+  participants: { id: "AMATEURS", name: "Любители" },
   isLoading: false,
   hasError: false,
   isFormValid: false,
@@ -48,7 +51,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
     set((state) => ({
       isFormValid:
         state.name.trim() != "" && state.location.trim() !== "" &&
-        state.date.trim() !== "" && state.maxParticipants > 0 &&
+        state.date.trim() !== "" &&
         state.description.trim() !== "" && state.contacts.some(contact => contact.trim() !== "")  &&
         state.swims.length > 0 &&
         new Date(state.date).getTime() >= new Date(new Date().toISOString().split("T")[0]).getTime()
@@ -60,12 +63,11 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
   setLocation: (location: string) => { set({ location }); get().checkFormValid(); },
   setDate: (date: string) => { set({ date }); get().checkFormValid(); },
   setDescription: (description: string) => { set({ description }); get().checkFormValid(); },
-  setMaxParticipants: (maxParticipants: number) => { set({ maxParticipants }); get().checkFormValid(); },
 
   setContactFromProfile: (state) => {
     if (state) {
       set({
-        contacts: [useOrganizationStore.getState().organization?.email || ""],
+        contacts: [useOrganizationStore.getState().organization?.email || "", "", ""],
         contactFromProfile: true
       });
     } else {
@@ -85,6 +87,8 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
 
     get().checkFormValid();
   },
+
+  setParticipants: (item: { id: string, name: string }) => set({ participants: { id: item.id as Participants, name: item.name } }),
 
   addSwim: () => {
     const swimData = useSwimCreateStore.getState().getSwim();
@@ -108,7 +112,9 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       competitionDate: competition.date,
       description: competition.description,
       contactLink: competition.contacts[0],
-      maxParticipants: competition.maxParticipants,
+      contactLink2: competition.contacts[1].length > 0 ? competition.contacts[1] : undefined,
+      contactLink3: competition.contacts[2].length > 0 ? competition.contacts[2] : undefined,
+      participantsType: competition.participants.id,
       competitionType: "соревнование",
       events: competition.swims
     })

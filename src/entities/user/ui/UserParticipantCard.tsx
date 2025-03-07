@@ -1,8 +1,8 @@
 import React from "react";
-import {UserShort} from "@/entities/user";
+import {Participant} from "@/entities/user";
 
 interface UserParticipantCardProps {
-  user?: UserShort;
+  user?: Participant;
   isLoading?: boolean;
 }
 
@@ -15,8 +15,8 @@ export const UserParticipantCard: React.FC<UserParticipantCardProps> = (
         <div className={"min-w-9 h-9 rounded-full bg-base-5 animate-pulse"}/>
 
         <p className={"w-full bg-base-5 rounded-md animate-pulse"}>{"Иванов Иван Иванович"}</p>
-        <p className={"w-full max-w-[80px] text-center bg-base-5 rounded-md animate-pulse"}>1305</p>
-        <p className={"w-full max-w-[80px] text-center bg-base-5 rounded-md animate-pulse"}>25</p>
+        <p className={"hidden w-full max-w-[80px] text-center bg-base-5 rounded-md animate-pulse xs:block"}>1305</p>
+        <p className={"hidden w-full max-w-[120px] text-center bg-base-5 rounded-md animate-pulse xs:block"}>Любитель</p>
       </div>
     )
   }
@@ -27,15 +27,15 @@ export const UserParticipantCard: React.FC<UserParticipantCardProps> = (
       <div className={"min-w-9 h-9 rounded-full bg-base-5"}/>
 
       <p className={"w-full"}>
-        {`${props.user.lastName} ${props.user.firstName} ${props.user.middleName}`}
+        {`${props.user.fullName}`}
       </p>
 
-      <p className={"w-full max-w-[80px] text-center"}>
-        1305
+      <p className={"hidden w-full max-w-[80px] text-center xs:block"}>
+        {`${props.user.rating}`}
       </p>
 
-      <p className={"w-full max-w-[80px] text-center"}>
-        25
+      <p className={"hidden w-full max-w-[120px] text-center xs:block"}>
+        {props.user.category}
       </p>
     </div>
   )

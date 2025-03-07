@@ -1,4 +1,5 @@
 import {Swim} from "@/entities/swim";
+import {Participants} from "@/entities/competition";
 
 export type CreateCompetitionParams = {
   competitionName: string,
@@ -6,7 +7,9 @@ export type CreateCompetitionParams = {
   competitionDate: string,
   description: string,
   contactLink: string,
-  maxParticipants: number,
+  contactLink2?: string,
+  contactLink3?: string,
+  participantsType: Participants;
   competitionType: string,
   events: Omit<Swim, "eventUuid">[],
 }

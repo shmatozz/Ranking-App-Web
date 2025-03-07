@@ -7,39 +7,26 @@ import {useUserStore} from "@/entities/user";
 import {Button, FileInput, TextInput} from "@/shared/ui";
 import {formatDate, getTime} from "@/shared/utils";
 import {redirect, useSearchParams} from "next/navigation";
-import {usePaymentStore} from "@/features/participation-payment";
+import {usePaymentStore, YooKassaWidget} from "@/features/participation-payment";
 
 export const Registration = () => {
-  const { competition, selectedSwim } = useCompetitionStore();
+  const { competition, selectedSwim, joinSwim } = useCompetitionStore();
   const { user, getUserShortInfo } = useUserStore();
   const isUserLoading = useUserStore(state => state.isLoading)
-  const { payment, paymentURL , createPayment, isLoading } = usePaymentStore();
+  const {
+    payment, token ,
+    createWidgetPayment, isLoading , clearPayment
+  } = usePaymentStore();
 
   useEffect(() => {
     if (!user && !isUserLoading) getUserShortInfo()
   }, [getUserShortInfo, isUserLoading, user]);
-
-  useEffect(() => {
-    if (paymentURL && payment) {
-      localStorage.setItem("payment", payment.id);
-      localStorage.setItem("swimID", selectedSwim!.eventUuid);
-      redirect(paymentURL);
-    }
-  }, [payment, paymentURL, selectedSwim]);
 
   const params = useSearchParams()
   if (!competition || !selectedSwim) {
     const newParams = new URLSearchParams(params);
     newParams.set("tab", "swims");
     redirect(`?${newParams.toString()}`);
-  }
-
-  if (payment) {
-    return (
-      <div className={"flex flex-col p-4 gap-4"}>
-        Производиться оплата
-      </div>
-    )
   }
 
   return (
@@ -65,19 +52,34 @@ export const Registration = () => {
         <TextInput title={"Экстренный телефон"} value={user?.emergencyPhone} disabled/>
       </div>
 
-      <FileInput title={"Загрузить мед. справку"} />
+      <FileInput title={"Загрузить мед. справку"}/>
 
       <Button
         variant={"primary"} size={"M"} isLoading={isLoading}
         className={"w-full max-w-[350px] self-center"}
-        onClick={() => createPayment(
-          100,
-          `http://localhost:3000/calendar/competition?id=${competition?.competitionUuid}&tab=swims`,
+        onClick={() => createWidgetPayment(
+          selectedSwim.price,
           `Оплата участия в заплыве ${getSwimShort(selectedSwim)}`
         )}
+        disabled={user?.userEvents?.some((swim) => swim.eventUuid == selectedSwim.eventUuid)}
       >
-        {"Оплатить" + (selectedSwim.cost ? selectedSwim.cost!.toString() : "")}
+        {user?.userEvents?.some((swim) => swim.eventUuid == selectedSwim.eventUuid) ?
+          "Вы уже зарегистрированы" :
+          `Оплатить ${selectedSwim.price} ₽`}
       </Button>
+
+      {payment && token && (
+        <YooKassaWidget
+          confirmationToken={token}
+          onComplete={() => {
+            joinSwim(selectedSwim.eventUuid);
+            clearPayment();
+          }}
+          onError={(error: never) => {
+            console.error("Payment error:", error);
+          }}
+        />
+      )}
     </div>
   )
 }

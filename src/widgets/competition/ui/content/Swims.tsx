@@ -7,38 +7,19 @@ import {SwimCreateForm} from "@/features/competition/create";
 import {useWhoAmIStore} from "@/features/who-am-i";
 import {useUserStore} from "@/entities/user";
 import {useRouter, useSearchParams} from "next/navigation";
-import {usePaymentStore} from "@/features/participation-payment";
 
 export const Swims = () => {
   const session = useSession();
   const router = useRouter();
   const {
     competition, isLoading, isDeleting,
-    deleteSwim, addSwim, getSwimResultsTemplate, joinSwim, setSelectedSwim
+    deleteSwim, addSwim, getSwimResultsTemplate, setSelectedSwim
   } = useCompetitionStore();
   const { whoAmI } = useWhoAmIStore();
   const isWhoAmILoading = useWhoAmIStore(state => state.isLoading);
   const { user, getUserInfo } = useUserStore();
-  const { payment, getPayment } = usePaymentStore();
-  const isPaymentLoading = usePaymentStore(state => state.isLoading);
 
   const [swimFormVisible, setSwimFormVisible] = React.useState(false);
-
-  useEffect(() => {
-    const paymentID = localStorage.getItem("payment");
-    if (paymentID !== null && !isPaymentLoading) {
-      getPayment(paymentID);
-    }
-  }, [getPayment, isPaymentLoading]);
-
-  useEffect(() => {
-    if (payment && payment.status == "succeeded") {
-      const swimID = localStorage.getItem("swimID");
-      if (swimID) joinSwim(swimID);
-      localStorage.removeItem("swimID")
-      localStorage.removeItem("payment");
-    }
-  }, [joinSwim, payment]);
 
   useEffect(() => {
     if (!user && whoAmI && !(whoAmI.organization) && !isWhoAmILoading) getUserInfo();
