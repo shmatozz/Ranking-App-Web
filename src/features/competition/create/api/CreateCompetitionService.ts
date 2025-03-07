@@ -8,7 +8,7 @@ import {auth} from "@/shared/lib";
 export async function createCompetition(
   params: CreateCompetitionParams,
 ) {
-  console.log("Send POST create competition request")
+  console.log("Send POST create competition request", params)
   const session = await auth();
 
   try {

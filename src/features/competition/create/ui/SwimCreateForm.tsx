@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import {Button, Radio, TextInput} from "@/shared/ui";
-import {useSwimCreateStore} from "@/features/competition/create";
+import {Button, Dropdown, Radio, TextInput} from "@/shared/ui";
+import {swimStyles, useSwimCreateStore} from "@/features/competition/create";
 
 interface SwimCreateFormProps {
   onCancel: () => void;
@@ -24,6 +24,12 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
           title={"Дистанция"} type={"number"} min={0}
         />
 
+
+        <TextInput
+          value={state.maxParticipants} onChange={(e) => state.setMaxParticipants(Number(e.target.value))}
+          title={"Макс. участников"} type={"text"}
+        />
+
         <TextInput
           value={state.ageFrom} onChange={(e) => state.setAgeFrom(Number(e.target.value))}
           title={"Возраст (от)"} type={"text"}
@@ -36,10 +42,16 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
       </div>
 
       <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-4"}>
-        <TextInput
-          value={state.style} onChange={(e) => state.setStyle(e.target.value)}
-          title={"Стиль"} type={"text"}
-        />
+        <div className={"flex flex-col w-full justify-between"}>
+          <p className={"text-bodyS_regular text-base-40"}>Стиль плаванья</p>
+
+          <Dropdown
+            items={swimStyles}
+            selectedItems={[state.style]}
+            onItemSelected={state.setStyle}
+            placeholder={"Стиль"}
+          />
+        </div>
 
         <div className="flex flex-row w-full gap-4">
           <TextInput

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {Button, Checkbox, FileInput, Icon, IconButton, TextInput} from "@/shared/ui";
-import {useCompetitionsCreateStore} from "@/widgets/profile";
+import {Button, Checkbox, Dropdown, FileInput, Icon, IconButton, TextInput} from "@/shared/ui";
+import {participantsType, useCompetitionsCreateStore} from "@/widgets/profile";
 import {SwimCard} from "@/entities/swim/ui/SwimCard";
 import {SwimCreateForm} from "@/features/competition/create";
 
@@ -44,10 +44,16 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
             inputSize={"M"} title={"Дата"} type={"date"} min={new Date().toISOString().split("T")[0]}
           />
 
-          <TextInput
-            value={state.maxParticipants} onChange={(e) => state.setMaxParticipants(Number(e.target.value))}
-            inputSize={"M"} title={"Макс. кол-во участников"} type={"number"} min={0} icon={"members"}
-          />
+          <div className={"flex flex-col w-full"}>
+            <p className={"text-bodyS_regular text-base-40 text-nowrap"}>Тип участников</p>
+
+            <Dropdown
+              items={participantsType}
+              selectedItems={[state.participants]}
+              onItemSelected={(item) => state.setParticipants(item)}
+              placeholder={"Тип участников"}
+            />
+          </div>
         </div>
 
         <TextInput
