@@ -11,6 +11,7 @@ export type UserShort = {
   firstName: string;
   lastName: string;
   middleName?: string;
+  rating: number;
 }
 
 export type User = UserShort & {

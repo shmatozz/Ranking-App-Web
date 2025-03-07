@@ -3,7 +3,7 @@
 import React, {useEffect} from "react";
 import {Button} from "@/shared/ui";
 import {useMembersStore} from "@/widgets/profile";
-import {UserParticipantCard} from "@/entities/user";
+import {UserMemberCard, UserParticipantCard} from "@/entities/user";
 import {SendInviteForm} from "@/features/organization-join";
 import {useOrganizationStore} from "@/entities/organization";
 
@@ -30,14 +30,12 @@ export const Members= () => {
         <div className={"flex flex-row w-full items-center gap-4"}>
           <p className={"w-full text-bodyS_regular text-base-95 text-center align-middle xs:text-bodyM_regular"}>Всего участников</p>
           <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Средний рейтинг</p>
-          <p className={"w-full text-bodyS_regular text-base-95 text-center xs:text-bodyM_regular"}>Средняя активность</p>
         </div>
 
         {!isLoading && members && (
           <div className={"flex flex-row w-full gap-1"}>
             <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? members.length : "-"}</p>
             <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? 1305 : "-"}</p>
-            <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? 25 : "-"}</p>
           </div>
         )}
 
@@ -45,7 +43,6 @@ export const Members= () => {
           <div className={"flex flex-row w-full gap-1 text-h5_bold text-base-5"}>
             <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>50</p></div>
             <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>1305</p></div>
-            <div className={"flex w-full justify-center"}><p className={"w-fit px-4 bg-base-5 text-center rounded-md animate-pulse"}>25</p></div>
           </div>
         )}
       </div>
@@ -55,15 +52,13 @@ export const Members= () => {
         <div className={"flex flex-row w-full gap-[10px] px-4"}>
           <div className={"min-w-9"}/>
           <p className={"text-bodyS_medium text-base-95 w-full xs:text-bodyM_medium"}>ФИО</p>
-          <p
-            className={"text-bodyS_medium text-base-95 w-full max-w-[80px] text-center xs:text-bodyM_medium"}>Рейтинг</p>
-          <p className={"text-bodyS_medium text-base-95 w-full max-w-[80px] text-center xs:text-bodyM_medium"}>Старты</p>
+          <p className={"text-bodyS_medium text-base-95 w-full max-w-[80px] text-center xs:text-bodyM_medium"}>Рейтинг</p>
         </div>
 
         <div className={"h-[2px] w-full bg-base-5"}/>
 
         {!isLoading && members && members.map((member) => (
-          <UserParticipantCard key={member.email} user={member}/>
+          <UserMemberCard key={member.email} user={member}/>
         ))}
 
         {!isLoading && members && members.length == 0 && (
