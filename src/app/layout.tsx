@@ -4,6 +4,7 @@ import {Header, Footer} from "@/widgets/navigation";
 import React from "react";
 import {FloatingCircles} from "@/shared/ui";
 import Script from "next/script";
+import * as process from "node:process";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -31,7 +32,7 @@ export default function RootLayout({
 
         <Footer/>
 
-        <Script src="https://api-maps.yandex.ru/v3/?apikey=4ea655dd-c6a3-417c-b49f-c294a34336df&lang=ru_RU" strategy="beforeInteractive" />
+        <Script src={`https://api-maps.yandex.ru/v3/?apikey=${process.env.NEXT_PUBLIC_YANDEX_API_KEY}&lang=ru_RU`} strategy="beforeInteractive" />
       </body>
     </html>
   );
