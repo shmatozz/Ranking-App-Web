@@ -26,8 +26,20 @@ export const Map = () => {
     );
   }, []);
 
+  const handleMapClick = async (_object: DomEventHandlerObject, event: DomEvent) => {
+    if (createAllowed) {
+      setFormVisible(true);
+      setCoordinates(event.coordinates)
+    }
+  };
+
   if (!reactifiedApi) {
-    return null;
+    return (
+      <div className={"flex relative h-full w-full items-center justify-center"}>
+        <p className={"text-bodyM_regular text-base-95 z-10"}>Загрузка карты</p>
+        <div className={"absolute w-full h-full bg-base-5 animate-pulse"}/>
+      </div>
+    )
   }
 
   const {
@@ -38,13 +50,6 @@ export const Map = () => {
     YMapMarker,
     YMapListener,
   } = reactifiedApi;
-
-  const handleMapClick = async (_object: DomEventHandlerObject, event: DomEvent) => {
-    if (createAllowed) {
-      setFormVisible(true);
-      setCoordinates(event.coordinates)
-    }
-  };
 
   return (
     <YMap location={LOCATION} className="w-full h-full">

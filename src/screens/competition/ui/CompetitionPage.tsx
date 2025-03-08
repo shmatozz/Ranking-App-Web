@@ -25,8 +25,8 @@ export const CompetitionPage = () => {
   }, []);
 
   useEffect(() => {
-    if (((whoAmI === undefined) || (session.data?.user?.email !== whoAmI?.email)) && !isLoading) getWhoAmI()
-  }, [getWhoAmI, isLoading, session.data?.user?.email, whoAmI]);
+    if (session.data && ((whoAmI === undefined) || (session.data?.user?.email !== whoAmI?.email)) && !isLoading) getWhoAmI()
+  }, [getWhoAmI, isLoading, session.data, whoAmI]);
 
   if (hasError) {
     return (
