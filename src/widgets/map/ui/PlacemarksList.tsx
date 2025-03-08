@@ -1,9 +1,13 @@
+"use client"
+
 import React, {useEffect} from "react";
 import {PlacemarkCreateForm, useMapStore, usePlacemarkCreateStore} from "@/features/training-map";
 import {Checkbox} from "@/shared/ui";
 import {useWhoAmIStore} from "@/features/who-am-i";
+import {useSession} from "next-auth/react";
 
 export const PlacemarksList = () => {
+  const session = useSession()
   const {
     createAllowed, formVisible,
     setCreateAllowed, setFormVisible, getMarker
@@ -12,8 +16,8 @@ export const PlacemarksList = () => {
   const { whoAmI, getWhoAmI } = useWhoAmIStore()
 
   useEffect(() => {
-    if (!whoAmI) getWhoAmI()
-  }, [whoAmI, getWhoAmI]);
+    if (!whoAmI && session.data) getWhoAmI()
+  }, [whoAmI, getWhoAmI, session.data]);
 
   return (
     <div className={"h-fit p-4"}>

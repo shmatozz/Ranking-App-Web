@@ -3,6 +3,7 @@ import "./globals.css";
 import {Header, Footer} from "@/widgets/navigation";
 import React from "react";
 import {FloatingCircles} from "@/shared/ui";
+import Script from "next/script";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -29,6 +30,8 @@ export default function RootLayout({
         </main>
 
         <Footer/>
+
+        <Script src="https://api-maps.yandex.ru/v3/?apikey=4ea655dd-c6a3-417c-b49f-c294a34336df&lang=ru_RU" strategy="beforeInteractive" />
       </body>
     </html>
   );
