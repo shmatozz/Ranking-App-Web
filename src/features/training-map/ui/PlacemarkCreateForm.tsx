@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Button, TextInput} from "@/shared/ui";
-import {usePlacemarkCreateStore} from "@/features/training-map";
+import {useMapStore, usePlacemarkCreateStore} from "@/features/training-map";
 
 interface PlacemarkCreateFormProps {
   onSubmit: () => void;
@@ -16,6 +16,8 @@ export const PlacemarkCreateForm: React.FC<PlacemarkCreateFormProps> = (
     name, description, email, coordinates, isFormValid,
     setName, setDescription, setEmail
   } = usePlacemarkCreateStore();
+
+  const { isLoading } = useMapStore();
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-base-95 bg-opacity-50 z-[5]">
@@ -52,7 +54,7 @@ export const PlacemarkCreateForm: React.FC<PlacemarkCreateFormProps> = (
 
           <Button
             variant={"primary"} palette={"blue"} className={"w-full"}
-            onClick={props.onSubmit} disabled={!isFormValid}
+            onClick={props.onSubmit} disabled={!isFormValid} isLoading={isLoading}
           >
             Добавить метку
           </Button>

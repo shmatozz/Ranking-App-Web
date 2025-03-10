@@ -1,27 +1,82 @@
 'use client';
 
 import { create } from "zustand/react";
-import {Marker} from "@/features/training-map";
+import {deletePoint, getPoints, Marker, PointData, savePoint} from "@/features/training-map";
 
 type MapState = {
-  placemarks: Marker[];
+  placemarks: PointData[];
+  selectedPointID?: number;
+  editMode: boolean;
   isLoading: boolean;
   hasError: boolean;
   errorMessage?: string;
 }
 
 type MapActions = {
-  addPlacemark: (placemark: Marker) => void;
+  setSelectedPointID: (selectedPointID: number | undefined) => void;
+  setEditMode: (allowed: boolean) => void;
+  addPlacemark: (placemark: Marker, callback?: () => void) => void;
+  getPlacemarks: () => void;
+  deletePlacemark: (id: number) => void;
 }
 
 const initialState: MapState = {
   placemarks: [],
+  editMode: false,
   isLoading: false,
   hasError: false,
 }
 
-export const useMapStore = create<MapState & MapActions>((set) => ({
+export const useMapStore = create<MapState & MapActions>((set, get) => ({
   ...initialState,
 
-  addPlacemark: (placemark: Marker) => set((state) => ({ placemarks: [...state.placemarks, placemark] })),
+  setSelectedPointID: (selectedPointID: number | undefined) => set({ selectedPointID }),
+  setEditMode: (allowed: boolean) => set({ editMode: allowed }),
+
+  addPlacemark: (placemark: Marker, callback) => {
+    set({ isLoading: true, hasError: false });
+
+    savePoint({ ...placemark })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          get().getPlacemarks();
+          if (callback) callback();
+        }
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message}))
+      .finally(() => set({ isLoading: false }))
+  },
+
+  getPlacemarks: () => {
+    set({ isLoading: true, hasError: false });
+
+    getPoints()
+      .then((response) => {
+        if (response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else if (response.data) {
+          set({ placemarks: response.data })
+          console.log(response.data);
+        }
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message}))
+      .finally(() => set({ isLoading: false }))
+  },
+
+  deletePlacemark: (id: number) => {
+    set({ isLoading: true, hasError: false });
+
+    deletePoint({ id })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          get().getPlacemarks();
+        }
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message}))
+      .finally(() => set({ isLoading: false }))
+  }
 }))
