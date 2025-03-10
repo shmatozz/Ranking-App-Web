@@ -1,52 +1,55 @@
 'use client'
 
-import React from "react";
-import {Button, Dropdown} from "@/shared/ui";
-import {ageCategoryFilters, competitionsTypesFilters, useRatingsStore} from "@/features/ratings";
+import React, {useEffect} from "react";
+import {Dropdown, TextInput} from "@/shared/ui";
+import {useRatingsStore} from "@/features/ratings";
+import {categories, gender} from "@/widgets/competition";
+import {useSearchParams} from "next/navigation";
 
 export const RatingsHeader = () => {
   const filters = useRatingsStore((state) => state.filters);
   const filtersActions = useRatingsStore((state) => state.filtersActions);
 
-  const { getRatings, clearFilters } = useRatingsStore();
+  const { getRatings, setPage } = useRatingsStore();
+
+  const searchParams = useSearchParams();
+  const page = searchParams.get("p");
+
+  useEffect(() => {
+    setPage(Number(page ? page : 0));
+  }, [setPage, page]);
+
+  useEffect(() => {
+    document.title = "Рейтинг"
+  }, []);
+
+  useEffect(() => {
+    getRatings();
+  }, [filters, getRatings, page]);
 
   return (
     <div className={"flex flex-col gap-4"}>
       <label className={"text-h4 text-base-100"}>Рейтинг спортсменов</label>
 
-      <div className={"flex flex-col gap-3 xs:flex-row"}>
+      <div className={"flex flex-col gap-3 items-center xs:flex-row"}>
         <Dropdown
-          items={ageCategoryFilters}
-          selectedItems={filters.ageCategory ? [filters.ageCategory] : []}
-          onItemSelected={filtersActions.setAgeCategory}
-          placeholder={"Возрастная группа"}
+          items={gender}
+          selectedItems={filters.gender ? [filters.gender] : []}
+          onItemSelected={(item) => filtersActions.setGender(item as { id: "MALE" | "FEMALE" | "RESET", name: string })}
+          placeholder={"Пол"}
         />
 
         <Dropdown
-          items={competitionsTypesFilters}
-          selectedItems={filters.competitionsType ? [filters.competitionsType] : []}
-          onItemSelected={filtersActions.setCompetitionsType}
-          placeholder={"Вид страртов"}
+          items={categories}
+          selectedItems={filters.category ? [filters.category] : []}
+          onItemSelected={filtersActions.setCategory}
+          placeholder={"Категория"}
         />
 
-        <div className={"flex flex-row w-full gap-3"}>
-          <Button
-            variant={"primary"} palette={"blue"} size={"S"} className={"w-full"}
-            onClick={getRatings}
-          >
-            Применить
-          </Button>
-
-          <Button
-            variant={"tertiary"} palette={"gray"} size={"S"}
-            onClick={() => {
-              clearFilters();
-              getRatings();
-            }} className={"w-full"}
-          >
-            Сбросить
-          </Button>
-        </div>
+        <TextInput
+          value={filters.startFrom ? filters.startFrom : ""} onChange={(e) => filtersActions.setStartFrom(Number(e.target.value))}
+          title={"Кол-во стартов, от"} animatedLabel={false}
+        />
       </div>
     </div>
   )

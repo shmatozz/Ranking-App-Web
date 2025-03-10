@@ -17,7 +17,7 @@ export const FiltersHeader = () => {
 
   useEffect(() => {
     getCompetitions()
-  }, [getCompetitions, state.page]);
+  }, [getCompetitions, state.page, state.arrange]);
 
   useEffect(() => {
     setPage(Number(page ? page : 0));
