@@ -5,42 +5,69 @@ import {PlacemarkCreateForm, useMapStore, usePlacemarkCreateStore} from "@/featu
 import {Checkbox} from "@/shared/ui";
 import {useWhoAmIStore} from "@/features/who-am-i";
 import {useSession} from "next-auth/react";
+import {PlacemarkCard} from "@/features/training-map/ui/PlacemarkCard";
 
 export const PlacemarksList = () => {
   const session = useSession()
+  const {formVisible, setFormVisible, getMarker, clearForm} = usePlacemarkCreateStore();
   const {
-    createAllowed, formVisible,
-    setCreateAllowed, setFormVisible, getMarker
-  } = usePlacemarkCreateStore();
-  const { addPlacemark } = useMapStore();
+    placemarks, selectedPointID, editMode,
+    setEditMode, addPlacemark, getPlacemarks, deletePlacemark, setSelectedPointID
+  } = useMapStore();
   const { whoAmI, getWhoAmI } = useWhoAmIStore()
 
   useEffect(() => {
     if (!whoAmI && session.data) getWhoAmI()
   }, [whoAmI, getWhoAmI, session.data]);
 
+  useEffect(() => {
+    getPlacemarks()
+  }, [getPlacemarks]);
+
+  const handlerScrollUp = () => {
+    document.body.scrollIntoView({
+      block: "start",
+      behavior: "smooth",
+    });
+  }
+
   return (
-    <div className={"h-fit p-4"}>
+    <div className={"flex flex-col gap-2 h-fit p-4"}>
       <div className={"flex flex-row w-full justify-between"}>
         <label className={"text-h5_bold text-base-95 w-full"}>Доступные места</label>
 
         {whoAmI && whoAmI.admin && (
           <Checkbox
-            checked={createAllowed} onClick={() => setCreateAllowed(!createAllowed)}
+            checked={editMode} onClick={() => setEditMode(!editMode)}
             text={"Режим редактирования"} className={"max-w-fit"}
           />
         )}
       </div>
 
-      <div className={"flex flex-col"}>
-        *Список карточек меток*
+      <div className={"flex flex-col gap-4"}>
+        {placemarks.length > 0 && placemarks.map((item) => (
+          <PlacemarkCard
+            key={item.id}
+            placemark={item}
+            selected={selectedPointID === item.id}
+            onClick={() => {
+              setSelectedPointID(selectedPointID === item.id ? undefined : item.id);
+              handlerScrollUp();
+            }}
+            admin={editMode} onDeletePress={() => deletePlacemark(item.id)}
+          />
+        ))}
+
+        {placemarks.length === 0 && (
+          <p className={"text-bodyM_regular text-base-95 text-center"}>В данный момент информация отсутвует</p>
+        )}
       </div>
 
       {formVisible && (
         <PlacemarkCreateForm
           onSubmit={() => {
-            addPlacemark(getMarker());
-            setFormVisible(false);
+            addPlacemark(getMarker(), () =>  setFormVisible(false));
+            clearForm();
           }}
           onCancel={() => setFormVisible(false)}
         />

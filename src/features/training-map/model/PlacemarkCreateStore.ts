@@ -8,7 +8,6 @@ type PlacemarkCreateState = {
   name: string; description: string;
   email: string;
   coordinates: LngLat;
-  createAllowed: boolean;
   formVisible: boolean;
   isFormValid: boolean;
   isLoading: boolean;
@@ -21,17 +20,16 @@ type PlacemarkCreateActions = {
   setDescription: (description: string) => void;
   setEmail: (email: string) => void;
   setCoordinates: (coordinates: LngLat) => void;
-  setCreateAllowed: (allowed: boolean) => void;
   setFormVisible: (visible: boolean) => void;
   checkFormValid: () => void;
   getMarker: () => Marker;
+  clearForm: () => void;
 }
 
 const initialState: PlacemarkCreateState = {
   name: "", description: "",
   email: "",
   coordinates: [0, 0],
-  createAllowed: false,
   formVisible: false,
   isFormValid: false,
   isLoading: false,
@@ -53,7 +51,6 @@ export const usePlacemarkCreateStore = create<PlacemarkCreateState & PlacemarkCr
   setDescription: (description) => { set({ description }); get().checkFormValid(); },
   setName: (name) => { set({name}); get().checkFormValid(); },
   setCoordinates: (coordinates) => set({ coordinates }),
-  setCreateAllowed: (allowed: boolean) => set({ createAllowed: allowed }),
   setFormVisible: (visible: boolean) => set({ formVisible: visible }),
 
   getMarker: () => {
@@ -68,5 +65,7 @@ export const usePlacemarkCreateStore = create<PlacemarkCreateState & PlacemarkCr
       },
       email: state.email
     }
-  }
+  },
+
+  clearForm: () => set(initialState),
 }))

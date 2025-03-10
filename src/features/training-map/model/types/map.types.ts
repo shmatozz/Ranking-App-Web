@@ -9,3 +9,17 @@ export type Marker = {
   },
   email: string
 }
+
+export type PointData = {
+  id: number,
+  geoJson: {
+    geometry: {
+      type: string,
+      coordinates: LngLat
+    },
+    properties: {
+      name: string,
+      description: string
+    }
+  }
+}
