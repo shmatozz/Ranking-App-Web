@@ -4,6 +4,7 @@ export {Radio} from "./Button/Radio";
 export {Checkbox} from "./Button/Checkbox";
 
 export {ChangePasswordForm} from "./Forms/ChangePasswordForm";
+export {Paging} from "./Forms/Paging";
 
 export {Icon, icons} from "./Icons/Icon";
 export {Logo} from "./Illustrations/Logo";
