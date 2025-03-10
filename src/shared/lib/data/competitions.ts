@@ -18,7 +18,7 @@ export function splitCompetitions(competitions: Competition[]) {
   return { upcoming: upcoming, passed: passed };
 }
 
-export type ArrangeOption = "date-closer" | "date-farther" | "participants-more" | "participants-less" | "name";
+export type ArrangeOption = "date-closer" | "date-farther" | "name";
 
 export function sortCompetitions(
   competitions: Competition[],

@@ -48,7 +48,7 @@ export const RatingsHeader = () => {
 
         <TextInput
           value={filters.startFrom ? filters.startFrom : ""} onChange={(e) => filtersActions.setStartFrom(Number(e.target.value))}
-          title={"Рейтинг от"} animatedLabel={false}
+          title={"Кол-во стартов, от"} animatedLabel={false}
         />
       </div>
     </div>

@@ -54,9 +54,7 @@ const initialState: CalendarState = {
 export const useCalendarStore = create<CalendarState & CalendarActions>((set,get) => ({
   ...initialState,
 
-  setArrange: (item) => {
-    set((state) => ({arrange: item, competitions: sortCompetitions(state.competitions!, item.id)}))
-  },
+  setArrange: (item) => {set({ arrange: item })},
 
   filtersActions: {
     setName: (name: string) => set((state) => ({ filters: {...state.filters, name} })),
@@ -76,7 +74,12 @@ export const useCalendarStore = create<CalendarState & CalendarActions>((set,get
   getCompetitions: () => {
     set({ isLoading: true, hasError: false })
 
-    getCompetitionsByFilter({...get().filters, page: get().page})
+    getCompetitionsByFilter({
+      ...get().filters,
+      page: get().page,
+      property: get().arrange.id.includes("date") ? "date" : "name",
+      direction: get().arrange.id == "date-closer" || get().arrange.id == "name" ? "ASC" : "DESC",
+    })
       .then((data) => {
         set({ competitions: sortCompetitions(data.content, get().arrange.id), totalPages: data.totalPages, totalResults: data.totalElements })
       })

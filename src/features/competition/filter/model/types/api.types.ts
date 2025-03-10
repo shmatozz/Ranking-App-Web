@@ -13,7 +13,9 @@ export type Filters = {
 
 export type Pages = {
   page?: number,
-  size?: number
+  size?: number,
+  property?: string,
+  direction?: "DESC" | "ASC",
 }
 
 

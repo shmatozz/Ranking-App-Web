@@ -17,6 +17,9 @@ export async function getRating(params: FilterRatingParams) {
       }
     });
 
+    urlParams.append("property", "rating");
+    urlParams.append("direction", "DESC");
+
     const response: FilterRatingResponse = await axiosInstance.get(
       `/user/rating-search?${urlParams.toString()}`
     );
