@@ -24,6 +24,7 @@ export const icons = {
   medal: Icons.Medal,
   members: Icons.Members,
   menu: Icons.Menu,
+  photo: Icons.Photo,
   plus: Icons.Plus,
   podium: Icons.Podium,
   radioBlank: Icons.RadioBlank,

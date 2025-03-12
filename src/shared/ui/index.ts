@@ -9,6 +9,7 @@ export {Paging} from "./Forms/Paging";
 export {Icon, icons} from "./Icons/Icon";
 export {Logo} from "./Illustrations/Logo";
 export {FloatingCircles} from "./Illustrations/FloatingCircles";
+export {ImageLoader} from "./Illustrations/ImageLoader";
 
 export {TextInput} from "./Input/TextInput";
 export {NumberHolder} from "./Input/NumberHolder";
