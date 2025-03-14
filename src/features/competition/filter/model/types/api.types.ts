@@ -16,6 +16,7 @@ export type Pages = {
   size?: number,
   property?: string,
   direction?: "DESC" | "ASC",
+  status?: "CREATED" | "IN_PROGRESS" | "ENDED"
 }
 
 

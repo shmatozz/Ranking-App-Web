@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import {useUserStore} from "@/entities/user";
 import {useOrganizationStore} from "@/entities/organization";
-import {FileInput, Icon, ImageLoader} from "@/shared/ui";
+import {Icon, ImageLoader} from "@/shared/ui";
 import {useWhoAmIStore} from "@/features/who-am-i";
 
 export const Photo = () => {

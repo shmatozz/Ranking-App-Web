@@ -28,6 +28,7 @@ type CalendarState = {
   totalResults?: number;
   arrange: ArrangeFilter;
   filters: FiltersState;
+  showPastEvents?: boolean;
   isLoading: boolean;
   hasError: boolean;
 };
@@ -37,7 +38,7 @@ type CalendarActions = {
   setPage: (page: number) => void,
   filtersActions: FiltersActions;
   clearFilters: () => void;
-  getCompetitions: () => void;
+  getCompetitions: (withPast?: boolean) => void;
 };
 
 const initialState: CalendarState = {
@@ -47,6 +48,7 @@ const initialState: CalendarState = {
   totalResults: 0,
   arrange: { id: "date-closer", name: "Дата (ближе)"},
   filters: {},
+  showPastEvents: false,
   isLoading: false,
   hasError: false,
 };
@@ -71,7 +73,7 @@ export const useCalendarStore = create<CalendarState & CalendarActions>((set,get
 
   clearFilters: () => set({ filters: {} }),
 
-  getCompetitions: () => {
+  getCompetitions: (withPast?: boolean) => {
     set({ isLoading: true, hasError: false })
 
     getCompetitionsByFilter({
@@ -79,6 +81,7 @@ export const useCalendarStore = create<CalendarState & CalendarActions>((set,get
       page: get().page,
       property: get().arrange.id.includes("date") ? "date" : "name",
       direction: get().arrange.id == "date-closer" || get().arrange.id == "name" ? "ASC" : "DESC",
+      status: withPast ? undefined : "CREATED"
     })
       .then((data) => {
         set({ competitions: sortCompetitions(data.content, get().arrange.id), totalPages: data.totalPages, totalResults: data.totalElements })

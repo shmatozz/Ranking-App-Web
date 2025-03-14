@@ -101,7 +101,7 @@ export const FiltersHeader = () => {
         <div className={"flex flex-col w-full gap-3 lg-md:w-1/2 2xs:flex-row"}>
           <Button
             variant={"primary"} palette={"blue"} size={"S"} className={"w-full"}
-            onClick={state.getCompetitions}
+            onClick={() => state.getCompetitions()}
           >
             Применить
           </Button>
