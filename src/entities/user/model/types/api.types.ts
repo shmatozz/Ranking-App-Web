@@ -10,3 +10,6 @@ export type UserResponse = {
   data: User;
 }
 
+export type uploadUserPhotoRequest = {
+  file: File
+}

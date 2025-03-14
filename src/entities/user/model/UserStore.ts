@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from "zustand/react";
-import {getUserInfo, getUserShortInfo, User} from "@/entities/user";
+import {getUserInfo, getUserShortInfo, uploadUserPhoto, User} from "@/entities/user";
 import {updatePasswordParams} from "@/shared/api/types";
 import {updatePassword} from "@/shared/api/common";
 import {useCompetitionsStore} from "@/widgets/profile";
@@ -16,10 +16,11 @@ type UserState = {
 type UserActions = {
   getUserShortInfo: () => void;
   getUserInfo: () => void;
+  uploadUserPhoto: (photo: File) => void;
   updatePassword: (params: updatePasswordParams) => void;
 }
 
-export const useUserStore = create<UserState & UserActions>((set) => ({
+export const useUserStore = create<UserState & UserActions>((set, get) => ({
   user: undefined,
   isLoading: false,
   hasError: false,
@@ -54,6 +55,12 @@ export const useUserStore = create<UserState & UserActions>((set) => ({
         set({hasError: true})
       })
       .finally(() => set({ isLoading: false }))
+  },
+
+  uploadUserPhoto: (photo: File) => {
+    uploadUserPhoto({ file: photo })
+      .then(() => get().getUserInfo())
+      .catch(() => set({ hasError: true }))
   },
 
   updatePassword: (params: updatePasswordParams) => {

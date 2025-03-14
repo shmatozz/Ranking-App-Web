@@ -1,6 +1,6 @@
 'use server';
 
-import {UserResponse, UserShort, UserShortResponse} from "@/entities/user";
+import {uploadUserPhotoRequest, UserResponse, UserShort, UserShortResponse} from "@/entities/user";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {auth} from "@/shared/lib";
 import {AxiosError} from "axios";
@@ -39,3 +39,27 @@ export async function getUserInfo() {
   }
 }
 
+export async function uploadUserPhoto(params: uploadUserPhotoRequest) {
+  console.log("Send POST upload user photo request");
+  const session = await auth();
+
+  const formData = new FormData();
+  formData.set("file", params.file);
+
+  try {
+    await axiosInstance.post(
+      "/user/upload-image",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "multipart/form-data"
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      console.error(e.response!.data.msg);
+      throw new Error(e.response!.data.msg);
+    }
+  }
+}

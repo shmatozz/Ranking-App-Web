@@ -19,6 +19,10 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   useEffect(() => {
+    setImageSrc(null);
+  }, [imagePath]);
+
+  useEffect(() => {
     let isMounted = true;
     if (!imageSrc) {
       fetchImage(imagePath).then((blob) => {
@@ -43,5 +47,5 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
     )
   }
 
-  return <Image src={imageSrc} alt="Loaded" className={clsx("w-full h-full", className)} width={100} height={100}/>;
+  return <Image src={imageSrc} alt="Loaded" className={clsx("w-full h-full z-0", className)} width={100} height={100}/>;
 };
