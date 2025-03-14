@@ -14,3 +14,6 @@ export type OrganizationResponse = {
   data: Organization;
 }
 
+export type uploadOrganizationPhotoRequest = {
+  file: File
+}

@@ -2,7 +2,7 @@
 
 import { create } from "zustand/react";
 import {LngLat} from "@yandex/ymaps3-types";
-import {Marker} from "@/features/training-map";
+import {Marker, PointData} from "@/features/training-map";
 
 type PlacemarkCreateState = {
   name: string; description: string;
@@ -23,6 +23,7 @@ type PlacemarkCreateActions = {
   setFormVisible: (visible: boolean) => void;
   checkFormValid: () => void;
   getMarker: () => Marker;
+  fillForm: (marker: PointData) => void;
   clearForm: () => void;
 }
 
@@ -65,6 +66,15 @@ export const usePlacemarkCreateStore = create<PlacemarkCreateState & PlacemarkCr
       },
       email: state.email
     }
+  },
+
+  fillForm: (marker: PointData) => {
+    set({
+      name: marker.geoJson.properties.name, description: marker.geoJson.properties.description,
+      email: "", coordinates: marker.geoJson.geometry.coordinates,
+    });
+
+    get().checkFormValid();
   },
 
   clearForm: () => set(initialState),

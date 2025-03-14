@@ -8,6 +8,7 @@ export type OrganizationShort = {
   name: string;
   role: Role;
   isOpen: boolean;
+  image: string
 }
 
 export type Organization = OrganizationShort & {

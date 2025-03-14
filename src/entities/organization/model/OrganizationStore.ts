@@ -1,5 +1,5 @@
 import { create } from "zustand/react";
-import {Organization, updateOrganizationOpenStatus} from "@/entities/organization";
+import {Organization, updateOrganizationOpenStatus, uploadOrganizationPhoto} from "@/entities/organization";
 import {getOrganizationInfo, getOrganizationShortInfo} from "@/entities/organization/api/OrganizationService";
 import {useCompetitionsStore, useMembersStore} from "@/widgets/profile";
 import {splitCompetitions} from "@/shared/lib";
@@ -14,6 +14,7 @@ type OrganizationActions = {
   getOrganizationInfo: () => void;
   getOrganizationShortInfo: () => void;
   updateOrganizationOpenStatus: () => void;
+  uploadOrganizationPhoto: (photo: File) => void;
 }
 
 export const useOrganizationStore = create<OrganizationState & OrganizationActions>((set, get) => ({
@@ -55,5 +56,11 @@ export const useOrganizationStore = create<OrganizationState & OrganizationActio
         })
       }))
       .catch((e) => console.log(e.message));
+  },
+
+  uploadOrganizationPhoto: (photo: File) => {
+    uploadOrganizationPhoto({ file: photo })
+      .then(() => get().getOrganizationInfo())
+      .catch(() => set({ hasError: true }))
   }
 }))

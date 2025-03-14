@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react";
-import {PointData} from "@/features/training-map";
-import {Button} from "@/shared/ui";
+import {PlacemarkCreateForm, PointData, useMapStore, usePlacemarkCreateStore} from "@/features/training-map";
+import {Button, Modal} from "@/shared/ui";
 import clsx from "clsx";
 
 interface PlacemarkCardProps {
@@ -17,6 +17,11 @@ interface PlacemarkCardProps {
 export const PlacemarkCard: React.FC<PlacemarkCardProps> = (
   props
 ) => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [updateFormVisible, setUpdateFormVisible] = React.useState(false);
+  const {getMarker, clearForm, fillForm} = usePlacemarkCreateStore();
+  const {updatePlacemark} = useMapStore();
+
   return (
     <div
       className={clsx(
@@ -31,12 +36,48 @@ export const PlacemarkCard: React.FC<PlacemarkCardProps> = (
       </div>
 
       {props.admin && (
-        <Button
-          variant={"tertiary"} size={"S"} palette={"blue"}
-          onClick={props.onDeletePress}
-        >
-          Удалить
-        </Button>
+        <div className={"flex flex-row gap-2"}>
+          <>
+            <Button
+              variant={"tertiary"} size={"S"} palette={"blue"}
+              onClick={() => {
+                fillForm(props.placemark)
+                setUpdateFormVisible(true)
+              }}
+            >
+              Редактировать
+            </Button>
+
+            {updateFormVisible && (
+              <PlacemarkCreateForm
+                onSubmit={() => {
+                  updatePlacemark(props.placemark.id, getMarker(), () =>  setUpdateFormVisible(false));
+                  clearForm();
+                }}
+                onCancel={() => setUpdateFormVisible(false)}
+              />
+            )}
+          </>
+
+          <>
+            <Button
+              variant={"tertiary"} size={"S"} palette={"gray"}
+              onClick={() => setIsModalOpen(true)}
+            >
+              Удалить
+            </Button>
+
+            {isModalOpen && (
+              <Modal>
+                <p>Вы уверены, что хотите удалить точку на карте?</p>
+                <div className="flex gap-4 mt-4 justify-evenly">
+                  <Button variant="primary" size={"S"} onClick={() => { if (props.onDeletePress) props.onDeletePress()} }>Удалить</Button>
+                  <Button variant="secondary" size={"S"} onClick={() => setIsModalOpen(false)}>Отмена</Button>
+                </div>
+              </Modal>
+            )}
+          </>
+        </div>
       )}
     </div>
   )

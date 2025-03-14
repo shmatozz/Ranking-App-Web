@@ -8,6 +8,7 @@ import {
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
 import {auth} from "@/shared/lib";
+import {uploadOrganizationPhotoRequest} from "@/entities/organization";
 
 export async function getOrganizationInfo(): Promise<Organization> {
   console.log("Send GET organization FULL info request");
@@ -50,6 +51,31 @@ export async function updateOrganizationOpenStatus(params: updateOpenStatusParam
       {
         headers: {
           Authorization: `Bearer ${session?.user.token}`,
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      console.error(e.response!.data.msg);
+      throw new Error(e.response!.data.msg);
+    }
+  }
+}
+
+export async function uploadOrganizationPhoto(params: uploadOrganizationPhotoRequest) {
+  console.log("Send POST upload organization photo request");
+  const session = await auth();
+
+  const formData = new FormData();
+  formData.set("file", params.file);
+
+  try {
+    await axiosInstance.post(
+      "/organization/upload-image",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "multipart/form-data"
         },
       });
   } catch (e) {

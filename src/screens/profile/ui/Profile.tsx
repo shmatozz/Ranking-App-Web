@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect} from "react";
-import {Competitions, CompetitionsCreate, Info, Members, Results} from "@/widgets/profile";
+import {Competitions, CompetitionsCreate, Info, Members, Photo, Results} from "@/widgets/profile";
 import {Subpages} from "@/entities/user";
 import {ProfilePages} from "@/widgets/navigation";
 import {useRouter, useSearchParams} from "next/navigation";
@@ -66,7 +66,7 @@ export const Profile: React.FC<ProfileProps> = ({
     <div className={"content-container flex-col lg-md:flex-row gap-[50px] text-wrap"}>
       <div className={"flex flex-col h-full w-full max-w-full gap-8 items-center lg-md:max-w-[250px]"}>
         {/* USER PHOTO */}
-        <div className={"h-[100px] w-[100px] bg-base-5 rounded-full lg-md:h-[250px] lg-md:w-[250px]"}/>
+        <Photo/>
 
         {/* PROFILE NAVIGATION */}
         <ProfilePages role={whoAmI?.organization ? "ORGANIZATION" : "USER"} page={activeTab} setPage={handleSubpageChange}/>
