@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from "zustand/react";
-import {deletePoint, getPoints, Marker, PointData, savePoint} from "@/features/training-map";
+import {deletePoint, getPoints, Marker, PointData, savePoint, updatePoint} from "@/features/training-map";
 
 type MapState = {
   placemarks: PointData[];
@@ -17,6 +17,7 @@ type MapActions = {
   setEditMode: (allowed: boolean) => void;
   addPlacemark: (placemark: Marker, callback?: () => void) => void;
   getPlacemarks: () => void;
+  updatePlacemark: (id: number, placemark: Marker, callback?: () => void) => void;
   deletePlacemark: (id: number) => void;
 }
 
@@ -62,6 +63,18 @@ export const useMapStore = create<MapState & MapActions>((set, get) => ({
         }
       })
       .catch((e) => set({ hasError: true, errorMessage: e.message}))
+      .finally(() => set({ isLoading: false }))
+  },
+
+  updatePlacemark: (id, placemark, callback) => {
+    set({ isLoading: true, hasError: false })
+
+    updatePoint({ id: id, point: {...placemark} })
+      .then(() => {
+        get().getPlacemarks();
+        if (callback) callback();
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message }))
       .finally(() => set({ isLoading: false }))
   },
 

@@ -25,6 +25,10 @@ export const News = () => {
     if (!news) getNews();
   }, [news, getNews]);
 
+  useEffect(() => {
+    document.title = "Заплыв НН - Главная"
+  }, []);
+
   return (
     <div className={"content-container relative flex-col gap-4 min-h-fit max-h-[600px]"}>
       <div className={"flex flex-row items-center justify-between"}>

@@ -16,6 +16,11 @@ export type GetPointsResponse = {
   data: PointData[]
 }
 
+export type UpdatePointRequest = {
+  id: number,
+  point: SavePointRequest,
+}
+
 export type DeletePointRequest = {
   id: number,
 }

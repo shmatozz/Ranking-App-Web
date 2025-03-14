@@ -3,7 +3,7 @@
 import {AxiosError} from "axios";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {auth} from "@/shared/lib";
-import {DeletePointRequest, GetPointsResponse, SavePointRequest} from "@/features/training-map";
+import {DeletePointRequest, GetPointsResponse, SavePointRequest, UpdatePointRequest} from "@/features/training-map";
 
 export async function savePoint(params: SavePointRequest) {
   try {
@@ -44,6 +44,29 @@ export async function getPoints() {
     return { error: "Неизвестная ошибка" }
   }
 }
+
+export async function updatePoint(params: UpdatePointRequest) {
+  try {
+    console.log("Send POST update coordinates request");
+    const session = await auth();
+
+    await axiosInstance.post(
+      `/admin/coordinates-update/${params.id}`,
+      params.point,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+      }
+    )
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return { error: error.response!.data.msg };
+    }
+    return { error: "Неизвестная ошибка" }
+  }
+}
+
 
 export async function deletePoint(params: DeletePointRequest) {
   try {
