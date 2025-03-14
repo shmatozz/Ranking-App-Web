@@ -8,3 +8,14 @@ export type News = {
   image2?: string,
   image3?: string
 }
+
+export type NewsCreate = {
+  topic: string,
+  text: string,
+  startDate: string,
+  endDate: string,
+  image1?: File,
+  image2?: File,
+  image3?: File
+}
+

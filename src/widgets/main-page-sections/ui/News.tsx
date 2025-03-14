@@ -4,13 +4,25 @@ import React, {useCallback, useEffect} from "react";
 import {useNewsStore} from "@/features/news/model/NewsStore";
 import {NewsCard} from "@/features/news/ui/NewsCard";
 import useEmblaCarousel from "embla-carousel-react";
-import {Icon} from "@/shared/ui";
+import {Button, Icon} from "@/shared/ui";
 import Autoplay from "embla-carousel-autoplay";
 import {EmblaCarouselType} from "embla-carousel";
+import {useSession} from "next-auth/react";
+import {useWhoAmIStore} from "@/features/who-am-i";
+import {useNewsCreateStore} from "@/features/news/model/NewsCreateStore";
+import {NewsCreateForm} from "@/features/news";
 
 export const News = () => {
-  const { news, getNews } = useNewsStore();
+  const session = useSession()
+  const { news, getNews, createNews } = useNewsStore();
+  const { formVisible, setFormVisible, clearForm, getFilledNews } = useNewsCreateStore();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+  const { whoAmI, getWhoAmI } = useWhoAmIStore();
+
+  useEffect(() => {
+    if (!whoAmI && session.data) getWhoAmI()
+  }, [whoAmI, getWhoAmI, session.data]);
+
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
     const autoplay = emblaApi?.plugins()?.autoplay
@@ -39,7 +51,18 @@ export const News = () => {
   }, [news, getNews]);
   return (
     <div className={"content-container relative flex-col gap-4 min-h-[600px] max-h-[600px]"}>
-      <label className={"text-h4 text-base-95"}>Новости</label>
+      <div className={"flex flex-row items-center justify-between"}>
+        <label className={"text-h4 text-base-95"}>Новости</label>
+
+        {whoAmI && whoAmI.admin && (
+          <Button
+            variant={"tertiary"} size={"S"} palette={"blue"}
+            onClick={() => setFormVisible(true)}
+          >
+            Создать новость
+          </Button>
+        )}
+      </div>
 
       <button
         aria-label='go to previous slide'
@@ -56,7 +79,7 @@ export const News = () => {
         <Icon name={"chevronRight"} size={32} color={"#868686"}/>
       </button>
 
-      <div className='flex flex-1 overflow-hidden rounded-2xl' ref={emblaRef}>
+      <div className='flex flex-1 overflow-hidden rounded-2xl container-shadow' ref={emblaRef}>
         <div className={"flex flex-1"}>
           {news && news.map((item) => (
             <NewsCard key={item.id} news={item}/>
@@ -71,8 +94,8 @@ export const News = () => {
             <button
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={`w-4 h-4 rounded-full opacity-75 ${
-                index === selectedIndex ? "bg-base-70" : "bg-base-10"
+              className={`w-4 h-4 rounded-full opacity-75 border-[3px] ${
+                index === selectedIndex ? "border-blue-70" : "border-base-10"
               }`}
             >
               <span className='sr-only'>go to slide {index + 1}</span>
@@ -80,6 +103,16 @@ export const News = () => {
           ))}
         </div>
       </div>
+
+      {formVisible && (
+        <NewsCreateForm
+          onSubmit={() => {
+            createNews(getFilledNews(), () => setFormVisible(false))
+            clearForm();
+          }}
+          onCancel={() => setFormVisible(false)}
+        />
+      )}
     </div>
   )
 }

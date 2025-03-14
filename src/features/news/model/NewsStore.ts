@@ -1,11 +1,12 @@
 'use client';
 
 import { create } from "zustand/react";
-import {News} from "@/features/news";
-import {getNews} from "@/features/news/api/NewsService";
+import {News, NewsCreate} from "@/features/news";
+import {createNews, getNews} from "@/features/news/api/NewsService";
 
 type NewsState = {
   news?: News[];
+  isCreating: boolean;
   isLoading: boolean;
   hasError: boolean;
   errorMessage?: string;
@@ -13,9 +14,11 @@ type NewsState = {
 
 type NewsActions = {
   getNews: () => void,
+  createNews: (news: NewsCreate, callback?: () => void) => void,
 }
 
 const initialState: NewsState = {
+  isCreating: false,
   isLoading: false,
   hasError: false,
 }
@@ -36,5 +39,22 @@ export const useNewsStore = create<NewsState & NewsActions>((set, get) => ({
       })
       .catch((e) => set({ hasError: true, errorMessage: e.message }))
       .finally(() => set({ isLoading: false }))
+  },
+
+  createNews: (news, callback) => {
+    set({ isCreating: true, hasError: false })
+
+    createNews({
+      topic: news.topic,
+      text: news.text,
+      startDate: news.startDate, endDate: news.endDate,
+      image1: news.image1, image2: news.image2, image3: news.image3,
+    })
+      .then(() => {
+        get().getNews();
+        if (callback) callback();
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message}))
+      .finally(() => set({ isCreating: false }))
   }
 }))

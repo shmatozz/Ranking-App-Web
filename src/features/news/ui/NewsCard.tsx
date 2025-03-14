@@ -16,14 +16,14 @@ export const NewsCard: React.FC<NewsCardProps> = (
 
   return (
     <div
-      className={"flex relative flex-[0_0_100%] container-shadow overflow-hidden flex-col justify-end"}
+      className={"flex relative flex-[0_0_100%] overflow-hidden flex-col justify-end"}
       onClick={props.onPress}
     >
       <div className={"absolute flex h-full w-full z-0"}>
-        { props.news.image1 && (<ImageLoader imagePath={props.news.image1} className={"object-contain"}/>)}
-        { props.news.image1 == undefined && props.news.image2 && (<ImageLoader imagePath={props.news.image2}/>)}
+        { props.news.image1 && (<ImageLoader imagePath={props.news.image1} className={"object-contain"} doubling/>)}
+        { props.news.image1 == undefined && props.news.image2 && (<ImageLoader imagePath={props.news.image2} doubling/>)}
         { props.news.image3 == undefined && props.news.image2 == undefined && props.news.image3 && (
-          <ImageLoader imagePath={props.news.image3}/>
+          <ImageLoader imagePath={props.news.image3} doubling/>
         )}
 
         {noImage && (

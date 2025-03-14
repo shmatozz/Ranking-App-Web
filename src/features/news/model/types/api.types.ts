@@ -10,3 +10,13 @@ export type NewsResponseData = {
   totalPages: number,
   content: News[]
 }
+
+export type CreateNewsRequest = {
+  topic: string,
+  text: string,
+  startDate: string,
+  endDate: string,
+  image1?: File,
+  image2?: File,
+  image3?: File,
+}
