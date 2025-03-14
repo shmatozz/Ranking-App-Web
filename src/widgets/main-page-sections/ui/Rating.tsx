@@ -14,7 +14,7 @@ export const Rating = () => {
 
         <Button
           variant={"tertiary"} size={"S"}
-          onClick={() => router.push("/rating")}
+          onClick={() => router.push("/ratings")}
         >
           Весь рейтинг
         </Button>

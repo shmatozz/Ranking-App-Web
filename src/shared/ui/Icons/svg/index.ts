@@ -20,6 +20,7 @@ export {Logout} from "./logout";
 export {Medal} from "./medal";
 export {Members} from "./members";
 export {Menu} from "./menu";
+export {Photo} from "./photo";
 export {Plus} from "./plus";
 export {Podium} from "./podium";
 export {RadioBlank} from "./radio-blank";
