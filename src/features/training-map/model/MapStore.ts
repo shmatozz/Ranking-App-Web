@@ -59,7 +59,6 @@ export const useMapStore = create<MapState & MapActions>((set, get) => ({
           set({ hasError: true, errorMessage: response.error })
         } else if (response.data) {
           set({ placemarks: response.data })
-          console.log(response.data);
         }
       })
       .catch((e) => set({ hasError: true, errorMessage: e.message}))

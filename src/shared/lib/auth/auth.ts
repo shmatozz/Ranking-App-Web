@@ -71,6 +71,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
   session: {
-    maxAge: 12960
+    maxAge: 10000
   }
 })
