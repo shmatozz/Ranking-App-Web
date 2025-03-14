@@ -32,13 +32,13 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
     };
   }, [imagePath, imageSrc]);
 
-  if (!imageSrc) return <p>Loading...</p>;
+  if (!imageSrc) return <div className={"w-full h-full bg-base-5 animate-pulse"}/>;
 
   if (doubling) {
     return (
       <>
-        <Image src={imageSrc} alt="LoadedBack" className={clsx("absolute w-full h-full object-cover -z-[1] blur-3xl")} width={100} height={100}/>
-        <Image src={imageSrc} alt="LoadedMain" className={clsx("w-full h-full", className)} width={100} height={100}/>
+        <Image src={imageSrc} alt="LoadedBack" className={clsx("absolute w-full h-full object-cover z-[1] blur-3xl")} width={100} height={100}/>
+        <Image src={imageSrc} alt="LoadedMain" className={clsx("w-full h-full z-[2]", className)} width={100} height={100}/>
       </>
     )
   }

@@ -55,7 +55,7 @@ export const NewsCreateForm: React.FC<PlacemarkCreateFormProps> = (
 
         <FileInput
           onChange={(e) => fileUploadHandler(e, setMainImage)}
-          title={"Основаная картинка"} accept={"image/*"} required
+          title={"Основаная картинка"} accept={"image/*"}
         />
         <FileInput
           onChange={(e) => fileUploadHandler(e, setAdditionalImage1)}

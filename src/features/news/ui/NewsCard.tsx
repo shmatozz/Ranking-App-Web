@@ -16,7 +16,7 @@ export const NewsCard: React.FC<NewsCardProps> = (
 
   return (
     <div
-      className={"flex relative flex-[0_0_100%] overflow-hidden flex-col justify-end"}
+      className={"flex relative flex-[0_0_100%] overflow-hidden flex-col justify-end cursor-pointer"}
       onClick={props.onPress}
     >
       <div className={"absolute flex h-full w-full z-0"}>
@@ -33,8 +33,8 @@ export const NewsCard: React.FC<NewsCardProps> = (
         )}
       </div>
 
-      <div className={"flex w-full bg-base-5 bg-opacity-50 backdrop-blur-xl px-8 py-4 z-10"}>
-        <p className={"text-h5 text-base-95"}>{props.news.topic}</p>
+      <div className={"flex w-full bg-base-5 bg-opacity-50 backdrop-blur-xl px-8 py-3 z-10"}>
+        <p className={"text-bodyM_medium text-base-95"}>{props.news.topic}</p>
       </div>
     </div>
   )

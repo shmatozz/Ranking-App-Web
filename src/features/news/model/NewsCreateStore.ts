@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from "zustand/react";
-import {NewsCreate} from "@/features/news";
+import {News, NewsCreate} from "@/features/news";
 
 type NewsCreateState = {
   name: string; description: string;
@@ -26,6 +26,7 @@ type NewsCreateActions = {
   setAdditionalImage2: (additionalImage2: File) => void;
   setFormVisible: (visible: boolean) => void;
   checkFormValid: () => void;
+  fillForm: (news: News) => void;
   getFilledNews: () => NewsCreate;
   clearForm: () => void;
 }
@@ -59,6 +60,15 @@ export const useNewsCreateStore = create<NewsCreateState & NewsCreateActions>((s
   setMainImage: (mainImage: File) => set({ mainImage }),
   setAdditionalImage1: (additionalImage1: File) => set({ additionalImage1 }),
   setAdditionalImage2: (additionalImage2: File) => set({ additionalImage2 }),
+
+  fillForm: (news: News) => {
+    set({
+      name: news.topic, description: news.text,
+      startDate: news.startDate, endDate: news.endDate,
+      mainImage: undefined, additionalImage1: undefined, additionalImage2: undefined
+    })
+    get().checkFormValid();
+  },
 
   getFilledNews: () => {
     const formState = get();

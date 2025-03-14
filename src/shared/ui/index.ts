@@ -18,3 +18,5 @@ export {InfoField} from "./Input/InfoField";
 export {FileInput} from "./Input/FileInput";
 export {Dropdown} from "./Input/Dropdown";
 export {Modal} from "./Input/Modal";
+
+export {Carousel} from "./Layout/Carousel";

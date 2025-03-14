@@ -20,3 +20,18 @@ export type CreateNewsRequest = {
   image2?: File,
   image3?: File,
 }
+
+export type UpdateNewsRequest = {
+  id: number,
+  topic: string,
+  text: string,
+  startDate: string,
+  endDate: string,
+  image1?: File,
+  image2?: File,
+  image3?: File,
+}
+
+export type DeleteNewsRequest = {
+  id: number,
+}
