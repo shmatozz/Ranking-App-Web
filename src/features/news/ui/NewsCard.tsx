@@ -33,7 +33,7 @@ export const NewsCard: React.FC<NewsCardProps> = (
         )}
       </div>
 
-      <div className={"flex w-full bg-base-5 bg-opacity-50 backdrop-blur-xl px-8 py-3 z-10"}>
+      <div className={"flex w-full bg-base-5 bg-opacity-70 backdrop-blur-xl px-8 py-3 z-10"}>
         <p className={"text-bodyM_medium text-base-95"}>{props.news.topic}</p>
       </div>
     </div>
