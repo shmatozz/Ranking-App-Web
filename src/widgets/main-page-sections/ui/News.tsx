@@ -3,7 +3,7 @@
 import React, {useEffect} from "react";
 import {useNewsStore} from "@/features/news/model/NewsStore";
 import {NewsCard} from "@/features/news/ui/NewsCard";
-import {Button, Carousel} from "@/shared/ui";
+import {Button, Carousel, ImageLoader} from "@/shared/ui";
 import {useSession} from "next-auth/react";
 import {useWhoAmIStore} from "@/features/who-am-i";
 import {useNewsCreateStore} from "@/features/news/model/NewsCreateStore";
@@ -49,9 +49,16 @@ export const News = () => {
       )}
 
       {news && news.length > 0 && (
-        <Carousel items={news} renderItem={(item) => (
-          <NewsCard key={item.id} news={item} onPress={() => router.push(`/article?id=${item.id}`)}/>
-        )}/>
+        <Carousel
+          items={news}
+          renderItem={(item) => (
+            <NewsCard key={item.id} news={item} onPress={() => router.push(`/article?id=${item.id}`)}/>
+          )}
+          renderThumbnail={(item) => {
+            if (item.image1) return <ImageLoader imagePath={item.image1} className={"object-cover"}/>
+            else return <div className={"flex w-full h-full bg-base-5"}/>
+          }}
+        />
       )}
 
       {news && news.length == 0 && (

@@ -34,7 +34,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   };
 
   return (
-    <div className={"flex flex-row items-center justify-between"}>
+    <div className={"flex flex-col items-center justify-between gap-2 xs:flex-row"}>
       <label className="text-h4 text-base-95">{selectedNews.topic}</label>
 
       <div className={"flex flex-row gap-2"}>
