@@ -24,13 +24,6 @@ export const PlacemarksList = () => {
     getPlacemarks()
   }, [getPlacemarks]);
 
-  const handlerScrollUp = () => {
-    document.body.scrollIntoView({
-      block: "start",
-      behavior: "smooth",
-    });
-  }
-
   return (
     <div className={"flex flex-col gap-2 h-fit p-4"}>
       <div className={"flex flex-row w-full justify-between"}>
@@ -52,7 +45,6 @@ export const PlacemarksList = () => {
             selected={selectedPointID === item.id}
             onClick={() => {
               setSelectedPointID(selectedPointID === item.id ? undefined : item.id);
-              handlerScrollUp();
             }}
             admin={editMode} onDeletePress={() => deletePlacemark(item.id)}
           />

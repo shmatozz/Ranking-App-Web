@@ -1,5 +1,6 @@
 import {LngLat} from "@yandex/ymaps3-types";
 import {PointData} from "@/features/training-map";
+import {Trainer} from "@/features/training-map/model/types/trainers.types";
 
 export type SavePointRequest = {
   name: string,
@@ -23,4 +24,19 @@ export type UpdatePointRequest = {
 
 export type DeletePointRequest = {
   id: number,
+}
+
+export type GetTrainersRequest = {
+  coordinateId: number,
+}
+
+export type GetTrainersResponseData = {
+  totalElements: number,
+  totalPages: number,
+  content: Trainer[]
+}
+
+export type CreateTrainerRequest = {
+  coordinateId: number,
+  data: FormData
 }
