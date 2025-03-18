@@ -1,5 +1,6 @@
 export type WhoAmI = {
   email: string,
   organization: boolean,
-  admin: boolean
+  admin: boolean,
+  curator: boolean
 }
