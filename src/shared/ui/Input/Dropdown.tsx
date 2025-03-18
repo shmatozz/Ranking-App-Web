@@ -10,6 +10,7 @@ interface DropdownProps {
   onItemSelected: (item: DropdownItem) => void;
   placeholder: string;
   multiple?: boolean;
+  disabled?: boolean;
   className?: string;
 }
 
@@ -36,10 +37,17 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className={clsx("flex flex-col w-full relative", props.className)}>
+    <div
+      ref={dropdownRef}
+      className={clsx(
+        "flex flex-col w-full relative",
+        props.disabled || props.items.length == 1 ? "opacity-70" : "opacity-100",
+        props.className
+      )}
+    >
       <div
         className={"flex justify-between items-center h-[40px] w-full bg-base-5 rounded-[8px] px-4 py-2 cursor-pointer z-[10]"}
-        onClick={() => setOpen(!opened)}
+        onClick={() => { if (!props.disabled && props.items.length > 0) setOpen(!opened) }}
       >
         {props.selectedItems.length === 0 && (
           <p className={"text-bodyS_regular text-base-70 select-none text-clip xs:text-bodyM_regular"}>{props.placeholder}</p>
