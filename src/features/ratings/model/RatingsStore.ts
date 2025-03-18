@@ -5,13 +5,15 @@ import {getRating, UserRating} from "@/features/ratings";
 
 type FiltersState = {
   gender?: { id: "MALE" | "FEMALE" | "RESET", name: string },
-  category?: { id: string, name: string },
+  userType?: { id: string, name: string },
+  categoryEnum?: { id: string, name: string },
   startFrom?: number
 }
 
 type FiltersActions = {
   setGender: (item: { id: "MALE" | "FEMALE" | "RESET", name: string }) => void,
-  setCategory: (item: { id: string, name: string }) => void,
+  setUserType: (item: { id: string, name: string }) => void,
+  setCategoryEnum: (item: { id: string, name: string }) => void,
   setStartFrom: (item: number) => void,
 }
 
@@ -49,7 +51,8 @@ export const useRatingsStore = create<RatingsState & RatingsActions>((set, get) 
 
     getRating({
       gender: filters.gender && filters.gender.id != "RESET" ? filters.gender.id : undefined,
-      categoryEnum: filters.category && filters.category.id != "RESET" ? filters.category.id : undefined,
+      userType: filters.userType && filters.userType.id != "RESET" ? filters.userType.id : undefined,
+      categoryEnum: filters.categoryEnum && filters.categoryEnum.id != "RESET" ? filters.categoryEnum.id : undefined,
       startsCountFrom: filters.startFrom ? filters.startFrom : undefined,
       page: get().page,
       size: get().pageSize,
@@ -66,11 +69,18 @@ export const useRatingsStore = create<RatingsState & RatingsActions>((set, get) 
   },
 
   filtersActions: {
-    setCategory: (category: { id: string, name: string }) => {
-      if (category.id == "RESET") {
-        set((state) => ({ filters: {...state.filters, category: undefined} }))
+    setUserType: (type: { id: string, name: string }) => {
+      if (type.id == "RESET") {
+        set((state) => ({ filters: {...state.filters, userType: undefined, categoryEnum: undefined} }))
       } else {
-        set((state) => ({ filters: {...state.filters, category} }))
+        set((state) => ({ filters: {...state.filters, userType: type, categoryEnum: undefined } }))
+      }
+    },
+    setCategoryEnum: (category: { id: string, name: string }) => {
+      if (category.id == "RESET") {
+        set((state) => ({ filters: {...state.filters, categoryEnum: undefined} }))
+      } else {
+        set((state) => ({ filters: {...state.filters, categoryEnum: category} }))
       }
     },
     setGender: (gender: { id: "MALE" | "FEMALE" | "RESET", name: string }) => {

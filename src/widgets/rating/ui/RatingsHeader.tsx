@@ -3,7 +3,7 @@
 import React, {useEffect} from "react";
 import {Dropdown, TextInput} from "@/shared/ui";
 import {useRatingsStore} from "@/features/ratings";
-import {categories, gender} from "@/widgets/competition";
+import {categories, gender, amateurCategories, professionalsCategories} from "@/features/ratings";
 import {useSearchParams} from "next/navigation";
 
 export const RatingsHeader = () => {
@@ -41,9 +41,17 @@ export const RatingsHeader = () => {
 
         <Dropdown
           items={categories}
-          selectedItems={filters.category ? [filters.category] : []}
-          onItemSelected={filtersActions.setCategory}
+          selectedItems={filters.userType ? [filters.userType] : []}
+          onItemSelected={filtersActions.setUserType}
           placeholder={"Категория"}
+        />
+
+        <Dropdown
+          items={filters.userType ? (filters.userType.id == "PROFESSIONALS" ? professionalsCategories : amateurCategories) : []}
+          selectedItems={filters.categoryEnum ? [filters.categoryEnum] : []}
+          onItemSelected={filtersActions.setCategoryEnum}
+          placeholder={"Подкатегория"}
+          disabled={filters.userType == undefined}
         />
 
         <TextInput

@@ -4,6 +4,7 @@ export type FilterRatingParams = RatingFilters & Pages
 
 export type RatingFilters = {
   gender?: "MALE" | "FEMALE",
+  userType?: string,
   categoryEnum?: string,
   startsCountFrom?: number,
 }
