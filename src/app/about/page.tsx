@@ -1,9 +1,6 @@
 import React from "react";
+import {AboutPage} from "@/screens/about";
 
 export default function About() {
-  return (
-    <div className="content-container text-h4 text-base-100">
-      О НАС
-    </div>
-  )
+  return <AboutPage/>
 }
