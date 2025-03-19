@@ -88,7 +88,7 @@ export const PlacemarkCard: React.FC<PlacemarkCardProps> = (
         )}
       </div>
 
-      <TrainersList coordinateId={props.placemark.id} admin={props.admin}/>
+      <TrainersList coordinateId={props.placemark.id} selected={props.selected} admin={props.admin}/>
     </div>
   )
 }
