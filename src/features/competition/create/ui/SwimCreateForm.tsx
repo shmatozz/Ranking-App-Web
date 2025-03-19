@@ -55,13 +55,8 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
 
         <div className="flex flex-row w-full gap-4">
           <TextInput
-            value={state.maxPoints} onChange={(e) => state.setMaxPoints(Number(e.target.value))}
-            title={"Макс. очки"} type={"number"} min={0}
-          />
-
-          <TextInput
             value={state.price} onChange={(e) => state.setPrice(Number(e.target.value))}
-            title={"Стоимость"} type={"number"} min={0}
+            title={"Стартовый взнос, ₽"} type={"number"} min={0}
           />
         </div>
       </div>
