@@ -1,27 +1,12 @@
 import React from "react";
+import {AboutUsText} from "@/widgets/about-page-sections";
 
 export const AboutPage = () => {
   return (
     <div className="content-container flex-col gap-4">
       <label className={"text-h4 text-base-100"}>О нас</label>
 
-      <div className={"flex flex-col gap-2"}>
-        <p className={"text-bodyM_regular text-base-95 whitespace-pre-wrap"}>
-          <b>«Заплыв НН»</b>
-          {
-            " — это масштабная платформа для спортсменов и организаторов.\n" +
-            "Мы объединяем лучших пловцов со всей Нижегородской области в едином рейтинге, где можно увидеть достижения как любителей " +
-            "так и профессионалов, а также спортсменов разных возрастных категорий."
-          }
-        </p>
-
-        <p className={"text-bodyM_regular text-base-95 whitespace-pre-wrap"}>
-          {
-            "Мы строго следим за качеством проведения соревнований и уверены в каждом организаторе.\n" +
-            "Вместе мы создаем историю плавания в столице закатов г. Нижнем Новгороде."
-          }
-        </p>
-      </div>
+      <AboutUsText/>
 
       <div className={"w-full h-[3px] bg-base-5"}/>
 
