@@ -36,7 +36,7 @@ export const Registration = () => {
         <label className={"text-h5 text-base-95"}>
           {getSwimShort(selectedSwim)}
           {", "}
-          {`${selectedSwim.gender == "MALE" ? "Мужчины" : (selectedSwim.gender == "FEMALE" ? "Женщины" : "Общий")}, макс. очков: ${selectedSwim.maxPoints}, ${getTime(new Date(selectedSwim.startTime))}`}
+          {`${selectedSwim.gender == "MALE" ? "Мужчины" : (selectedSwim.gender == "FEMALE" ? "Женщины" : "Общий")}, ${getTime(new Date(selectedSwim.startTime))}`}
         </label>
       </div>
 
