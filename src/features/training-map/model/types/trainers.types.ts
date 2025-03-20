@@ -3,7 +3,9 @@ export type Trainer = {
   firstName: string,
   lastName: string,
   middleName?: string,
-  description?: string,
+  education?: string,
+  specialization?: string,
+  achievements?: string,
   image?: string
 }
 
@@ -11,6 +13,8 @@ export type TrainerCreate = {
   firstName: string,
   lastName: string,
   middleName?: string,
-  description?: string,
+  education?: string,
+  specialization?: string,
+  achievements?: string,
   image?: File
 }

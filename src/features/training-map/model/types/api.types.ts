@@ -40,3 +40,9 @@ export type CreateTrainerRequest = {
   coordinateId: number,
   data: FormData
 }
+
+export type UpdateTrainerRequest = {
+  trainerID: number,
+  data: FormData
+}
+
