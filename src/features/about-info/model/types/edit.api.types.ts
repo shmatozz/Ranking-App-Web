@@ -11,6 +11,10 @@ export type UpdatePartnerParams = {
   data: FormData
 }
 
+export type DeletePartnerParams = {
+  partnerID: number;
+}
+
 export type AddSponsorParams = {
   data: FormData
 }
@@ -20,3 +24,6 @@ export type UpdateSponsorParams = {
   data: FormData
 }
 
+export type DeleteSponsorParams = {
+  sponsorID: number;
+}

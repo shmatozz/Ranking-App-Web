@@ -4,9 +4,10 @@ import React, {useEffect, useState} from "react";
 import {useAboutInfoStore} from "@/widgets/about-page-sections";
 import {Button, FileInput, TextInput} from "@/shared/ui";
 import {useWhoAmIStore} from "@/features/who-am-i";
+import {PartnerCard} from "@/features/about-info";
 
 export const Partners = () => {
-  const { partners, getPartners, addPartner } = useAboutInfoStore();
+  const { partners, getPartners, addPartner, updatePartner, deletePartner } = useAboutInfoStore();
   const { whoAmI } = useWhoAmIStore();
 
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -39,11 +40,17 @@ export const Partners = () => {
         )}
       </div>
 
-      <span className={"flex flex-col text-bodyM_regular text-base-95 gap-2"}>
+      <div className={"flex flex-wrap justify-center gap-4"}>
         {partners.length > 0 && (
-          partners.map((item) => <li key={item.id}>{item.partnerDescription}</li>)
+          partners.map((item) => (
+            <PartnerCard
+              key={item.id} partner={item} classname={"mx-4"} admin={whoAmI && whoAmI.admin}
+              onSubmitEdit={(data) => updatePartner(item.id, data)}
+              onSubmitDelete={() => deletePartner(item.id)}
+            />
+          ))
         )}
-      </span>
+      </div>
 
       {partners.length === 0 && (
         <p className={"text-bodyM_regular text-base-95 text-center"}>{"В данный момент информация о партнёрах отсутствует"}</p>

@@ -4,7 +4,7 @@ import {AxiosError} from "axios";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {
   AddPartnerParams,
-  AddSponsorParams,
+  AddSponsorParams, DeletePartnerParams, DeleteSponsorParams,
   updateAboutUsParams,
   UpdatePartnerParams,
   UpdateSponsorParams
@@ -139,3 +139,47 @@ export async function updateSponsor(params: UpdateSponsorParams) {
     else return { error: "Неизвестная ошибка" };
   }
 }
+
+export async function deletePartner(params: DeletePartnerParams) {
+  try {
+    console.log("Send DELETE partner request");
+    const session = await auth();
+
+    await axiosInstance.delete(
+      `/admin/partners/${params.partnerID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        }
+      }
+    )
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      return { error: e.response!.data.msg };
+    }
+    else return { error: "Неизвестная ошибка" };
+  }
+}
+
+
+export async function deleteSponsor(params: DeleteSponsorParams) {
+  try {
+    console.log("Send DELETE sponsor request");
+    const session = await auth();
+
+    await axiosInstance.delete(
+      `/admin/sponsors/${params.sponsorID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        }
+      }
+    )
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      return { error: e.response!.data.msg };
+    }
+    else return { error: "Неизвестная ошибка" };
+  }
+}
+

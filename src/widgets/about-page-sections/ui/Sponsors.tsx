@@ -4,9 +4,10 @@ import React, {useEffect, useState} from "react";
 import {Button, FileInput, TextInput} from "@/shared/ui";
 import {useAboutInfoStore} from "@/widgets/about-page-sections";
 import {useWhoAmIStore} from "@/features/who-am-i";
+import {SponsorCard} from "@/features/about-info";
 
 export const Sponsors = () => {
-  const { sponsors, getSponsors, addSponsor } = useAboutInfoStore();
+  const { sponsors, getSponsors, addSponsor, updateSponsor, deleteSponsor } = useAboutInfoStore();
   const { whoAmI } = useWhoAmIStore();
 
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -39,11 +40,17 @@ export const Sponsors = () => {
         )}
       </div>
 
-      <span className={"flex flex-col text-bodyM_regular text-base-95 gap-2"}>
+      <div className={"flex flex-wrap justify-center gap-4"}>
         {sponsors.length > 0 && (
-          sponsors.map((item) => <li key={item.id}>{item.sponsorDescription}</li>)
+          sponsors.map((item) => (
+            <SponsorCard
+              key={item.id} sponsor={item} classname={"mx-4"} admin={whoAmI && whoAmI.admin}
+              onSubmitEdit={(data) => updateSponsor(item.id, data)}
+              onSubmitDelete={() => deleteSponsor(item.id)}
+            />
+          ))
         )}
-      </span>
+      </div>
 
       {sponsors.length === 0 && (
         <p
