@@ -1,7 +1,15 @@
 "use client"
 
 import { create } from "zustand/react";
-import {getAboutUsInfo, getPartnersInfo, getSponsorsInfo, Partner, Sponsor} from "@/features/about-info";
+import {
+  addPartner, addSponsor,
+  getAboutUsInfo,
+  getPartnersInfo,
+  getSponsorsInfo,
+  Partner,
+  Sponsor,
+  updateAboutUs
+} from "@/features/about-info";
 
 type AboutInfoState = {
   aboutUsText: string | undefined;
@@ -13,8 +21,11 @@ type AboutInfoState = {
 
 type AboutInfoActions = {
   getAboutUsText: () => void;
+  setAboutUsText: (text: string, callback?: () => void) => void;
   getPartners: () => void;
+  addPartner: (data: FormData, callback?: () => void) => void;
   getSponsors: () => void;
+  addSponsor: (data: FormData, callback?: () => void) => void;
 }
 
 const initialState: AboutInfoState = {
@@ -24,7 +35,7 @@ const initialState: AboutInfoState = {
   hasError: false,
 }
 
-export const useAboutInfoStore = create<AboutInfoState & AboutInfoActions>((set) => ({
+export const useAboutInfoStore = create<AboutInfoState & AboutInfoActions>((set, get) => ({
   ...initialState,
 
   getAboutUsText: () => {
@@ -34,6 +45,19 @@ export const useAboutInfoStore = create<AboutInfoState & AboutInfoActions>((set)
           set({ aboutUsText: response.data.description })
         } else if (response.error) {
           set({ hasError: true, errorMessage: response.error })
+        }
+      })
+      .catch((e) => set({ hasError: true, errorMessage: e.message }))
+  },
+
+  setAboutUsText: (text: string, callback) => {
+    updateAboutUs({ text: text })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          if (callback) callback();
+          set({ aboutUsText: text })
         }
       })
       .catch((e) => set({ hasError: true, errorMessage: e.message }))
@@ -51,6 +75,19 @@ export const useAboutInfoStore = create<AboutInfoState & AboutInfoActions>((set)
       .catch((e) => set({ hasError: true, errorMessage: e.message }))
   },
 
+  addPartner: (data: FormData, callback?) => {
+    addPartner({ data })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          get().getPartners();
+          if (callback) callback();
+        }
+      })
+      .catch(e => set({ hasError: true, errorMessage: e.message }))
+  },
+
   getSponsors: () => {
     getSponsorsInfo()
       .then((response) => {
@@ -62,4 +99,17 @@ export const useAboutInfoStore = create<AboutInfoState & AboutInfoActions>((set)
       })
       .catch((e) => set({ hasError: true, errorMessage: e.message }))
   },
+
+  addSponsor: (data: FormData, callback?: () => void) => {
+    addSponsor({ data })
+      .then((response) => {
+        if (response && response.error) {
+          set({ hasError: true, errorMessage: response.error })
+        } else {
+          get().getSponsors();
+          if (callback) callback();
+        }
+      })
+      .catch(e => set({ hasError: true, errorMessage: e.message }))
+  }
 }))

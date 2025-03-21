@@ -16,12 +16,15 @@ export async function updateAboutUs(params: updateAboutUsParams) {
     console.log("Send POST update info about us request");
     const session = await auth();
 
+    console.log(params.text);
+
     await axiosInstance.post(
       "/admin/update-about-us",
       params.text,
       {
         headers: {
           Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "text/plain"
         }
       }
     )
@@ -38,9 +41,11 @@ export async function addPartner(params: AddPartnerParams) {
     console.log("Send POST add partner request");
     const session = await auth();
 
+    console.log(params)
+
     await axiosInstance.post(
       "/admin/add-partner",
-      params,
+      params.data,
       {
         headers: {
           Authorization: `Bearer ${session?.user.token}`,
@@ -91,10 +96,11 @@ export async function addSponsor(params: AddSponsorParams) {
 
     await axiosInstance.post(
       "/admin/add-sponsor",
-      params,
+      params.data,
       {
         headers: {
           Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "multipart/form-data",
         }
       }
     )
