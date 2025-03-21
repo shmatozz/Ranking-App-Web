@@ -41,5 +41,5 @@ export function getSwimsDropDown(swims: Swim[]): DropdownItem[] {
 }
 
 export function getSwimShort(swim: Swim): string {
-  return `${swim.distance}м, ${getAgeRange(swim.ageFrom, swim.ageTo)}, ${swim.maxPoints} очков`;
+  return `${swim.distance}м, ${getAgeRange(swim.ageFrom, swim.ageTo)}, стиль ${swim.style}`;
 }

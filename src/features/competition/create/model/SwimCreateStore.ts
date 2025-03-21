@@ -70,7 +70,7 @@ export const useSwimCreateStore = create<SwimCreateState & SwimCreateActions>((s
       distance: swimData.distance, style: swimData.style.name,
       gender: swimData.gender,
       ageFrom: swimData.ageFrom, ageTo: swimData.ageTo, maxParticipants: swimData.maxParticipants,
-      maxPoints: 0, price: swimData.price,
+      price: swimData.price,
       startTime: swimData.startTime,
     }
   },

@@ -11,6 +11,7 @@ type WhoAmIState = {
 
 type WhoAmIActions = {
   getWhoAmI: () => void;
+  resetWhoAmI: () => void;
 }
 
 export const useWhoAmIStore = create<WhoAmIState & WhoAmIActions>((set) => ({
@@ -28,4 +29,6 @@ export const useWhoAmIStore = create<WhoAmIState & WhoAmIActions>((set) => ({
       .catch((e) => {console.log(e.message)})
       .finally(() => set({ isLoading: false }))
   },
+
+  resetWhoAmI: () => set({ whoAmI: undefined, isLoading: false, hasError: false }),
 }))

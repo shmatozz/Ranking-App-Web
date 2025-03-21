@@ -12,3 +12,5 @@ export {PlacemarkCreateForm} from "./ui/PlacemarkCreateForm";
 export {TrainerCreateForm} from "./ui/TrainerCreateForm";
 export {PlacemarkCard} from "./ui/PlacemarkCard";
 export {TrainersList} from "./ui/TrainersList";
+export {TrainerCard} from "./ui/TrainerCard";
+

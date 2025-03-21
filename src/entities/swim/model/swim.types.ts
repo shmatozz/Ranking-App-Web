@@ -4,7 +4,6 @@ export type Swim = {
   gender: "MALE" | "FEMALE" | "MIXED",
   ageFrom: number,
   ageTo: number,
-  maxPoints: number,
   maxParticipants: number,
   price: number,
   videoLink?: string,

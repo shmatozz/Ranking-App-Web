@@ -2,10 +2,12 @@
 
 import React from "react";
 import {Button, FileInput, TextInput} from "@/shared/ui";
+import {Trainer} from "@/features/training-map";
 
 interface TrainerCreateFormProps {
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
+  predefinedData?: Trainer;
 }
 
 export const TrainerCreateForm: React.FC<TrainerCreateFormProps> = (
@@ -25,18 +27,46 @@ export const TrainerCreateForm: React.FC<TrainerCreateFormProps> = (
         className="flex flex-col gap-2 bg-white p-6 m-auto rounded-lg container-shadow min-w-[500px] text-center items-center"
         onSubmit={handleSubmit}
       >
-        <label className={"text-h5_bold text-base-95 text-center"}>Создание точки</label>
-
-        <TextInput title={"Фамилия"} name={"lastName"} required/>
-        <TextInput title={"Имя"} name={"firstName"} required/>
-        <TextInput title={"Отчество"} name={"middleName"}/>
+        <label className={"text-h5_bold text-base-95 text-center"}>
+          {props.predefinedData ? "Редактирование тренера" : "Добавление тренера"}
+        </label>
 
         <TextInput
-          type={"area"} className={"min-h-[100px]"}
-          title={"Информация"} name={"description"}
+          title={"Фамилия"} name={"lastName"} required
+          defaultValue={props.predefinedData ? props.predefinedData.lastName : ""}
         />
 
-        <FileInput title={"Фото"} name={"image"}/>
+        <TextInput
+          title={"Имя"} name={"firstName"} required
+          defaultValue={props.predefinedData ? props.predefinedData.firstName : ""}
+        />
+
+        <TextInput
+          title={"Отчество"} name={"middleName"}
+          defaultValue={props.predefinedData && props.predefinedData.middleName ? props.predefinedData.middleName : ""}
+        />
+
+        <TextInput
+          type={"area"} className={"min-h-[75px]"}
+          title={"Образование"} name={"education"}
+          defaultValue={props.predefinedData && props.predefinedData.education ? props.predefinedData.education : ""}
+        />
+
+        <TextInput
+          type={"area"} className={"min-h-[75px]"}
+          title={"Специализация"} name={"specialization"}
+          defaultValue={props.predefinedData && props.predefinedData.specialization ? props.predefinedData.specialization : ""}
+        />
+
+        <TextInput
+          type={"area"} className={"min-h-[75px]"}
+          title={"Достижения"} name={"achievements"}
+          defaultValue={props.predefinedData && props.predefinedData.achievements ? props.predefinedData.achievements : ""}
+        />
+
+        <FileInput
+          title={"Фото"} name={"image"}
+        />
 
         <div className={"flex flex-row gap-4 w-full"}>
           <Button
@@ -49,7 +79,7 @@ export const TrainerCreateForm: React.FC<TrainerCreateFormProps> = (
           <Button
             variant={"primary"} palette={"blue"} className={"w-full"} type={"submit"}
           >
-            Добавить тренера
+            {props.predefinedData ? "Сохранить" : "Добавить тренера"}
           </Button>
         </div>
       </form>
