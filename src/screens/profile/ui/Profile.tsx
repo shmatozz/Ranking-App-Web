@@ -6,12 +6,13 @@ import {Subpages} from "@/entities/user";
 import {ProfilePages} from "@/widgets/navigation";
 import {useRouter, useSearchParams} from "next/navigation";
 import {useWhoAmIStore} from "@/features/who-am-i";
+import {Admin} from "@/widgets/profile/admin";
 
 interface ProfileProps {
   sessionEmail: string;
 }
 
-const TABS: Subpages[] = ["info", "comps", "comps-create", "members", "results"];
+const TABS: Subpages[] = ["info", "comps", "comps-create", "members", "results", "admin"];
 
 export const Profile: React.FC<ProfileProps> = ({
   sessionEmail
@@ -59,6 +60,10 @@ export const Profile: React.FC<ProfileProps> = ({
         if (!whoAmI.organization) return <Results/>
         else return <Members/>
       }
+      case "admin": {
+        if (!whoAmI.admin) return <Info role={whoAmI.organization ? "ORGANIZATION" : "USER"}/>
+        else return <Admin/>
+      }
     }
   }
 
@@ -69,7 +74,7 @@ export const Profile: React.FC<ProfileProps> = ({
         <Photo/>
 
         {/* PROFILE NAVIGATION */}
-        <ProfilePages role={whoAmI?.organization ? "ORGANIZATION" : "USER"} page={activeTab} setPage={handleSubpageChange}/>
+        <ProfilePages role={whoAmI?.organization ? "ORGANIZATION" : whoAmI.admin ? "ADMIN" : "USER"} page={activeTab} setPage={handleSubpageChange}/>
       </div>
 
       <Content href={activeTab}/>

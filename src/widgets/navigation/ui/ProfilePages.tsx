@@ -39,6 +39,16 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
         >
           {role == "ORGANIZATION" ? "Мои участники" : "Мои результаты"}
         </Button>
+
+        {role == "ADMIN" && (
+          <Button
+            size={"M"} variant={page == "admin" ? "primary" : "tertiary"}
+            className={"w-full"}
+            onClick={() => setPage("admin")}
+          >
+            {"Панель управления"}
+          </Button>
+        )}
       </div>
 
       <div className={"flex flex-row w-full gap-4 xs:hidden"}>
@@ -47,27 +57,30 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
           size={"M"} variant={page == "info" ? "primary" : "tertiary"}
           className={"w-full"}
           onClick={() => setPage("info")}
-        >
-          Мои данные
-        </IconButton>
+        />
 
         <IconButton
           icon={"trophy"}
           size={"M"} variant={page == "comps" || page == "comps-create" ? "primary" : "tertiary"}
           className={"w-full"}
           onClick={() => setPage("comps")}
-        >
-          Мои соревнования
-        </IconButton>
+        />
 
         <IconButton
           icon={role == "ORGANIZATION" ? "members" : "podium"}
           size={"M"} variant={(page == "results" || page == "members") ? "primary" : "tertiary"}
           className={"w-full"}
           onClick={() => setPage(role == "ORGANIZATION" ? "members" : "results")}
-        >
-          {role == "ORGANIZATION" ? "Мои участники" : "Мои результаты"}
-        </IconButton>
+        />
+
+        {role == "ADMIN" && (
+          <IconButton
+            icon={"admin"}
+            size={"M"} variant={page == "admin" ? "primary" : "tertiary"}
+            className={"w-full"}
+            onClick={() => setPage("admin")}
+          />
+        )}
       </div>
 
 
@@ -82,9 +95,7 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
         icon={"logout"}
         size={"S"} variant={"primary"} palette={"gray"}
         className={"xs:hidden"} onClick={quit}
-      >
-        Выйти
-      </IconButton>
+      />
     </div>
   )
 }

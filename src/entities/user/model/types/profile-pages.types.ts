@@ -1,1 +1,1 @@
-export type Subpages = "info" | "comps" | "comps-create" | "results" | "members";
+export type Subpages = "info" | "comps" | "comps-create" | "results" | "members" | "admin";

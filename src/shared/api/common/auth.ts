@@ -64,3 +64,18 @@ export const sendCodeRequest = async (email: string) => {
     }
   }
 };
+
+export const emailExist = async (email: string) => {
+  try {
+    console.log("Send GET email exists request")
+    const response = await axiosInstance.get(
+      `/auth/exist-email/${email}`
+    )
+
+    return response.data;
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      throw new Error(err.response!.data.msg);
+    }
+  }
+};
