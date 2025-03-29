@@ -1,4 +1,5 @@
 export {Account} from "./account";
+export {Admin} from "./admin";
 export {Bell} from "./bell";
 export {BellBadge} from "./bell-badge";
 export {CheckboxBlank} from "./checkbox-blank";

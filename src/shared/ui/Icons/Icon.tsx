@@ -3,6 +3,7 @@ import * as Icons from "./svg";
 
 export const icons = {
   account: Icons.Account,
+  admin: Icons.Admin,
   bell: Icons.Bell,
   bellBadge: Icons.BellBadge,
   checkboxBlank: Icons.CheckboxBlank,
