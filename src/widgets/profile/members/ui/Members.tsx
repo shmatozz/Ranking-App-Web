@@ -4,15 +4,24 @@ import React, {useEffect} from "react";
 import {Button} from "@/shared/ui";
 import {useMembersStore} from "@/widgets/profile";
 import {UserMemberCard, UserParticipantCard} from "@/entities/user";
-import {SendInviteForm} from "@/features/organization-join";
+import {SendInviteForm, AddUserForm, CreateUserForm} from "@/features/organization-join";
 import {useOrganizationStore} from "@/entities/organization";
+import {useWhoAmIStore} from "@/features/who-am-i";
+import {getAvgRating} from "@/shared/lib";
 
 export const Members= () => {
-  const { members, getMembers, isLoading} = useMembersStore();
+  const {
+    members, isLoading,
+    getMembers, addUserWithOutInvite, createUser,
+    addUserError, createUserError, clearErrors
+  } = useMembersStore();
 
   const { organization, getOrganizationInfo } = useOrganizationStore();
+  const { whoAmI} = useWhoAmIStore();
 
   const [inputUserEmailVisible, setInputUserEmailVisible] = React.useState(false);
+  const [addUserVisible, setAddUserVisible] = React.useState(false);
+  const [createUserVisible, setCreateUserVisible] = React.useState(false);
 
   useEffect(() => {
     if (!organization) getOrganizationInfo()
@@ -35,7 +44,7 @@ export const Members= () => {
         {!isLoading && members && (
           <div className={"flex flex-row w-full gap-1"}>
             <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? members.length : "-"}</p>
-            <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? 1305 : "-"}</p>
+            <p className={"w-full text-h5_bold text-blue-80 text-center"}>{members.length != 0 ? getAvgRating(members) : "-"}</p>
           </div>
         )}
 
@@ -71,10 +80,10 @@ export const Members= () => {
 
         {!inputUserEmailVisible && !isLoading && (
           <Button
-            size={"S"} variant={"secondary"} rightIcon={"plus"} className={"w-full max-w-[350px]"}
+            size={"S"} variant={"secondary"} rightIcon={"plus"} className={"w-full max-w-[370px]"}
             onClick={() => setInputUserEmailVisible(true)}
           >
-            Добавить участника
+            <p className={"text-nowrap"}>Добавить по приглашению</p>
           </Button>
         )}
 
@@ -83,6 +92,48 @@ export const Members= () => {
             onSuccess={() => setInputUserEmailVisible(false)}
             onCancel={() => setInputUserEmailVisible(false)}
           />
+        )}
+
+        {whoAmI && whoAmI.curator && (
+          <div className={"flex flex-col w-full items-center gap-2"}>
+            <p className={"text-bodyM_regular text-base-95 text-center"}>Вы - куратор. Вам доступен следующий функционал:</p>
+            <Button
+              size={"S"} variant={"secondary"} className={"w-full max-w-[370px]"}
+              onClick={() => setAddUserVisible(true)}
+            >
+              <p className={"text-nowrap"}>Добавить без приглашения</p>
+            </Button>
+
+            <Button
+              size={"S"} variant={"secondary"} className={"w-full max-w-[370px]"}
+              onClick={() => setCreateUserVisible(true)}
+            >
+              <p className={"text-nowrap"}>Зарегистрировать участника</p>
+            </Button>
+
+            {addUserVisible && (
+              <AddUserForm
+                byInvite={false}
+                onSubmit={(data: FormData) => addUserWithOutInvite(data, () => setAddUserVisible(false))}
+                onCancel={() => {
+                  setAddUserVisible(false);
+                  clearErrors();
+                }}
+                error={addUserError}
+              />
+            )}
+
+            {createUserVisible && (
+              <CreateUserForm
+                onSubmit={(data: FormData) => createUser(data, () => setCreateUserVisible(false))}
+                onCancel={() => {
+                  setCreateUserVisible(false);
+                  clearErrors();
+                }}
+                error={createUserError}
+              />
+            )}
+          </div>
         )}
       </div>
     </div>
