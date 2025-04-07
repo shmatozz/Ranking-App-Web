@@ -4,8 +4,8 @@ import {faker} from "@faker-js/faker/locale/ru";
 export function createTestUser(overrides: Partial<UserShort> = {}): UserShort {
   const defaultUser: UserShort = {
     email: faker.internet.email(),
-    phone: faker.phone.number({ style: "human" }),
-    emergencyPhone: faker.phone.number({ style: "human" }),
+    phone: "+79999999999",
+    emergencyPhone: "+79999999999",
     birthDate: faker.date.birthdate({ min: 5, max: 65, mode: 'age' }).toISOString().split('T')[0],
     gender: faker.helpers.arrayElement(['MALE', 'FEMALE']),
     firstName: faker.person.firstName(),
