@@ -44,7 +44,7 @@ export const Partners = () => {
         {partners.length > 0 && (
           partners.map((item) => (
             <PartnerCard
-              key={item.id} partner={item} classname={"mx-4 w-[150px] h-[150px]"} admin={whoAmI && whoAmI.admin}
+              key={item.id} partner={item} classname={"mx-4 w-fit max-w-[150px] h-fit max-h-[200px]"} admin={whoAmI && whoAmI.admin}
               onSubmitEdit={(data) => updatePartner(item.id, data)}
               onSubmitDelete={() => deletePartner(item.id)}
             />
