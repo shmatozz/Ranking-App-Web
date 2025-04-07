@@ -1,7 +1,10 @@
 import {UserShort} from "@/entities/user";
 
-export const getAvgRating = (members: UserShort[]): number => {
-  const ratings = members.map((member: UserShort) => member.rating);
+export const getAvgRating = (members: UserShort[]): number | string => {
+  if (members.length === 0) {
+    return "-";
+  }
 
-  return ratings.reduce( function( x, y ){ return x + y }) / ratings.length
-}
+  const sum = members.reduce((total, member) => total + member.rating, 0);
+  return sum / members.length;
+};

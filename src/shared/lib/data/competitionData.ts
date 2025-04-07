@@ -12,7 +12,7 @@ export function getDistances(swims: Swim[]): string {
 }
 
 export function getAgeRange(from: number, to: number): string {
-  return `от ${from} до ${to} ${to % 10 == 1 ? "года" : "лет"}`;
+  return `от ${from} до ${to} ${(to % 10 == 1 && to != 11) ? "года" : "лет"}`;
 }
 
 export function isPassed(competitionDate?: string): boolean {
