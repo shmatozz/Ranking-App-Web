@@ -29,7 +29,7 @@ export const InfoField: React.FC<InfoFieldProps> = ({
     return (
       <div className={clsx("flex flex-col w-full", className)}>
         <p className={"text-bodyS_regular text-base-40"}>{title}</p>
-        <div className={"w-fit px-8 text-bodyM_regular text-base-5 bg-base-5 rounded-md animate-pulse"}>{title}</div>
+        <div className={"w-fit px-8 text-bodyM_regular text-base-5 bg-base-5 rounded-md animate-pulse"}>{value ? value : "some value"}</div>
       </div>
     )
   }

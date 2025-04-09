@@ -62,7 +62,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
         <Icon name={"chevronDown"} size={24} className={"text-base-60"} />
       </div>
 
-      <div
+      <div data-testid={"list"}
         className={clsx(
           "flex flex-col w-full absolute bg-white container-shadow rounded-md overflow-y-auto transition-all duration-300 ease-in-out z-[20] scrollbar-hide",
           opened ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"

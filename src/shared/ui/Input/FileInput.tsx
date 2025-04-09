@@ -52,6 +52,7 @@ export const FileInput: React.FC<FileInputProps> = ({
       <div className="relative w-full">
         {/* Скрытый file input */}
         <input
+          data-testid={"file-input"}
           id={props.id}
           name={props.name}
           type="file"
@@ -62,7 +63,7 @@ export const FileInput: React.FC<FileInputProps> = ({
         />
 
         {/* Кастомный file input UI */}
-        <div
+        <div data-testid={"container"}
           className={clsx(
             "flex items-center w-full h-[2.75rem] rounded-md border transition overflow-hidden",
             "cursor-pointer bg-base-0 border-base-20 hover:border-blue-50",

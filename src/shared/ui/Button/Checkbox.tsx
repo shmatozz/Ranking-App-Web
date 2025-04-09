@@ -1,7 +1,7 @@
 'use client'
 
 import React, {InputHTMLAttributes, useEffect} from "react";
-import {Icon} from "@/shared/ui";
+import {Icon} from "@/shared/ui/Icons/Icon";
 import clsx from "clsx";
 
 type CheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -35,11 +35,11 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   }[theme];
 
   return (
-    <div className={clsx("flex flex-row w-full gap-1 items-center", className)} onClick={() => {
+    <div className={clsx("flex flex-row w-full gap-1 items-center", className)} onClick={disabled ? () => {} : () => {
       setChecked(!checked);
       if (onClick) onClick();
     }}>
-      <input name={props.name} hidden type={"checkbox"} checked={checked} onChange={() => setChecked(!checked)}/>
+      <input name={props.name} hidden type={"checkbox"} checked={checked} disabled={disabled} onChange={() => setChecked(!checked)}/>
 
       <Icon name={checked ? "checkboxChecked" : "checkboxBlank"} size={24}
             color={disabled ? "#C6C6C6" : (checked ? themeClass : "#9B9B9B")}/>
@@ -55,7 +55,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <Icon name={"info"} size={16} color={"#C6C6C6"}/>
+          <Icon data-testid="info-icon" name={"info"} size={16} color={"#C6C6C6"}/>
           {showTooltip && (
             <div
               className="absolute right-0 top-6 w-48 bg-base-90 text-white text-caption_regular select-none p-2 rounded shadow-md">
