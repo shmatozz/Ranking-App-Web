@@ -2,6 +2,9 @@ export function formatDate(dateStr: string | undefined): string | undefined {
   if (!dateStr) return undefined
 
   const date = new Date(dateStr);
+  if (isNaN(date.getTime())) {
+    return undefined;
+  }
   let month: string;
 
   switch (date.getMonth()) {
@@ -16,7 +19,7 @@ export function formatDate(dateStr: string | undefined): string | undefined {
     case 8: month = "сентября"; break;
     case 9: month = "октября"; break;
     case 10: month = "ноября"; break;
-    default: month = "Декабрь"
+    default: month = "декабря"
   }
 
   return `${date.getDate()} ${month} ${date.getFullYear()}`
@@ -30,17 +33,46 @@ export function getTime(date: Date): string | undefined {
 }
 
 
-export function getAge(date: Date): string {
+export function getAge(birthDate: Date | string): string {
+  const date = new Date(birthDate);
   const today = new Date();
-  const birthDate = new Date(date);
 
-  let years = today.getFullYear() - birthDate.getFullYear();
+  if (isNaN(date.getTime())) {
+    return '-';
+  }
 
-  const hasBirthdayPassed =
-    today.getMonth() > birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+  let years = today.getFullYear() - date.getFullYear();
 
-  if (!hasBirthdayPassed) years--;
+  const currentMonth = today.getMonth();
+  const birthMonth = date.getMonth();
+  const currentDay = today.getDate();
+  const birthDay = date.getDate();
 
-  return `${years} ${years % 10 == 1 ? "год" : ((years % 10 >= 5 || years % 10 == 0) ? "лет" : "года")}`;
+  if (currentMonth < birthMonth ||
+    (currentMonth === birthMonth && currentDay < birthDay)) {
+    years--;
+  }
+
+  let ageSuffix: string;
+  const lastDigit = years % 10;
+  const lastTwoDigits = years % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+    ageSuffix = 'лет';
+  } else {
+    switch (lastDigit) {
+      case 1:
+        ageSuffix = 'год';
+        break;
+      case 2:
+      case 3:
+      case 4:
+        ageSuffix = 'года';
+        break;
+      default:
+        ageSuffix = 'лет';
+    }
+  }
+
+  return `${years} ${ageSuffix}`;
 }

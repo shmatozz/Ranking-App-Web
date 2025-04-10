@@ -2,7 +2,7 @@
 
 import React, {ButtonHTMLAttributes} from "react";
 import clsx from "clsx";
-import {Icon, icons} from "@/shared/ui";
+import {Icon, icons} from "@/shared/ui/Icons/Icon";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   palette?: "blue" | "orange" | "gray";

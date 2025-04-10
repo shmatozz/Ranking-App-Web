@@ -10,8 +10,15 @@ export const Modal: React.FC<ModalProps> = (
   props
 ) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-base-95 bg-opacity-50 z-[5]">
-      <div className="flex flex-col gap-1 bg-white p-6 m-auto rounded-lg container-shadow w-fit text-center items-center">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-base-95 bg-opacity-50 z-[5]"
+      data-testid="modal-overlay"
+      role="dialog"
+    >
+      <div
+        className="flex flex-col gap-1 bg-white p-6 m-auto rounded-lg container-shadow w-fit text-center items-center"
+        data-testid="modal-content"
+      >
         {props.children}
 
         {props.onClose && (
