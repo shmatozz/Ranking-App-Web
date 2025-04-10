@@ -6,6 +6,7 @@ import {Button, ChangePasswordForm, Checkbox, CodeInput, InfoField} from "@/shar
 import {useOrganizationStore} from "@/entities/organization";
 import {updatePassword} from "@/shared/api/common";
 import {useChangeContactsStore} from "@/features/change-contacts";
+import {useWhoAmIStore} from "@/features/who-am-i";
 
 interface OrganizationInfoProps {
   className?: string;
@@ -18,13 +19,14 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
   const isLoading = useOrganizationStore((state) => state.isLoading);
   const hasError = useOrganizationStore((state) => state.hasError);
 
-  const { organization, getOrganizationInfo } = useOrganizationStore();
+  const { organization, getOrganizationInfo, requestCuratorStatus, curatorRequested } = useOrganizationStore();
   const {
     isCodeSent, changeEmailRequested, errorMessage,
     code, setCode, rightCode, changeEmail
   } = useChangeContactsStore();
   const hasChangeError = useChangeContactsStore(state => state.hasError);
   const isChangeLoading = useChangeContactsStore(state => state.isLoading);
+  const { whoAmI} = useWhoAmIStore();
 
   const [inputPasswordVisible, setInputPasswordVisible] = React.useState(false);
 
@@ -78,6 +80,17 @@ export const OrganizationInfo: React.FC<OrganizationInfoProps> = (
 
       {inputPasswordVisible && (
         <ChangePasswordForm onSubmit={updatePassword} onSuccess={() => setInputPasswordVisible(false)}/>
+      )}
+
+      {whoAmI && !whoAmI.curator && !curatorRequested && (
+        <div className={"flex flex-col w-full items-center gap-2"}>
+          <Button
+            size={"S"} variant={"secondary"} className={"w-full max-w-[370px]"}
+            onClick={() => requestCuratorStatus()}
+          >
+            <p className={"text-nowrap"}>Запросить роль куратора</p>
+          </Button>
+        </div>
       )}
     </div>
   )

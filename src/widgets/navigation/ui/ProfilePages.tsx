@@ -2,6 +2,7 @@ import React from "react";
 import {Subpages} from "@/entities/user";
 import {quit, Role} from "@/shared/lib";
 import {Button, IconButton} from "@/shared/ui";
+import {useWhoAmIStore} from "@/features/who-am-i";
 
 interface ProfilePageProps {
   role: Role;
@@ -13,6 +14,8 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
   role,
   page, setPage
 }) => {
+  const { resetWhoAmI } = useWhoAmIStore();
+
   return (
     <div className={"flex flex-row h-full w-full gap-4 items-center justify-between lg-md:flex-col"}>
       <div className={"hidden xs:flex xs:flex-row w-full gap-4 lg-md:flex-col"}>
@@ -86,7 +89,9 @@ export const ProfilePages: React.FC<ProfilePageProps> = ({
 
       <Button
         size={"S"} variant={"primary"} palette={"gray"}
-        className={"hidden xs:flex w-fit lg-md:w-full"} onClick={quit}
+        className={"hidden xs:flex w-fit lg-md:w-full"} onClick={() => {
+          quit().finally(() => resetWhoAmI())
+        }}
       >
         Выйти
       </Button>

@@ -86,3 +86,23 @@ export async function uploadOrganizationPhoto(params: uploadOrganizationPhotoReq
   }
 }
 
+export async function requestCuratorStatus() {
+  try {
+    console.log("Send POST request curator status request");
+    const session = await auth();
+
+    await axiosInstance.post(
+      `/organization/send-request-to-admin`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      return { error: e.response!.data.msg }
+    }
+    return { error: "Неизвестная ошибка" }
+  }
+}
