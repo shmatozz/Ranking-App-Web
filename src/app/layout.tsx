@@ -5,6 +5,7 @@ import React from "react";
 import {FloatingCircles} from "@/shared/ui";
 import Script from "next/script";
 import * as process from "node:process";
+import {NotificationsList} from "@/features/notifications";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -25,6 +26,8 @@ export default function RootLayout({
       >
         <Header/>
         <FloatingCircles/>
+
+        <NotificationsList/>
 
         <main className="flex flex-col flex-grow py-[3.25rem] shadow-md scroll">
           {children}

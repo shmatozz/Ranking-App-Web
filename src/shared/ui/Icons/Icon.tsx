@@ -30,6 +30,7 @@ export const icons = {
   podium: Icons.Podium,
   radioBlank: Icons.RadioBlank,
   radioChecked: Icons.RadioChecked,
+  refresh: Icons.Refresh,
   submit: Icons.Submit,
   swim: Icons.Swim,
   template: Icons.Template,

@@ -26,6 +26,7 @@ export {Plus} from "./plus";
 export {Podium} from "./podium";
 export {RadioBlank} from "./radio-blank";
 export {RadioChecked} from "./radio-checked";
+export {Refresh} from "./refresh";
 export {Submit} from "./submit";
 export {Swim} from "./swim";
 export {Template} from "./template";

@@ -1,11 +1,17 @@
 import { create } from "zustand/react";
-import {Organization, updateOrganizationOpenStatus, uploadOrganizationPhoto} from "@/entities/organization";
+import {
+  Organization,
+  requestCuratorStatus,
+  updateOrganizationOpenStatus,
+  uploadOrganizationPhoto
+} from "@/entities/organization";
 import {getOrganizationInfo, getOrganizationShortInfo} from "@/entities/organization/api/OrganizationService";
 import {useCompetitionsStore, useMembersStore} from "@/widgets/profile";
 import {splitCompetitions} from "@/shared/lib";
 
 type OrganizationState = {
   organization: Organization | undefined;
+  curatorRequested: boolean;
   isLoading: boolean;
   hasError: boolean;
 }
@@ -15,10 +21,12 @@ type OrganizationActions = {
   getOrganizationShortInfo: () => void;
   updateOrganizationOpenStatus: () => void;
   uploadOrganizationPhoto: (photo: File) => void;
+  requestCuratorStatus: () => void;
 }
 
 export const useOrganizationStore = create<OrganizationState & OrganizationActions>((set, get) => ({
   organization: undefined,
+  curatorRequested: false,
   isLoading: false,
   hasError: false,
 
@@ -62,5 +70,16 @@ export const useOrganizationStore = create<OrganizationState & OrganizationActio
     uploadOrganizationPhoto({ file: photo })
       .then(() => get().getOrganizationInfo())
       .catch(() => set({ hasError: true }))
+  },
+
+  requestCuratorStatus: () => {
+    requestCuratorStatus()
+      .then((response) => {
+        if (response && response.error) {
+          console.log(response.error)
+        } else {
+          set({curatorRequested: true})
+        }
+      })
   }
 }))

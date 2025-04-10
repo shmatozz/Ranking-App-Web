@@ -28,3 +28,23 @@ export type Participant = {
   rating: number,
   category: string,
 }
+
+export type ParticipantFull = {
+  firstName: string,
+  lastName: string,
+  middleName: string,
+  birthDate: string,
+  gender: "MALE" | "FEMALE",
+  email: string,
+  phone?: string,
+  emergencyPhone: string,
+  time?: {
+    hour: number,
+    minute: number,
+    second: number,
+    nano?: number
+  },
+  points?: number,
+  place?: number,
+  registrationDate?: string
+}

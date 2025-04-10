@@ -20,7 +20,7 @@ export const PartnerCard: React.FC<PartnerCardProps> = (
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
 
   return (
-    <div className={clsx("flex flex-col gap-2 items-center max-w-[300px] justify-center", props.classname)}>
+    <div className={clsx("flex flex-col gap-2 items-center justify-center", props.classname)}>
       <div className="relative w-full h-full group rounded-2xl overflow-hidden">
         <ImageLoader imagePath={props.partner.partnerLogo} className="w-full h-full"/>
 

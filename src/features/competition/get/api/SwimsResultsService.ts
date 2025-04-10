@@ -3,6 +3,7 @@
 import {auth} from "@/shared/lib";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
+import {SwimResultsForm} from "@/features/competition/get";
 
 export async function generateResultsTemplate(params: { uuid: string }) {
   console.log("Send GET swim results template by ID request");
@@ -59,6 +60,27 @@ export async function uploadSwimResults(params: { uuid: string, file: File }) {
     if (error instanceof AxiosError) {
       console.error("File upload error:", error.response ? error.response.data : error);
     }
+  }
+}
+
+export async function uploadSwimResultsByForm(params: { uuid: string, data: SwimResultsForm[] }) {
+  console.log("Send POST swim results template by ID request");
+  const session = await auth();
+
+  try {
+    await axiosInstance.post(
+      `/event/result/${params.uuid}`,
+      params.data,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+      });
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("File upload error:", error.response ? error.response.data : error);
+    }
+    return { error: "Неизветная ошибка" };
   }
 }
 

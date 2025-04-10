@@ -1,8 +1,8 @@
 'use client';
 
 import { create } from "zustand/react";
-import {getSwimParticipantsInfo} from "@/features/competition/get";
-import {Participant} from "@/entities/user";
+import {getSwimInfo, getSwimParticipantsInfo} from "@/features/competition/get";
+import {Participant, ParticipantFull} from "@/entities/user";
 import {DropdownItem} from "@/shared/ui/Input/Dropdown";
 
 type FiltersState = {
@@ -19,6 +19,8 @@ type FiltersActions = {
 
 type ParticipantsState = {
   users: Participant[] | undefined;
+  usersFull?: ParticipantFull[];
+  swimDistance: number;
   selectedSwim?: DropdownItem;
   filters: FiltersState;
   page: number, totalPages: number, totalResults: number,
@@ -29,6 +31,7 @@ type ParticipantsState = {
 
 type ParticipantsActions = {
   getParticipants: (swimId: string) => void;
+  getSwimFull: (swimId: string) => void;
   setSelectedSwim: (id: DropdownItem) => void;
   filtersActions: FiltersActions;
   setPage: (page: number) => void,
@@ -37,7 +40,7 @@ type ParticipantsActions = {
 const initialState: ParticipantsState = {
   filters: {},
   users: undefined,
-  selectedSwim: undefined,
+  selectedSwim: undefined, swimDistance: 0,
   page: 0, totalPages: 0, totalResults: 0,
   isLoading: false,
   hasError: false,
@@ -69,6 +72,15 @@ export const useParticipantsStore = create<ParticipantsState & ParticipantsActio
         set({ hasError: true, errorMessage: e.message })
       })
       .finally(() => set({ isLoading: false }));
+  },
+
+  getSwimFull: (swimId: string) => {
+    getSwimInfo({ uuid: swimId })
+      .then((response) => {
+        if (response && response.data) {
+          set({ usersFull: response.data.users, swimDistance: response.data.distance })
+        }
+      })
   },
 
   setSelectedSwim: (item) => {

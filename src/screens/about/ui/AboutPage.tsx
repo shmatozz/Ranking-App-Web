@@ -18,6 +18,10 @@ export const AboutPage = () => {
     }
   }, [getWhoAmI, resetWhoAmI, session.data?.user.email, whoAmI]);
 
+  useEffect(() => {
+    document.title = "О нас";
+  }, []);
+
   return (
     <div className="content-container flex-col gap-4">
       <AboutUsText/>

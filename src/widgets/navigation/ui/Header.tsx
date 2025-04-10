@@ -5,10 +5,12 @@ import {Icon, icons, Logo} from "@/shared/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import {useNotificationsStore} from "@/features/notifications";
 
 export const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isNotificationsOpen, setNotificationsOpen} = useNotificationsStore();
 
   const isActive = (href: string) => pathname.startsWith(href);
 
@@ -42,7 +44,7 @@ export const Header = () => {
   }) => (
     <Link
       href={href}
-      className="flex items-center justify-center h-full w-full w-max-[11.25rem] relative group"
+      className="flex items-center justify-center h-full w-full max-w-[11.25rem] relative group"
     >
       <Icon name={icon} size={32} color={isActive(href) ? "#D3DCFF" : "white" } className={"transition-colors"}/>
 
@@ -73,8 +75,15 @@ export const Header = () => {
         {/* Icons */}
         <div className="flex flex-row gap-4 justify-end">
           <IconLink href="/profile" icon="account" isActive={isActive}/>
-          <div className={"hidden xs:flex items-center justify-center h-full w-[3.25rem] relative group"}>
-            <Icon name="bell" size={30} color="white"/>
+
+          <div
+            className="flex items-center justify-center h-full w-full max-w-[11.25rem] relative group"
+            onClick={() => setNotificationsOpen(true)}
+          >
+            <Icon name={"bell"} size={26} color={isNotificationsOpen ? "#D3DCFF" : "white"}
+                  className={"transition-colors"}/>
+            <div
+              className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isNotificationsOpen ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
           </div>
         </div>
 
