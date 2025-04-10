@@ -11,7 +11,7 @@ import {
 } from "@/features/competition/get";
 import {AxiosError} from "axios";
 import {Swim} from "@/entities/swim";
-import {Participant} from "@/entities/user";
+import {ParticipantFull} from "@/entities/user";
 
 export async function getCompetitionByID(params: CompetitionRequest) {
   console.log("Send GET competition by ID request");
@@ -55,7 +55,7 @@ export async function getSwimInfo(params: SwimRequest) {
   console.log("Send GET find swim info request");
 
   try {
-    const response = await axiosInstance.get<Swim & { users: Participant[] }>(
+    const response = await axiosInstance.get<Swim & { users: ParticipantFull[] }>(
       `/event/find/${params.uuid}`
     );
 
@@ -64,6 +64,7 @@ export async function getSwimInfo(params: SwimRequest) {
     if (e instanceof AxiosError) {
       return { error: e.response!.data.msg };
     }
+    return { error: "Неизвестная ошибка" }
   }
 }
 

@@ -44,3 +44,15 @@ export type FilterParticipantsResponseData = {
   content: Participant[];
 }
 
+export type SwimResultsForm = {
+  userEmail: string;
+  distance: number;
+  gender: "MALE" | "FEMALE";
+  userTime: {
+    hour: number;
+    minute: number;
+    second: number;
+    nano?: number;
+  };
+};
+

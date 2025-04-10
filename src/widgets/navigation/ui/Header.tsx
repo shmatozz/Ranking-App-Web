@@ -74,7 +74,7 @@ export const Header = () => {
         <div className="flex flex-row gap-4 justify-end">
           <IconLink href="/profile" icon="account" isActive={isActive}/>
           <div className={"hidden xs:flex items-center justify-center h-full w-[3.25rem] relative group"}>
-            <Icon name="bell" size={30} color="white"/>
+            <Icon name="bell" size={26} color="white"/>
           </div>
         </div>
 

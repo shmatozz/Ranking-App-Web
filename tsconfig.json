@@ -31,7 +31,7 @@
       "./node_modules/@types",
       "./node_modules/@yandex/ymaps3-types"
     ],
-    "types": ["jest", "@testing-library/jest-dom"]
+    "types": ["jest"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
