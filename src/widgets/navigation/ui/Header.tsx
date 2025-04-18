@@ -18,15 +18,27 @@ export const Header = () => {
 
   const NavLinks = ({ isActive }: { isActive: (href: string) => boolean }) => (
     <div className="flex flex-col large:flex-row gap-2">
-      <NavLink href="/calendar" label="Календарь" isActive={isActive} />
-      <NavLink href="/ratings" label="Рейтинг" isActive={isActive} />
-      <NavLink href="/about" label="О нас" isActive={isActive} />
-      <NavLink href="/useful" label="Полезное" isActive={isActive} />
+      <NavLink href="/calendar" label="Календарь" isActive={isActive}/>
+      <NavLink href="/ratings" label="Рейтинг" isActive={isActive}/>
+      <NavLink href="/about" label="О нас" isActive={isActive}/>
+      <NavLink href="/useful" label="Полезное" isActive={isActive}/>
+
+      <div  onClick={() => setNotificationsOpen(true)}
+            className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-[50px]">
+        <div className={clsx(
+          "flex items-center justify-center w-full relative transition-colors text-base-0",
+          isNotificationsOpen ?"text-blue-10" : "text-base-0"
+        )}>
+          {"Уведомления"}
+          <div className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isNotificationsOpen ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
+        </div>
+      </div>
     </div>
   );
 
-  const NavLink = ({ href, label, isActive }: { href: string; label: string; isActive: (href: string) => boolean }) => (
-    <Link href={href} onClick={toggleMenu} className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-[50px]">
+  const NavLink = ({href, label, isActive}: { href: string; label: string; isActive: (href: string) => boolean }) => (
+    <Link href={href} onClick={toggleMenu}
+          className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-[50px]">
       <div className={clsx(
         "flex items-center justify-center w-full relative transition-colors",
         isActive(href) ? "text-blue-10" : "text-base-0"
@@ -77,7 +89,7 @@ export const Header = () => {
           <IconLink href="/profile" icon="account" isActive={isActive}/>
 
           <div
-            className="flex items-center justify-center h-full w-full max-w-[11.25rem] relative group"
+            className="hidden xs:flex items-center justify-center h-full w-full max-w-[11.25rem] relative group"
             onClick={() => setNotificationsOpen(true)}
           >
             <Icon name={"bell"} size={26} color={isNotificationsOpen ? "#D3DCFF" : "white"}
@@ -98,13 +110,6 @@ export const Header = () => {
         <div
           className="absolute top-[50px] right-0 gap-4 w-fit bg-blue-50 bg-opacity-85 shadow-md flex flex-col items-center py-4 large:hidden rounded-bl-2xl -z-10">
           <NavLinks isActive={isActive}/>
-          <div className={clsx(
-            "flex items-center justify-center w-full relative transition-colors text-base-0",
-          )}>
-            {"Уведомления"}
-            <div
-              className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1")}/>
-          </div>
         </div>
       )}
     </header>
