@@ -24,7 +24,7 @@ export const Header = () => {
       <NavLink href="/useful" label="Полезное" isActive={isActive}/>
 
       <div  onClick={() => setNotificationsOpen(true)}
-            className="flex w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-[50px]">
+            className="flex large:hidden w-[11.25rem] px-8 h-full min-h-10 justify-center group select-none lg-md:min-h-[50px]">
         <div className={clsx(
           "flex items-center justify-center w-full relative transition-colors text-base-0",
           isNotificationsOpen ?"text-blue-10" : "text-base-0"
