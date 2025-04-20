@@ -6,6 +6,7 @@ export type CreateCompetitionParams = {
   competitionLocation: string,
   competitionDate: string,
   description: string,
+  videoLink?: string,
   contactLink: string,
   contactLink2?: string,
   contactLink3?: string,

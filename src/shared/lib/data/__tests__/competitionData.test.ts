@@ -1,4 +1,11 @@
-import { getDistances, getAgeRange, getSwimShort, isPassed, getSwimsDropDown } from '@/shared/lib/data/competitionData';
+import {
+  getDistances,
+  getAgeRange,
+  getSwimShort,
+  isPassed,
+  getSwimsDropDown,
+  getEmbedStreamUrl
+} from '@/shared/lib/data/competitionData';
 import { Swim } from '@/entities/swim';
 import {describe, expect, it} from "@jest/globals";
 import {DropdownItem} from "@/shared/ui/Input/Dropdown";
@@ -136,5 +143,42 @@ describe('getSwimsDropDown', () => {
     const result = getSwimsDropDown(swims);
     expect(result[0].id).toBe('1');
     expect(result[1].id).toBe('2');
+  });
+});
+
+describe("getEmbedUrl", () => {
+  it("should convert YouTube full link to embed", () => {
+    const url = "https://www.youtube.com/watch?v=abc123";
+    expect(getEmbedStreamUrl(url)).toBe("https://www.youtube.com/embed/abc123");
+  });
+
+  it("should convert youtu.be short link to embed", () => {
+    const url = "https://youtu.be/xyz789";
+    expect(getEmbedStreamUrl(url)).toBe("https://www.youtube.com/embed/xyz789");
+  });
+
+  it("should convert VK video link to embed", () => {
+    const url = "https://live.vkvideo.ru/fox.media";
+    expect(getEmbedStreamUrl(url)).toBe("https://live.vkvideo.ru/app/embed/fox.media");
+  });
+
+  it("should pass already embed VK link as-is", () => {
+    const url = "https://live.vkvideo.ru/app/embed/fox.media";
+    expect(getEmbedStreamUrl(url)).toBe("https://live.vkvideo.ru/app/embed/fox.media");
+  });
+
+  it("should convert Twitch channel link to embed", () => {
+    const url = "https://www.twitch.tv/streamername";
+    expect(getEmbedStreamUrl(url)).toBe("https://player.twitch.tv/?channel=streamername&parent=localhost");
+  });
+
+  it("should return null for unsupported domain", () => {
+    const url = "https://example.com/stream";
+    expect(getEmbedStreamUrl(url)).toBe(null);
+  });
+
+  it("should return null for invalid URL", () => {
+    const url = "not-a-url";
+    expect(getEmbedStreamUrl(url)).toBe(null);
   });
 });

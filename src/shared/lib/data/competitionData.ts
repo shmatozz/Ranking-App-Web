@@ -43,3 +43,40 @@ export function getSwimsDropDown(swims: Swim[]): DropdownItem[] {
 export function getSwimShort(swim: Swim): string {
   return `${swim.distance}м, ${getAgeRange(swim.ageFrom, swim.ageTo)}, стиль ${swim.style}`;
 }
+
+export function getEmbedStreamUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname.includes("youtube.com")) {
+      const videoId = parsed.searchParams.get("v");
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (parsed.hostname === "youtu.be") {
+      const videoId = parsed.pathname.slice(1);
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    if (parsed.hostname.includes("vkvideo.ru")) {
+      if (parsed.pathname.includes("app/embed/")) {
+        return url;
+      } else {
+        return `https://live.vkvideo.ru/app/embed${parsed.pathname}`;
+      }
+    }
+    if (parsed.hostname.includes("vkvideo.ru")) {
+      const channelName = parsed.pathname.replace(/^\/+/, "");
+      return `https://live.vkvideo.ru/app/embed/${channelName}`;
+    }
+
+    if (parsed.hostname.includes("twitch.tv")) {
+      const channel = parsed.pathname.split("/")[1];
+      return `https://player.twitch.tv/?channel=${channel}&parent=localhost`;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
