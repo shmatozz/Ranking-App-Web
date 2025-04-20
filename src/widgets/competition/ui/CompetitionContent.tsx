@@ -42,10 +42,10 @@ export const CompetitionContent = () => {
       className={clsx(
         "relative w-full h-full text-center content-center group select-none"
       )}
-      onClick={(href == "results" && !isPassed(competition?.date)) || href == "live" ? undefined : () => handleTabChange(href)}
+      onClick={(href == "results" && !isPassed(competition?.date)) || (href == "live" && !competition?.videoLink) ? undefined : () => handleTabChange(href)}
     >
       <p className={clsx(
-        (href == "results" && !isPassed(competition?.date)) || href == "live" ? "text-base-50" : "text-base-95",
+        (href == "results" && !isPassed(competition?.date)) || (href == "live" && !competition?.videoLink) ? "text-base-50" : "text-base-95",
         "hidden xs:block"
         )}
       >
@@ -55,7 +55,7 @@ export const CompetitionContent = () => {
       <div className={"w-full flex flex-row justify-center xs:hidden"}>
         <Icon
           name={getIcon(href)}
-          className={(href == "results" && !isPassed(competition?.date)) || href == "live" ?
+          className={(href == "results" && !isPassed(competition?.date)) || (href == "live" && !competition?.videoLink) ?
             "text-base-40" : (isActive(href) ? "text-blue-50" : "text-base-70")}
         />
       </div>
@@ -63,7 +63,7 @@ export const CompetitionContent = () => {
       <div className={clsx(
         "absolute bottom-0 w-full transition-all duration-200",
         isActive(href) ? "h-1 bg-blue-50" : "h-0 bg-base-10",
-        (href == "results" && !isPassed(competition?.date)) || href == "live" ? "group-hover:h-0" : "group-hover:h-1"
+        (href == "results" && !isPassed(competition?.date)) || (href == "live" && !competition?.videoLink) ? "group-hover:h-0" : "group-hover:h-1"
       )}/>
     </div>
   );

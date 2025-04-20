@@ -9,6 +9,7 @@ type CompetitionsCreateState = {
   name: string;
   location: string; date: string;
   description: string;
+  videoLink: string;
   contacts: string[]; contactFromProfile: boolean;
   participants: { id: Participants, name: string };
   swims: Omit<Swim, "eventUuid">[];
@@ -22,6 +23,7 @@ type CompetitionsCreateActions = {
   setLocation: (location: string) => void;
   setDate: (date: string) => void;
   setDescription: (description: string) => void;
+  setVideoLink: (videoLink: string) => void;
   setContactFromProfile: (state: boolean) => void;
   setContact: (index: number, newContact: string) => void;
   setParticipants: (item: { id: string, name: string }) => void;
@@ -35,7 +37,7 @@ type CompetitionsCreateActions = {
 const initialState: CompetitionsCreateState = {
   name: "",
   location: "", date: "",
-  description: "",
+  description: "", videoLink: "",
   contacts: ["", "", ""], contactFromProfile: false,
   swims: [],
   participants: { id: "AMATEURS", name: "Любители" },
@@ -63,6 +65,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
   setLocation: (location: string) => { set({ location }); get().checkFormValid(); },
   setDate: (date: string) => { set({ date }); get().checkFormValid(); },
   setDescription: (description: string) => { set({ description }); get().checkFormValid(); },
+  setVideoLink: (videoLink: string) => { set({ videoLink }); get().checkFormValid(); },
 
   setContactFromProfile: (state) => {
     if (state) {
@@ -111,6 +114,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
       competitionLocation: competition.location,
       competitionDate: competition.date,
       description: competition.description,
+      videoLink: competition.videoLink.length > 0 ? competition.videoLink : undefined,
       contactLink: competition.contacts[0],
       contactLink2: competition.contacts[1].length > 0 ? competition.contacts[1] : undefined,
       contactLink3: competition.contacts[2].length > 0 ? competition.contacts[2] : undefined,

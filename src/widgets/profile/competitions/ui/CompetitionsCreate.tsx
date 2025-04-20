@@ -61,6 +61,11 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
           inputSize={"M"} title={"Описание"} type={"area"} className={"min-h-[120px]"}
         />
 
+        <TextInput
+          value={state.videoLink} onChange={(e) => state.setVideoLink(e.target.value)}
+          inputSize={"M"} title={"Ссылка на трансляцию"} type={"text"}
+        />
+
         <div className={"flex flex-col gap-2"}>
           <p className={"text-bodyM_regular"}>Контакты</p>
 

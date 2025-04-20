@@ -14,6 +14,7 @@ export type Competition = {
   participantsType: Participants;
   competitionType: string;
   competitionUuid: string;
+  videoLink?: string
 };
 
 export type CompetitionResult = {
