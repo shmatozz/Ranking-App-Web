@@ -4,19 +4,19 @@ import { create } from "zustand/react";
 import {emailExist} from "@/shared/api/common";
 import {addCurator} from "@/features/user-roles";
 
-type AdminPanelState = {
+type AddCuratorState = {
   addCuratorError?: string;
 }
 
-type AdminPanelActions = {
+type AddCuratorActions = {
   addCurator: (formData: FormData, callback?: () => void) => void;
 }
 
-const initialState: AdminPanelState = {
+const initialState: AddCuratorState = {
 
 }
 
-export const useAdminPanelStore = create<AdminPanelState & AdminPanelActions>((set) => ({
+export const useAddCuratorStore = create<AddCuratorState & AddCuratorActions>((set) => ({
   ...initialState,
 
   addCurator: (formData, callback) => {

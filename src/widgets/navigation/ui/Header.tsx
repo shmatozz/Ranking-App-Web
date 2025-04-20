@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Icon, icons, Logo} from "@/shared/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,11 +10,19 @@ import {useNotificationsStore} from "@/features/notifications";
 export const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isNotificationsOpen, setNotificationsOpen} = useNotificationsStore();
+  const { notifications, isNotificationsOpen, setNotificationsOpen, getNotifications } = useNotificationsStore();
 
   const isActive = (href: string) => pathname.startsWith(href);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  useEffect(() => {
+    getNotifications();
+  }, [getNotifications]);
+
+  useEffect(() => {
+    console.log(notifications && notifications.length > 0);
+  }, [notifications]);
 
   const NavLinks = ({ isActive }: { isActive: (href: string) => boolean }) => (
     <div className="flex flex-col large:flex-row gap-2">
@@ -92,7 +100,7 @@ export const Header = () => {
             className="hidden xs:flex items-center justify-center h-full w-full max-w-[11.25rem] relative group"
             onClick={() => setNotificationsOpen(true)}
           >
-            <Icon name={"bell"} size={26} color={isNotificationsOpen ? "#D3DCFF" : "white"}
+            <Icon name={(notifications && notifications.length > 0) ? "bellBadge" : "bell"} size={26} color={isNotificationsOpen ? "#D3DCFF" : "white"}
                   className={"transition-colors"}/>
             <div
               className={clsx("absolute bottom-0 w-full transition-all duration-200 group-hover:h-1", isNotificationsOpen ? "h-1 bg-blue-10" : "h-0 bg-base-0")}/>
