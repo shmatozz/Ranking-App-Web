@@ -3,6 +3,7 @@
 import React from "react";
 import {Button, TextInput} from "@/shared/ui";
 import {useAdminPanelStore} from "@/widgets/profile/admin";
+import {RecordsTable} from "@/features/admin-panel/records";
 
 export const Admin = () => {
   const { addCurator, addCuratorError } = useAdminPanelStore()
@@ -38,6 +39,12 @@ export const Admin = () => {
           </Button>
         </div>
       </form>
+
+      <div className={"h-[3px] w-full bg-base-5"}/>
+
+      <p className={"text-bodyS_medium text-base-95 w-full"}>Рекорды</p>
+
+      <RecordsTable/>
     </div>
   )
 }
