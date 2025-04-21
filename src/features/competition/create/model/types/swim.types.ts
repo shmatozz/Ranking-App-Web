@@ -4,5 +4,5 @@ export const swimStyles: { id: string, name: string }[] = [
   { id: "crawl", name: "Кроль" },
   { id: "butterfly", name: "Баттерфляй" },
   { id: "neck", name: "На спине" },
-  { id: "medley", name: "Комплексное плавание" },
+  { id: "medley", name: "Комплексный" },
 ]
