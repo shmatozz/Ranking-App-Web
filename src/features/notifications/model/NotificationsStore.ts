@@ -35,7 +35,6 @@ export const useNotificationsStore = create<NotificationsState & NotificationsAc
 
     getNotifications()
       .then((response) => {
-        console.log(response)
         if (response && response.data) {
           set({ notifications: response.data })
         } else if (response && response.error) {

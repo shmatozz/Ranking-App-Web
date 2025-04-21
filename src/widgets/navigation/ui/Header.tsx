@@ -20,10 +20,6 @@ export const Header = () => {
     getNotifications();
   }, [getNotifications]);
 
-  useEffect(() => {
-    console.log(notifications && notifications.length > 0);
-  }, [notifications]);
-
   const NavLinks = ({ isActive }: { isActive: (href: string) => boolean }) => (
     <div className="flex flex-col large:flex-row gap-2">
       <NavLink href="/calendar" label="Календарь" isActive={isActive}/>
