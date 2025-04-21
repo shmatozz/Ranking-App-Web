@@ -3,7 +3,7 @@
 export const verifyEmail = async (email: string) => {
   try {
     console.log(email);
-    const response = await fetch("http://localhost:9000/api/v1/password/recovery",
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/password/recovery`,
       {
         method: "POST",
         headers: {
@@ -26,7 +26,7 @@ export const verifyToken = async (token: string) => {
   try {
     console.log(token)
 
-    const response = await fetch("http://localhost:9000/api/v1/password/validate-token",
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/password/validate-token`,
       {
         method: "POST",
         headers: {
@@ -45,7 +45,7 @@ export const verifyToken = async (token: string) => {
 
 export const updatePassword = async (password: string, token: string) => {
   try {
-    const response = await fetch("http://localhost:9000/api/v1/password/change",
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/password/change`,
       {
         method: "POST",
         headers: {
