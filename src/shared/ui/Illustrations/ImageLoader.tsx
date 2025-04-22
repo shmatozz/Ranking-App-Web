@@ -11,6 +11,8 @@ interface ImageLoaderProps {
   className?: string;
 }
 
+const imageCache = new Map<string, string>();
+
 export const ImageLoader: React.FC<ImageLoaderProps> = ({
   imagePath,
   doubling,
@@ -19,33 +21,46 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    setImageSrc(null);
-  }, [imagePath]);
-
-  useEffect(() => {
     let isMounted = true;
-    if (!imageSrc) {
-      fetchImage(imagePath).then((blob) => {
-        if (isMounted && blob) setImageSrc(URL.createObjectURL(blob));
-      });
+
+    if (imageCache.has(imagePath)) {
+      setImageSrc(imageCache.get(imagePath)!);
+      return;
     }
+
+    fetchImage(imagePath).then((blob) => {
+      if (!isMounted || !blob) return;
+
+      const objectUrl = URL.createObjectURL(blob);
+      imageCache.set(imagePath, objectUrl); // Сохраняем в кэш
+      setImageSrc(objectUrl);
+    });
 
     return () => {
       isMounted = false;
-      if (imageSrc) URL.revokeObjectURL(imageSrc);
     };
-  }, [imagePath, imageSrc]);
+  }, [imagePath]);
 
-  if (!imageSrc) return <div className={"w-full h-full bg-base-5 animate-pulse"}/>;
+  if (!imageSrc) return <div className={"w-full h-full bg-base-5 animate-pulse"} />;
+
+  const imageClasses = clsx("object-contain", className);
 
   if (doubling) {
     return (
       <>
-        <Image src={imageSrc} alt="LoadedBack" className={clsx("absolute w-full h-full object-cover z-[1] blur-3xl")} width={100} height={100}/>
-        <Image src={imageSrc} alt="LoadedMain" className={clsx("w-full h-full z-[2]", className)} width={100} height={100}/>
+        <div className="absolute inset-0 z-[1] blur-3xl">
+          <Image src={imageSrc} alt="LoadedBack" className="object-cover" fill />
+        </div>
+        <div className="relative z-[2] w-full h-full">
+          <Image src={imageSrc} alt="LoadedMain" className={imageClasses} fill />
+        </div>
       </>
     )
   }
 
-  return <Image src={imageSrc} alt="Loaded" className={clsx("w-full h-full z-0", className)} width={100} height={100}/>;
+  return (
+    <div className="relative w-full h-full">
+      <Image src={imageSrc} alt="Loaded" className={imageClasses} fill />
+    </div>
+  );
 };
