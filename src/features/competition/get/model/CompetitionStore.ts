@@ -61,7 +61,6 @@ export const useCompetitionStore = create<CompetitionState & CompetitionActions>
     getCompetitionByID({ uuid: id })
       .then((competition) => {
         if (competition) {
-          console.log(competition);
           set({ competition });
           useParticipantsStore.setState({ selectedSwim: { id: competition.events[0].eventUuid, name: getSwimShort(competition.events[0])} });
         }
