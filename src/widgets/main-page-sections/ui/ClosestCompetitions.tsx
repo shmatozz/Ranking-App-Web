@@ -46,10 +46,25 @@ export const ClosestCompetitions = () => {
         </IconButton>
       </div>
 
-      <div className={"flex flex-col flex-1 gap-8 lg-md:flex-row"}>
-        <div className={"flex flex-1"}>
-          <ClosestCompetitionCard competition={closestCompetition}/>
+      {competitions && competitions.length == 0 && (
+        <div className={"flex flex-1 items-end justify-center"}>
+          <p className={"text-bodyM_regular text-base-95 text-center"}>В данный момент соревнования отсутвуют</p>
         </div>
+      )}
+
+      <div className={"flex flex-col flex-1 gap-8 lg-md:flex-row"}>
+        {!closestCompetition && competitions && competitions.length > 0 && (
+          <div className={"flex flex-1"}><ClosestCompetitionCard/></div>
+        )}
+
+        {closestCompetition && (
+          <div className={"flex flex-1"}>
+            <ClosestCompetitionCard
+              competition={closestCompetition}
+              onClick={() => router.push(`/calendar/competition?id=${closestCompetition.competitionUuid}`)}
+            />
+          </div>
+        )}
 
         {!competitions && (
           <div className={"flex flex-col flex-1 gap-4 justify-center"}>

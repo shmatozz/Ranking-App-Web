@@ -5,6 +5,7 @@ import {getSwimShort} from "@/shared/lib";
 
 interface ClosestCompetitionCardProps {
   competition?: CompetitionFull;
+  onClick?: () => void;
   isLoading?: boolean
 }
 
@@ -42,7 +43,10 @@ export const ClosestCompetitionCard: React.FC<ClosestCompetitionCardProps> = (pr
   }
 
   return (
-    <div className="flex flex-col w-full min-h-[330px] rounded-2xl container-shadow px-8 py-6 gap-2">
+    <div
+      className="flex flex-col w-full min-h-[330px] rounded-2xl container-shadow px-8 py-6 gap-2 cursor-pointer"
+      onClick={props.onClick}
+    >
       <p className="text-h5_bold text-base-95">{props.competition.name}</p>
       <p className="text-bodyM_regular text-base-95">{formatDate(props.competition.date)}</p>
 
