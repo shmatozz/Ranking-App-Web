@@ -18,13 +18,13 @@ export const ArticleContent: React.FC<ArticleContentProps> = ({
           items={images}
           renderItem={(item, index) => (
             <div key={index} className={"flex relative flex-[0_0_100%] overflow-hidden"}>
-              <ImageLoader imagePath={item!} className="object-contain max-h-full" doubling />
+              <ImageLoader imagePath={item!} className="object-contain" doubling />
             </div>
           )}
         />
       ) : images.length === 1 ? (
-        <div className={"flex relative overflow-hidden rounded-2xl max-h-[500px]"}>
-          <ImageLoader imagePath={images[0]!} className="object-contain max-h-[500px]" doubling />
+        <div className={"flex relative overflow-hidden rounded-2xl h-[500px]"}>
+          <ImageLoader imagePath={images[0]!} className="object-contain h-full" doubling />
         </div>
       ) : null}
 
