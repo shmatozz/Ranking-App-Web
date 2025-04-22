@@ -44,7 +44,7 @@ export const Sponsors = () => {
         {sponsors.length > 0 && (
           sponsors.map((item) => (
             <SponsorCard
-              key={item.id} sponsor={item} classname={"mx-4 w-fit max-w-[150px] h-fit max-h-[200px]"} admin={whoAmI && whoAmI.admin}
+              key={item.id} sponsor={item} classname={"mx-4 w-[150px] h-[150px]"} admin={whoAmI && whoAmI.admin}
               onSubmitEdit={(data) => updateSponsor(item.id, data)}
               onSubmitDelete={() => deleteSponsor(item.id)}
             />

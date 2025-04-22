@@ -20,8 +20,8 @@ export const SponsorCard: React.FC<SponsorCardProps> = (
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
 
   return (
-    <div className={clsx("flex flex-col gap-2 items-center max-w-[300px] justify-center", props.classname)}>
-      <div className="relative w-[150px] h-[150px] group rounded-2xl overflow-hidden">
+    <div className={"flex flex-col gap-2 items-center justify-center"}>
+      <div className={clsx("relative group rounded-2xl overflow-hidden", props.classname)}>
         <ImageLoader imagePath={props.sponsor.sponsorLogo} className="w-full h-full"/>
 
         <div
