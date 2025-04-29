@@ -13,6 +13,8 @@ export const CompetitionsList = () => {
     totalPages, page, totalResults
   } = useCalendarStore();
 
+  console.log(competitions);
+
   return (
     <div className={"flex flex-col gap-4 px-2"}>
       {(!competitions || isLoading) && Array(3).fill(1).map((_v, index) => (

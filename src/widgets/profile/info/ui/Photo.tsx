@@ -32,7 +32,9 @@ export const Photo = () => {
       </div>
 
       {currentPhoto && (
-        <ImageLoader imagePath={currentPhoto} className={"w-full h-full object-cover z-10"}/>
+        <div className={"w-full h-full object-cover z-10"}>
+          <ImageLoader imagePath={currentPhoto}/>
+        </div>
       )}
 
       <input ref={inputRef} type={"file"} accept={"image/png"} hidden onChange={(e) => {

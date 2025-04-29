@@ -1,5 +1,6 @@
 import React from "react";
 import {Participant} from "@/entities/user";
+import {ImageLoader} from "@/shared/ui";
 
 interface UserParticipantCardProps {
   user?: Participant;
@@ -23,8 +24,15 @@ export const UserParticipantCard: React.FC<UserParticipantCardProps> = (
 
   return (
     <div
-      className={"flex flex-row h-fit min-h-[48px] w-full items-center px-4 gap-[10px] text-bodyM_regular text-base-95"}>
-      <div className={"min-w-9 h-9 rounded-full bg-base-5"}/>
+      className={"flex flex-row h-fit min-h-[48px] w-full items-center px-4 gap-[10px] text-bodyM_regular text-base-95"}
+    >
+      {props.user.image ? (
+        <div className={"hidden 2xs:block min-w-[36px] h-[36px] rounded-full bg-base-5 overflow-hidden"}>
+          <ImageLoader imagePath={props.user.image}/>
+        </div>
+      ) : (
+        <div className={"hidden 2xs:block min-w-[36px] h-[36px] rounded-full bg-base-5"}/>
+      )}
 
       <p className={"w-full"}>
         {`${props.user.fullName}`}
