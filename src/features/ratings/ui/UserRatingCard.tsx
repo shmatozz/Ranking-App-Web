@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import {Icon} from "@/shared/ui";
+import {Icon, ImageLoader} from "@/shared/ui";
 import {UserRating} from "@/features/ratings";
 
 interface UserRatingCardProps {
@@ -30,10 +30,16 @@ export const UserRatingCard: React.FC<UserRatingCardProps> = (
         <p className={"text-h4 text-base-0 w-[70px] text-center"}>{props.position}</p>
 
         {/* PHOTO */}
-        <div className={"w-[80px] h-[80px] rounded-full bg-base-5"}/>
+        {props.user.image ? (
+          <div className={"hidden 2xs:block w-[80px] h-[80px] rounded-full bg-base-5 overflow-hidden"}>
+            <ImageLoader imagePath={props.user.image}/>
+          </div>
+        ) : (
+          <div className={"hidden 2xs:block w-[80px] h-[80px] rounded-full bg-base-5"}/>
+        )}
 
         <div className={"flex flex-col"}>
-          {/* NAME */}
+        {/* NAME */}
           <p className={"text-h5 text-base-0 flex-1"}>{props.user.fullName}</p>
 
           <div className={"hidden flex-row large:flex"}>
@@ -77,14 +83,20 @@ export const UserRatingCard: React.FC<UserRatingCardProps> = (
 
   return (
     <div className={clsx(
-      "flex flex-row w-full px-4 gap-4 items-center h-[50px]",
+      "flex flex-row w-full px-4 gap-4 items-center min-h-[50px] h-fit",
       props.className
     )}>
       {/* POSITION */}
-      <p className={"text-bodyM_medium text-base-95 w-[80px] text-center"}>{props.position}</p>
+      <p className={"text-bodyM_medium text-base-95 w-[40px] xs:w-[80px] text-center"}>{props.position}</p>
 
       {/* PHOTO */}
-      <div className={"w-[36px] h-[36px] rounded-full bg-base-5"}/>
+      {props.user.image ? (
+        <div className={"hidden 2xs:block w-[36px] h-[36px] rounded-full bg-base-5 overflow-hidden"}>
+          <ImageLoader imagePath={props.user.image}/>
+        </div>
+      ) : (
+        <div className={"hidden 2xs:block w-[36px] h-[36px] rounded-full bg-base-5"}/>
+      )}
 
       {/* NAME */}
       <p className={"text-bodyM_regular text-base-95 flex-1"}>{props.user.fullName}</p>

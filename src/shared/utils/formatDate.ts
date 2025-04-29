@@ -76,20 +76,3 @@ export function getAge(birthDate: Date | string): string {
 
   return `${years} ${ageSuffix}`;
 }
-
-export const formatTime = (time: {
-  hour: number,
-  minute: number,
-  second: number,
-  nano: number
-}): string => {
-  const hundredths = Math.floor(time.nano / 10_000_000);
-
-  const hours = time.hour.toString().padStart(2, '0');
-  const minutes = time.minute.toString().padStart(2, '0');
-  const seconds = time.second.toString().padStart(2, '0');
-  const hundredthsStr = hundredths.toString().padStart(2, '0');
-
-  return `${hours}:${minutes}:${seconds}${hundredthsStr != "00" ? `.${hundredthsStr}` : ""}`;
-};
-

@@ -4,12 +4,7 @@ export type EventResult = {
   ageTo: number,
   distance: number,
   style: string,
-  time: {
-    hour: number,
-    minute: number,
-    second: number,
-    nano: number
-  },
+  time: string,
   place: number
 }
 

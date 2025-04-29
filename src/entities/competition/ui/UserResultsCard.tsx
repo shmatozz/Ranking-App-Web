@@ -2,7 +2,6 @@ import React from "react";
 import {CompetitionResult} from "@/widgets/profile";
 import clsx from "clsx";
 import {getAgeRange} from "@/shared/lib";
-import {formatTime} from "@/shared/utils";
 
 interface UserResultsCardProps {
   result?: CompetitionResult,
@@ -51,7 +50,7 @@ export const UserResultsCard: React.FC<UserResultsCardProps> = (
             </p>
 
             <p className="text-bodyM_regular text-base-95 relative z-10">
-              {formatTime(swim.time)}
+              {swim.time}
             </p>
           </div>
         ))}

@@ -1,6 +1,7 @@
 export type UserRating = {
   id: number,
   fullName: string,
+  image?: string,
   gender: string,
   age: number,
   rating: number,
