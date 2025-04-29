@@ -19,7 +19,8 @@ export const RatingsList = () => {
       <div>
         {((page == 0 && rating.length > 1) || (page > 0 && rating.length > 0)) && (
           <div className={"flex flex-row items-center px-4 gap-4"}>
-            <p className={"text-bodyM_medium text-base-95 w-[80px] text-center"}>Позиция</p>
+            <p className={"block xs:hidden text-bodyM_medium text-base-95 w-[40px] text-center"}>Поз.</p>
+            <p className={"hidden xs:block text-bodyM_medium text-base-95 w-[80px] text-center"}>Позиция</p>
             <div className={"w-[36px] h-[36px] rounded-full bg-base-0"}/>
             <p className={"text-bodyM_medium text-base-95 flex-1"}>ФИО</p>
 
@@ -28,9 +29,12 @@ export const RatingsList = () => {
               <p className={"text-bodyM_medium text-base-95 w-[70px] text-center"}>Возраст</p>
               <p className={"text-bodyM_medium text-base-95 w-[80px] text-center"}>Рейтинг</p>
               <p className={"text-bodyM_medium text-base-95 w-[70px] text-center"}>Старты</p>
-              <div className={"flex w-[28px] items-center justify-center"}><Icon name={"medal"} color={"#FFE79A"} size={24}/></div>
-              <div className={"flex w-[28px] items-center justify-center"}><Icon name={"medal"} color={"#C6C6C6"} size={24}/></div>
-              <div className={"flex w-[28px] items-center justify-center"}><Icon name={"medal"} color={"#C6A791"} size={24}/></div>
+              <div className={"flex w-[28px] items-center justify-center"}><Icon name={"medal"} color={"#FFE79A"}
+                                                                                 size={24}/></div>
+              <div className={"flex w-[28px] items-center justify-center"}><Icon name={"medal"} color={"#C6C6C6"}
+                                                                                 size={24}/></div>
+              <div className={"flex w-[28px] items-center justify-center"}><Icon name={"medal"} color={"#C6A791"}
+                                                                                 size={24}/></div>
               <p className={"text-bodyM_medium text-base-95 w-[130px] text-center"}>Лучшее время</p>
             </div>
           </div>
