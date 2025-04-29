@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {CompetitionFull} from "@/entities/competition";
 import {formatDate} from "@/shared/utils";
 import {getSwimShort} from "@/shared/lib";
+import {ImageLoader} from "@/shared/ui";
 
 interface ClosestCompetitionCardProps {
   competition?: CompetitionFull;
@@ -9,8 +10,10 @@ interface ClosestCompetitionCardProps {
   isLoading?: boolean
 }
 
-export const ClosestCompetitionCard: React.FC<ClosestCompetitionCardProps> = (props) => {
+export const  ClosestCompetitionCard: React.FC<ClosestCompetitionCardProps> = (props) => {
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
+
+  console.log(props.competition)
 
   useEffect(() => {
     if (!props.competition) return;
@@ -44,7 +47,7 @@ export const ClosestCompetitionCard: React.FC<ClosestCompetitionCardProps> = (pr
 
   return (
     <div
-      className="flex flex-col w-full min-h-[330px] rounded-2xl container-shadow px-8 py-6 gap-2 cursor-pointer"
+      className="flex relative flex-col w-full min-h-[330px] rounded-2xl container-shadow px-8 py-6 gap-2 cursor-pointer"
       onClick={props.onClick}
     >
       <p className="text-h5_bold text-base-95">{props.competition.name}</p>
@@ -74,6 +77,14 @@ export const ClosestCompetitionCard: React.FC<ClosestCompetitionCardProps> = (pr
             <p className={"text-bodyS_medium text-base-95 text-center w-full xs:text-h5"}>часов</p>
             <p className={"text-bodyS_medium text-base-95 text-center w-full xs:text-h5"}>минут</p>
             <p className={"text-bodyS_medium text-base-95 text-center w-full xs:text-h5"}>секунд</p>
+          </div>
+        </div>
+      )}
+
+      {props.competition.organizationInfo.image && (
+        <div className="absolute top-1/2 w-4/5 h-4/5 transition-transform -translate-y-1/2 z-[1] opacity-10">
+          <div className={"w-full h-full object-cover"}>
+            <ImageLoader imagePath={props.competition.organizationInfo.image}/>
           </div>
         </div>
       )}

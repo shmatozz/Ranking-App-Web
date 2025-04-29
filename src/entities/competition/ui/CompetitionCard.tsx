@@ -1,8 +1,7 @@
 import React from "react";
 import {Competition} from "@/entities/competition";
-import Image from "next/image";
-import placeholderImage from "@/shared/assets/image/fizcult.png";
 import {formatDate} from "@/shared/utils";
+import {ImageLoader} from "@/shared/ui";
 
 interface CompetitionCardProps {
   competition?: Competition;
@@ -40,15 +39,13 @@ export const CompetitionCard: React.FC<CompetitionCardProps> = (
       <label className={"text-bodyM_medium text-blue-90 z-[2] xs:text-h5 cursor-pointer"}>{props.competition.name}</label>
       <p className={"text-bodyS_regular text-base-80 z-[2] xs:text-bodyM_regular"}>{formatDate(props.competition.date)}</p>
 
-      <div className="absolute right-4 top-1/2 transition-transform -translate-y-1/2 z-[1] opacity-75 xs:opacity-100">
-        <Image
-          src={placeholderImage}
-          alt={props.competition.name}
-          width={128}
-          height={125}
-          className="w-full h-full object-cover rounded-lg transition-transform duration-300 ease-in-out group-hover:scale-150"
-        />
-      </div>
+      {props.competition.image && (
+        <div className="absolute right-4 top-1/2 w-1/2 xs:w-1/5 h-3/4 transition-transform -translate-y-1/2 z-[1] opacity-75 xs:opacity-100">
+          <div className={"w-full h-full object-cover rounded-lg transition-transform duration-300 ease-in-out group-hover:scale-125"}>
+            <ImageLoader imagePath={props.competition.image}/>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -22,6 +22,7 @@ export type User = UserShort & {
 }
 
 export type Participant = {
+  image?: string,
   fullName: string,
   gender: string,
   age: number,

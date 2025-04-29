@@ -79,7 +79,7 @@ export const Participants = () => {
 
       <div className={"flex flex-col w-full gap-2 items-center"}>
         <div className={"flex flex-row w-full gap-[10px] px-4"}>
-          <div className={"min-w-9"}/>
+          <div className={"hidden 2xs:block min-w-9"}/>
           <p className={"text-bodyS_medium text-base-95 w-full xs:text-bodyM_medium"}>ФИО</p>
           <p
             className={"hidden text-bodyS_medium text-base-95 w-full max-w-[80px] text-center xs:text-bodyM_medium xs:block"}>Рейтинг</p>

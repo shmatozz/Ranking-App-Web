@@ -5,6 +5,7 @@ export type Participants = "PROFESSIONALS" | "AMATEURS"
 
 export type Competition = {
   name: string;
+  image?: string;
   location: string;
   date: string;
   description: string;
