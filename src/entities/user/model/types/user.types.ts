@@ -39,12 +39,7 @@ export type ParticipantFull = {
   email: string,
   phone?: string,
   emergencyPhone: string,
-  time?: {
-    hour: number,
-    minute: number,
-    second: number,
-    nano?: number
-  },
+  time?: string,
   points?: number,
   place?: number,
   registrationDate?: string

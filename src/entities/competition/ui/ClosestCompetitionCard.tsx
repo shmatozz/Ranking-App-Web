@@ -13,8 +13,6 @@ interface ClosestCompetitionCardProps {
 export const  ClosestCompetitionCard: React.FC<ClosestCompetitionCardProps> = (props) => {
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
 
-  console.log(props.competition)
-
   useEffect(() => {
     if (!props.competition) return;
 

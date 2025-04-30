@@ -1,6 +1,7 @@
 export {UserParticipantCard} from "./ui/UserParticipantCard";
 export {UserInfo} from "./ui/UserInfo";
 export {UserMemberCard} from "./ui/UserMemberCard";
+export {UserResultCard} from "./ui/UserResultCard";
 
 export * from "./model/types/user.types";
 export * from "./model/types/profile-pages.types";
