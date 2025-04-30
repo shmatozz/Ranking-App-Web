@@ -1,15 +1,17 @@
 'use client';
 
 import React, {useEffect} from "react";
-import {redirect, useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {SwimResultsForm, useCompetitionStore} from "@/features/competition/get";
 import {getSwimsDropDown, isPassed} from "@/shared/lib";
 import {useSession} from "next-auth/react";
 import {Button, Dropdown, FileInput} from "@/shared/ui";
 import {useParticipantsStore} from "@/widgets/competition";
+import {UserResultCard} from "@/entities/user";
 
 export const Results = () => {
   const session = useSession();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const competitionUUID = searchParams.get("id");
 
@@ -28,15 +30,7 @@ export const Results = () => {
     return null;
   }
 
-  if (!isPassed(competition.date)) redirect("/calendar/competition?id=" + competitionUUID);
-
-  if (session.data?.user?.email !== competition.organizationInfo.email) {
-    return (
-      <div className={"p-4 text-center text-blue-90"}>
-        Организация ещё не опубликовала результаты
-      </div>
-    )
-  }
+  if (!isPassed(competition.date)) router.replace("/calendar/competition?id=" + competitionUUID);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target as HTMLInputElement;
@@ -64,20 +58,51 @@ export const Results = () => {
       </div>
 
       {/* RESULTS */}
-      <div className={"flex flex-col items-center"}>
-        <FileInput title={"Загрузить файл с результатами"} onChange={handleFileUpload}/>
-      </div>
+      {(
+        session.data?.user?.email === competition.organizationInfo.email
+        && usersFull && usersFull.length > 0 && usersFull.some((val) => val.time == null)
+      ) && (
+        <>
+          <div className={"flex flex-col items-center"}>
+            <FileInput title={"Загрузить файл с результатами"} onChange={handleFileUpload}/>
+          </div>
 
-      <div className={"hidden flex-col w-full gap-2 lg:flex"}>
-        <p className={"text-bodyM_medium text-center"}>или</p>
+          <div className={"hidden flex-col w-full gap-2 lg:flex"}>
+            <p className={"text-bodyM_medium text-center"}>или</p>
 
-        <Button
-          className={"self-center w-full max-w-[350px]"}
-          onClick={() => setResultsFormVisible(true)}
-        >
-          Заполнить вручную
-        </Button>
-      </div>
+            <Button
+              className={"self-center w-full max-w-[350px]"}
+              onClick={() => setResultsFormVisible(true)}
+            >
+              Заполнить вручную
+            </Button>
+          </div>
+        </>
+      )}
+
+      {usersFull && usersFull.length == 0 && (
+        <p className={"text-bodyM_regular text-base-95 text-center"}>Никто не зарегистрировался на заплыв</p>
+      )}
+
+      {selectedSwim && usersFull && usersFull.length > 0 && usersFull.some((val) => val.time == null) && (
+        <p className={"text-bodyM_regular text-base-95 text-center"}>Организатор ещё не загрузил результаты</p>
+      )}
+
+      {selectedSwim && usersFull && usersFull.length > 0 && !usersFull.some((val) => val.place == undefined) && (
+        <div className={"flex flex-col gap-2"}>
+          <div className={"flex flex-row pl-[66px] pr-4 gap-[10px]"}>
+            <p className={"w-full z-10"}>ФИО</p>
+            <p className={"hidden w-full max-w-[100px] text-center xs:block z-10"}>Время</p>
+            <p className={"hidden w-full max-w-[120px] text-center xs:block z-10"}>Рейтинг</p>
+          </div>
+
+          <div className={"w-full h-[3px] bg-base-5"}/>
+
+          {usersFull.sort((a, b) => a.place! - b.place!).map((user) => (
+            <UserResultCard key={user.email} user={user}/>
+          ))}
+        </div>
+      )}
 
       {resultsFormVisible && (
         <>
