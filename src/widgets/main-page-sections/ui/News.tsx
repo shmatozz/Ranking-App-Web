@@ -32,7 +32,7 @@ export const News = () => {
   return (
     <div className={"content-container relative flex-col gap-4 min-h-fit max-h-[600px]"}>
       <div className={"flex flex-row items-center justify-between"}>
-        <label className={"text-h4 text-base-95"}>Новости ТЕСТ деплоя</label>
+        <label className={"text-h4 text-base-95"}>Новости</label>
 
         {whoAmI && whoAmI.admin && (
           <Button
