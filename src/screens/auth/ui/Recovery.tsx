@@ -19,7 +19,6 @@ export const Recovery = () => {
   const [feedback, setFeedback] = useState<{ error: string | null; message: string | null }>({ error: null, message: null });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle token verification
   useEffect(() => {
     const token = params.get("token");
     if (token) {
@@ -34,12 +33,10 @@ export const Recovery = () => {
     }
   }, [params]);
 
-  // Form input handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Form submission handler
   const handleSubmit = useCallback(() => {
     setIsLoading(true);
     setFeedback({ error: null, message: null });
