@@ -26,7 +26,7 @@ export const News = () => {
   }, [news, getNews]);
 
   useEffect(() => {
-    document.title = "Заплыв НН - Главная"
+    document.title = "Заплыв НН"
   }, []);
 
   return (
