@@ -2,12 +2,17 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      screens: {
+        '2xs': '330px',
+        'xs': '660px',
+        'lg-md': '950px',
+        'large': '1100px',
+        '2xl': '1600px',
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -42,13 +47,15 @@ export default {
           40: "#FF6B4E", 50: "#EE4E34", 60: "#D63420",
           70: "#B91E12", 80: "#981109", 90: "#750E05",
         },
-      },
-      fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
+        gold: "#FFE79A",
+        silver: "#C6C6C6",
+        bronze: "#C6A791",
+        nonPrize: "#F3F3F3",
       },
       fontSize: {
         h4: ["26px", { lineHeight: "32px", fontWeight: "600" }],
         h5: ["20px", { fontWeight: "500" }],
+        h5_bold: ["20px", { fontWeight: "600" }],
         bodyM_regular: ["16px", { fontWeight: "500" }],
         bodyM_medium: ["16px", { fontWeight: "600" }],
         bodyS_regular: ["14px", { fontWeight: "500" }],
@@ -58,5 +65,20 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: (utilities: {
+        ".scrollbar-hide::-webkit-scrollbar": { display: string };
+        ".scrollbar-hide": { "scrollbar-width": string; "-ms-overflow-style": string }
+      }) => void }) {
+      addUtilities({
+        ".scrollbar-hide": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+        ".scrollbar-hide::-webkit-scrollbar": {
+          display: "none",
+        },
+      });
+    },
+  ],
 } satisfies Config;

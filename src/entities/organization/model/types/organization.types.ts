@@ -1,0 +1,17 @@
+import {UserShort} from "@/entities/user";
+import {Competition} from "@/entities/competition";
+import {Role} from "@/shared/lib";
+
+export type OrganizationShort = {
+  id: number;
+  email: string;
+  name: string;
+  role: Role;
+  isOpen: boolean;
+  image: string
+}
+
+export type Organization = OrganizationShort & {
+  users?: UserShort[],
+  competitions?: Competition[],
+}

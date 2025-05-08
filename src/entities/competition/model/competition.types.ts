@@ -1,0 +1,30 @@
+import {Swim, SwimResult} from "@/entities/swim";
+import {OrganizationShort} from "@/entities/organization";
+
+export type Participants = "PROFESSIONALS" | "AMATEURS"
+
+export type Competition = {
+  name: string;
+  image?: string;
+  location: string;
+  date: string;
+  description: string;
+  contactLink: string,
+  contactLink2?: string,
+  contactLink3?: string,
+  participantsType: Participants;
+  competitionType: string;
+  competitionUuid: string;
+  videoLink?: string
+};
+
+export type CompetitionResult = {
+  competitionUuid: string;
+  name: string;
+  swimsResults: SwimResult[]
+};
+
+export type CompetitionFull = Competition & {
+  events: Swim[];
+  organizationInfo: Omit<OrganizationShort, "role" | "id">;
+};

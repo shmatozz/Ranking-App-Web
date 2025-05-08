@@ -1,0 +1,108 @@
+'use server';
+
+import {
+  OrganizationShort, Organization,
+  OrganizationShortResponse,OrganizationResponse,
+  updateOpenStatusParams
+} from "@/entities/organization";
+import axiosInstance from "@/shared/api/AxiosConfig";
+import {AxiosError} from "axios";
+import {auth} from "@/shared/lib";
+import {uploadOrganizationPhotoRequest} from "@/entities/organization";
+
+export async function getOrganizationInfo(): Promise<Organization> {
+  console.log("Send GET organization FULL info request");
+  const session = await auth();
+
+  const response: OrganizationResponse = await axiosInstance.get(
+    "/organization/full-info",
+    {
+      headers: {
+        Authorization: `Bearer ${session?.user.token}`,
+      },
+    });
+
+  return response.data;
+}
+
+export async function getOrganizationShortInfo(): Promise<OrganizationShort> {
+  console.log("Send GET organization short info request");
+  const session = await auth();
+
+  const response: OrganizationShortResponse = await axiosInstance.get(
+    "/organization/short-info",
+    {
+      headers: {
+        Authorization: `Bearer ${session?.user.token}`,
+      },
+    });
+
+  return response.data;
+}
+
+export async function updateOrganizationOpenStatus(params: updateOpenStatusParams) {
+  console.log("Send POST update open status request");
+  const session = await auth();
+
+  try {
+    await axiosInstance.post(
+      "/organization/update-open-status",
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      console.error(e.response!.data.msg);
+      throw new Error(e.response!.data.msg);
+    }
+  }
+}
+
+export async function uploadOrganizationPhoto(params: uploadOrganizationPhotoRequest) {
+  console.log("Send POST upload organization photo request");
+  const session = await auth();
+
+  const formData = new FormData();
+  formData.set("file", params.file);
+
+  try {
+    await axiosInstance.post(
+      "/organization/upload-image",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "multipart/form-data"
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      console.error(e.response!.data.msg);
+      throw new Error(e.response!.data.msg);
+    }
+  }
+}
+
+export async function requestCuratorStatus() {
+  try {
+    console.log("Send POST request curator status request");
+    const session = await auth();
+
+    await axiosInstance.post(
+      `/organization/send-request-to-admin`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+      });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      return { error: e.response!.data.msg }
+    }
+    return { error: "Неизвестная ошибка" }
+  }
+}
