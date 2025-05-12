@@ -19,7 +19,6 @@ export const Recovery = () => {
   const [feedback, setFeedback] = useState<{ error: string | null; message: string | null }>({ error: null, message: null });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle token verification
   useEffect(() => {
     const token = params.get("token");
     if (token) {
@@ -34,12 +33,10 @@ export const Recovery = () => {
     }
   }, [params]);
 
-  // Form input handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Form submission handler
   const handleSubmit = useCallback(() => {
     setIsLoading(true);
     setFeedback({ error: null, message: null });
@@ -65,7 +62,11 @@ export const Recovery = () => {
   }, [state, form, params, router]);
 
   return (
-    <div className={clsx("flex flex-col m-auto items-center gap-4", "w-full max-w-[40rem] h-fit rounded-3xl px-[3.25rem] py-8", "bg-base-0 container-shadow")}>
+    <div className={clsx(
+      "flex flex-col m-auto items-center gap-4",
+      "w-full max-w-[40rem] h-fit rounded-3xl px-4 xs:px-[3.25rem] py-8",
+      "bg-base-0 lg-md:shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)]"
+    )}>
       <p className="text-h4 text-base-95 text-center">Восстановление пароля</p>
 
       {feedback.error && <div className="px-6 py-2 rounded-2xl bg-red-5 text-center text-red-70">{feedback.error}</div>}

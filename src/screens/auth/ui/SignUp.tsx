@@ -13,8 +13,8 @@ export const SignUp = () => {
     <div
       className={clsx(
         "flex flex-col self-center items-center gap-3",
-        "w-full max-w-[31.25rem] h-fit rounded-3xl px-[3.25rem] py-8",
-        "bg-base-0 container-shadow"
+        "w-full max-w-[31.25rem] h-fit rounded-3xl px-4 xs:px-[3.25rem] py-8",
+        "bg-base-0 lg-md:shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)]"
       )}
     >
       <p className={"text-h4 text-base-95 text-center"}>
