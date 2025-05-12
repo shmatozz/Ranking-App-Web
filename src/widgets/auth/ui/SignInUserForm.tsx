@@ -54,6 +54,7 @@ export const SignInUserForm = () => {
       }
 
       <TextInput
+        id={"email"}
         name="email"
         required
         title={"Email"}
@@ -62,6 +63,7 @@ export const SignInUserForm = () => {
       />
 
       <TextInput
+        id={"password"}
         name="password"
         required
         title={"Пароль"}
