@@ -62,14 +62,18 @@ export const Recovery = () => {
   }, [state, form, params, router]);
 
   return (
-    <div className={clsx("flex flex-col m-auto items-center gap-4", "w-full max-w-[40rem] h-fit rounded-3xl px-[3.25rem] py-8", "bg-base-0 container-shadow")}>
+    <div className={clsx(
+      "flex flex-col m-auto items-center gap-4",
+      "w-full max-w-[40rem] h-fit rounded-3xl px-4 xs:px-[3.25rem] py-8",
+      "bg-base-0 lg-md:shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)]"
+    )}>
       <p className="text-h4 text-base-95 text-center">Восстановление пароля</p>
 
       {feedback.error && <div className="px-6 py-2 rounded-2xl bg-red-5 text-center text-red-70">{feedback.error}</div>}
       {feedback.message && <div className="px-6 py-2 rounded-2xl bg-green-5 text-center text-green-90">{feedback.message}</div>}
 
       {state === "email-input" && (
-        <TextInput type="email" required title="E-mail" name="email" value={form.email} onChange={handleChange} disabled={state !== "email-input"} />
+        <TextInput id={"email"} type="email" required title="E-mail" name="email" value={form.email} onChange={handleChange} disabled={state !== "email-input"} />
       )}
 
       {state === "validate" && (
@@ -81,8 +85,8 @@ export const Recovery = () => {
 
       {state === "new password" && (
         <div className="flex flex-col w-full gap-1">
-          <TextInput type="password" required title="Пароль" name="password" value={form.password} onChange={handleChange} className="w-full" autoComplete="off" />
-          <TextInput type="password" required title="Повторите пароль" name="passwordConfirm" value={form.passwordConfirm} onChange={handleChange} className="w-full" autoComplete="off" />
+          <TextInput id={"password"} type="password" required title="Пароль" name="password" value={form.password} onChange={handleChange} className="w-full" autoComplete="off" />
+          <TextInput id={"passwordConfirm"} type="password" required title="Повторите пароль" name="passwordConfirm" value={form.passwordConfirm} onChange={handleChange} className="w-full" autoComplete="off" />
         </div>
       )}
 

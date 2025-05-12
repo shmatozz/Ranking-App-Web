@@ -56,50 +56,50 @@ export const SignUpUserForm = () => {
       }
 
       <TextInput
-        name={"lastName"} required
+        id={"lastName"} name={"lastName"} required
         title={"Фамилия"}
         type={"text"}
       />
 
       <TextInput
-        name={"firstName"} required
+        id={"firstName"} name={"firstName"} required
         title={"Имя"}
         type={"text"}
       />
 
       <TextInput
-        name={"middleName"}
+        id={"middleName"} name={"middleName"}
         title={"Отчество"}
         type={"text"}
       />
 
       <TextInput
-        name={"birthDate"} required
+        id={"birthDate"} name={"birthDate"} required
         title={"Дата рождения"}
         type={"date"}
       />
 
       <TextInput
-        name={"email"} required
+        id={"email"} name={"email"} required
         title={"Email"}
         type={"email"}
       />
 
       <TextInput
-        name={"emergencyPhone"} required
+        id={"emergencyPhone"} name={"emergencyPhone"} required
         title={"Экстренный номер"}
         type={"tel"}
       />
 
       <TextInput
-        name={"password"} required
+        id={"password"} name={"password"} required
         title={"Пароль"}
         type={"password"}
         minLength={8} maxLength={256}
       />
 
       <TextInput
-        name={"confirmPassword"} required
+        id={"confirmPassword"} name={"confirmPassword"} required
         title={"Повторите пароль"}
         type={"password"}
         minLength={8} maxLength={256}

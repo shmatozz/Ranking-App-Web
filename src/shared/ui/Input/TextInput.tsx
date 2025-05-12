@@ -57,7 +57,7 @@ export const TextInput: React.FC<TextInputProps> = ({
     <div className={"relative flex flex-col w-full gap-0"}>
       {/* Title with animation */}
       {animatedLabel && (
-        <label
+        <label htmlFor={props.id}
           className={clsx(
             "flex flex-row h-fit transition-transform duration-300 select-none gap-1",
             "pointer-events-none",
