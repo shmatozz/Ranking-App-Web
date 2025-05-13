@@ -1,7 +1,7 @@
 import { create } from "zustand/react";
 import {useOrganizationStore} from "@/entities/organization";
 import {Swim} from "@/entities/swim";
-import {useSwimCreateStore} from "@/features/competition/create";
+import {CreateCompetitionParams, useSwimCreateStore} from "@/features/competition/create";
 import {createCompetition} from "@/features/competition/create";
 import {Participants} from "@/entities/competition";
 
@@ -12,6 +12,7 @@ type CompetitionsCreateState = {
   videoLink: string;
   contacts: string[]; contactFromProfile: boolean;
   participants: { id: Participants, name: string };
+  attachment: File | null;
   swims: Omit<Swim, "eventUuid">[];
   isLoading: boolean;
   hasError: boolean;
@@ -27,6 +28,7 @@ type CompetitionsCreateActions = {
   setContactFromProfile: (state: boolean) => void;
   setContact: (index: number, newContact: string) => void;
   setParticipants: (item: { id: string, name: string }) => void;
+  setAttachmentFile: (file: File | null) => void;
   checkFormValid: () => void;
   addSwim: () => void;
   deleteSwim: (swimToDelete: Swim | Omit<Swim, "eventUuid">) => void;
@@ -41,6 +43,7 @@ const initialState: CompetitionsCreateState = {
   contacts: ["", "", ""], contactFromProfile: false,
   swims: [],
   participants: { id: "AMATEURS", name: "Любители" },
+  attachment: null,
   isLoading: false,
   hasError: false,
   isFormValid: false,
@@ -55,7 +58,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
         state.name.trim() != "" && state.location.trim() !== "" &&
         state.date.trim() !== "" &&
         state.description.trim() !== "" && state.contacts.some(contact => contact.trim() !== "")  &&
-        state.swims.length > 0 &&
+        state.swims.length > 0 && state.attachment != null &&
         new Date(state.date).getTime() >= new Date(new Date().toISOString().split("T")[0]).getTime()
     }));
   },
@@ -66,6 +69,7 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
   setDate: (date: string) => { set({ date }); get().checkFormValid(); },
   setDescription: (description: string) => { set({ description }); get().checkFormValid(); },
   setVideoLink: (videoLink: string) => { set({ videoLink }); get().checkFormValid(); },
+  setAttachmentFile: (file) => set({ attachment: file }),
 
   setContactFromProfile: (state) => {
     if (state) {
@@ -107,26 +111,44 @@ export const useCompetitionsCreateStore = create<CompetitionsCreateState & Compe
   },
 
   createCompetition: (onSuccess) => {
+    set({ isLoading: true, hasError: false })
+
     const competition = get();
 
-    createCompetition({
+    const formData = new FormData();
+    if (competition.attachment) {
+      formData.append("attachment", competition.attachment);
+    }
+
+    const competitionPayload: CreateCompetitionParams = {
       competitionName: competition.name,
       competitionLocation: competition.location,
       competitionDate: competition.date,
       description: competition.description,
-      videoLink: competition.videoLink.length > 0 ? competition.videoLink : undefined,
+      videoLink: competition.videoLink || undefined,
       contactLink: competition.contacts[0],
-      contactLink2: competition.contacts[1].length > 0 ? competition.contacts[1] : undefined,
-      contactLink3: competition.contacts[2].length > 0 ? competition.contacts[2] : undefined,
+      contactLink2: competition.contacts[1] || undefined,
+      contactLink3: competition.contacts[2] || undefined,
       participantsType: competition.participants.id,
       competitionType: "соревнование",
-      events: competition.swims
-    })
+      events: competition.swims,
+    };
+
+    const competitionBlob = new Blob([JSON.stringify(competitionPayload)], {
+      type: 'application/json',
+    });
+    formData.append('competition', competitionBlob);
+
+    createCompetition(formData)
       .then(() => {
         onSuccess();
         get().clearForm();
       })
-      .catch((e) => console.log(e.message));
+      .catch((e) => {
+        console.log(e.message)
+        set({ hasError: true })
+      })
+      .finally(() => set({ isLoading: false }))
   },
 
   clearForm: () => set(initialState),
