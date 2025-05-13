@@ -9,6 +9,7 @@ export function createTestCompetition(overrides: Partial<Competition> = {}): Com
     description: 'Default Description',
     contactLink: 'http://example.com',
     participantsType: "AMATEURS",
+    attachment: "123.pdf",
     competitionType: 'official',
     ...overrides
   };
