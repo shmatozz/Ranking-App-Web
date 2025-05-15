@@ -30,18 +30,18 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
         <TextInput
           value={state.name} onChange={(e) => state.setName(e.target.value)}
-          inputSize={"M"} title={"Название старта"} icon={"trophy"} required
+          inputSize={"M"} id={"name"} title={"Название старта"} icon={"trophy"} required
         />
 
         <TextInput
           value={state.location} onChange={(e) => state.setLocation(e.target.value)}
-          inputSize={"M"} title={"Место проведения"} icon={"location"} required
+          inputSize={"M"} id={"place"} title={"Место проведения"} icon={"location"} required
         />
 
         <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
           <TextInput
             value={state.date} onChange={(e) => state.setDate(e.target.value)}
-            inputSize={"M"} title={"Дата"} type={"date"} required min={new Date().toISOString().split("T")[0]}
+            inputSize={"M"} id={"date"} title={"Дата"} type={"date"} required min={new Date().toISOString().split("T")[0]}
           />
 
           <div className={"flex flex-col w-full"}>
@@ -58,12 +58,12 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
         <TextInput
           value={state.description} onChange={(e) => state.setDescription(e.target.value)}
-          inputSize={"M"} title={"Описание"} type={"area"} className={"min-h-[120px]"} required
+          inputSize={"M"} id={"description"} title={"Описание"} type={"area"} className={"min-h-[120px]"} required
         />
 
         <TextInput
           value={state.videoLink} onChange={(e) => state.setVideoLink(e.target.value)}
-          inputSize={"M"} title={"Ссылка на трансляцию"} type={"text"}
+          inputSize={"M"} id={"liveVideoLink"} title={"Ссылка на трансляцию"} type={"text"}
         />
 
         <div className={"flex flex-col gap-2"}>
@@ -71,7 +71,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
           <TextInput
             value={state.contacts[0]} onChange={(e) => state.setContact(0, e.target.value)}
-            inputSize={"M"} title={"Основной контакт"} type={"text"} icon={"forum"} animatedLabel={false} required
+            inputSize={"M"} id={"mainContact"} title={"Основной контакт"} type={"text"} icon={"forum"} animatedLabel={false} required
           />
 
           <Checkbox
@@ -82,7 +82,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
             }}
           />
 
-          <div className={`flex w-full justify-center cursor-pointer transition-all ${showAdditionalContacts ? "rotate-180" : "rotate-0"}`} onClick={() => setShowAdditionalContacts(!showAdditionalContacts)}>
+          <div data-testid="expand" className={`flex w-full justify-center cursor-pointer transition-all ${showAdditionalContacts ? "rotate-180" : "rotate-0"}`} onClick={() => setShowAdditionalContacts(!showAdditionalContacts)}>
             <Icon name="chevronDown" color="gray" />
           </div>
 
@@ -93,12 +93,12 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
           >
             <TextInput
               value={state.contacts[1]} onChange={(e) => state.setContact(1, e.target.value)}
-              inputSize="M" title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
+              inputSize="M" id={"additionalContact1"} title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
             />
 
             <TextInput
               value={state.contacts[2]} onChange={(e) => state.setContact(2, e.target.value)}
-              inputSize="M" title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
+              inputSize="M" id={"additionalContact2"} title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
             />
           </div>
         </div>

@@ -8,7 +8,10 @@ export async function getRating(params: FilterRatingParams) {
   try {
     console.log("Send GET ratings request");
 
-    const urlParams = new URLSearchParams();
+    const urlParams = new URLSearchParams({
+      property: "rating",
+      direction: "DESC"
+    });
 
     Object.keys(params).forEach((key) => {
       const value = params[key as keyof FilterRatingParams];
@@ -17,9 +20,6 @@ export async function getRating(params: FilterRatingParams) {
       }
     });
 
-    urlParams.append("property", "rating");
-    urlParams.append("direction", "DESC");
-
     const response: FilterRatingResponse = await axiosInstance.get(
       `/user/rating-search?${urlParams.toString()}`
     );
@@ -27,8 +27,9 @@ export async function getRating(params: FilterRatingParams) {
     return { data: response.data };
   } catch (error) {
     if (error instanceof AxiosError) {
-      return { error: error.response!.data.msg };
+      return { error: error.response!.data.msg || "Ошибка сервера" };
     }
     return { error: "Неизвестная ошибка" }
   }
 }
+
