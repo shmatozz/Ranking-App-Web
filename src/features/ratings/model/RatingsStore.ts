@@ -18,7 +18,7 @@ type FiltersActions = {
 }
 
 type RatingsState = {
-  rating: UserRating[];
+  rating?: UserRating[];
   filters: FiltersState,
   page: number, pageSize: number, totalPages: number, totalResults: number,
   isLoading: boolean;
@@ -34,7 +34,7 @@ type RatingsActions = {
 }
 
 const initialState: RatingsState = {
-  rating: [],
+  rating: undefined,
   filters: {},
   page: 0, pageSize: 20, totalPages: 0, totalResults: 0,
   isLoading: false,

@@ -8,16 +8,34 @@ import {Icon, Paging} from "@/shared/ui";
 
 export const RatingsList = () => {
   const router = useRouter();
-  const { rating, totalPages, totalResults, page, pageSize } = useRatingsStore();
+  const {
+    rating, totalPages, totalResults,
+    page, pageSize,
+    isLoading , hasError, errorMessage
+  } = useRatingsStore();
 
   return (
     <div className={"flex flex-col w-full gap-4"}>
-      {rating.length > 0  && page == 0 && (
-        <UserRatingCard key={rating[0].id} user={rating[0]} position={1}/>
+      {(!rating || isLoading) && (
+        <div data-testid="ratings-loader" className={"flex flex-col gap-4 h-fit w-full"}>
+          <div className={"flex w-full px-4 h-[120px] bg-base-5 rounded-2xl"}/>
+          <div className={"flex w-full px-4 h-[50px] bg-base-5 rounded-2xl"}/>
+          <div className={"flex w-full px-4 h-[50px] bg-base-5 rounded-2xl"}/>
+        </div>
+      )}
+
+      {hasError && errorMessage && (
+        <div data-testid="ratings-error" className={"flex flex-col gap-4 h-fit bg-red-5 w-full"}>
+          <p className={"text-red-80 text-bodyM_regular text-center"}>Ошибка загрузки рейтинга</p>
+        </div>
+      )}
+
+      {rating && rating.length > 0 && page == 0 && (
+        <UserRatingCard key={rating[0].id} user={rating[0]} position={1} isLoading={isLoading}/>
       )}
 
       <div>
-        {((page == 0 && rating.length > 1) || (page > 0 && rating.length > 0)) && (
+        {rating && ((page == 0 && rating.length > 1) || (page > 0 && rating.length > 0)) && (
           <div className={"flex flex-row items-center px-4 gap-4"}>
             <p className={"block xs:hidden text-bodyM_medium text-base-95 w-[40px] text-center"}>Поз.</p>
             <p className={"hidden xs:block text-bodyM_medium text-base-95 w-[80px] text-center"}>Позиция</p>
@@ -40,13 +58,13 @@ export const RatingsList = () => {
           </div>
         )}
 
-        {rating.length > 0 && rating.map((item, index) => {
+        {rating && rating.length > 0 && rating.map((item, index) => {
           if ((page == 0 && index > 0) || (page > 0)) return <UserRatingCard key={item.id} user={item}
-                                                                             position={index + 1 + page * pageSize}/>
+                                                                             position={index + 1 + page * pageSize} isLoading={isLoading}/>
         })}
       </div>
 
-      {rating.length === 0 && (
+      {rating && rating.length === 0 && !isLoading && (
         <p className={"text-bodyM_regular text-base-95 text-center"}>
           Информация о рейтинге по данным фильтрам в данный момент недоступна
         </p>
