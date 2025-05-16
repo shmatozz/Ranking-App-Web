@@ -64,7 +64,7 @@ export const Info = () => {
         <p className={"text-bodyM_medium text-base-95"}>Общая информация</p>
 
         <div className={"flex flex-col w-full gap-[2px]"}>
-          <InfoRow title={"Тип соревнования"} info={competition.competitionType}/>
+          <InfoRow title={"Тип соревнования"} info={competition.participantsType == "AMATEURS" ? "Любители" : "Профессионалы"}/>
           <InfoRow title={"Дистанции"} info={getDistances(competition.events)}/>
 
           {competition.attachment && (
