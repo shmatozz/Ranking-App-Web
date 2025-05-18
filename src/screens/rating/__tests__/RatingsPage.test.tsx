@@ -82,23 +82,23 @@ describe('RatingPage', () => {
   });
 
   describe('Default State', () => {
-    it('рендерит заголовок страницы', () => {
+    it('renders page header', () => {
       render(<RatingPage />);
       expect(screen.getByText('Рейтинг спортсменов')).toBeInTheDocument();
     });
 
-    it('отображает фильтры', () => {
+    it('shows rating filters', () => {
       render(<RatingPage />);
       expect(screen.getByTestId('ratings-header')).toBeInTheDocument();
     });
 
-    it('отображает список рейтинга', () => {
+    it('shows ratings list', () => {
       render(<RatingPage />);
       expect(screen.getByText('Иванов Иван')).toBeInTheDocument();
       expect(screen.getByText('1000')).toBeInTheDocument();
     });
 
-    it('вызывает getRatings при монтировании', () => {
+    it('call getRatings on mount', () => {
       render(<RatingPage />);
       expect(mockGetRatings).toHaveBeenCalled();
     });
@@ -114,7 +114,7 @@ describe('RatingPage', () => {
       });
     });
 
-    it('отображает сообщение при отсутствии данных', () => {
+    it('shows message on empty data', () => {
       render(<RatingPage />);
       const message = screen.getByText(/Информация о рейтинге по данным фильтрам в данный момент недоступна/i);
       expect(message).toBeInTheDocument();
@@ -129,7 +129,7 @@ describe('RatingPage', () => {
       });
     });
 
-    it('отображает индикатор загрузки', () => {
+    it('shows loading indicator', () => {
       render(<RatingPage />);
       expect(screen.getByTestId("ratings-loader")).toBeInTheDocument();
     });
@@ -144,7 +144,7 @@ describe('RatingPage', () => {
       });
     });
 
-    it('отображает сообщение об ошибке', () => {
+    it('shows error message', () => {
       render(<RatingPage />);
       expect(screen.getByText(/Ошибка загрузки рейтинга/i)).toBeInTheDocument();
     });
@@ -166,7 +166,7 @@ describe('RatingPage', () => {
     });
 
 
-    it('изменяет фильтр по полу', async () => {
+    it('changes gender filter', async () => {
       render(<RatingPage />);
 
       const genderDropdown = screen.getByTestId('dropdown-Пол');
@@ -179,7 +179,7 @@ describe('RatingPage', () => {
       expect(mockGetRatings).toHaveBeenCalled();
     });
 
-    it('изменяет фильтр по количеству стартов', async () => {
+    it('change filter on starts count', async () => {
       render(<RatingPage />);
 
       const startsInput = screen.getByPlaceholderText('Кол-во стартов, от');
