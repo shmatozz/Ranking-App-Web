@@ -59,7 +59,7 @@ export const Swims = () => {
 
   return (
     <div className={"flex flex-col w-full px-1 py-4 gap-6 items-center xs:px-4"}>
-      {competition.events.map((swim) => {
+      {competition.events.map((swim, index) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [isModalSwimOpen, setIsModalSwimOpen] = useState(false);
 
@@ -68,7 +68,7 @@ export const Swims = () => {
           : false
 
         return (
-          <SwimCard key={swim.eventUuid} swim={swim}>
+          <SwimCard key={swim.eventUuid} swim={swim} id={`swimCard-${index}`}>
             {session.data && session.data.user.email == competition.organizationInfo.email && (
               <div className={"flex flex-col gap-1 items-center w-fit xs:flex-row"}>
                 <Button
@@ -99,6 +99,7 @@ export const Swims = () => {
 
             {session.data && !(whoAmI && whoAmI.organization) && user?.userEvents != undefined && (
               <Button
+                name={"swim-register-button"}
                 size={"S"} variant={"tertiary"}
                 rightIcon={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "submit" : "link"}
                 disabled={

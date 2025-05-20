@@ -21,23 +21,23 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
       <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-4"}>
         <TextInput
           value={state.distance} onChange={(e) => state.setDistance(Number(e.target.value))}
-          title={"Дистанция"} type={"number"} min={0}
+          title={"Дистанция"} id={"swim-distance"} type={"number"} min={0}
         />
 
 
         <TextInput
           value={state.maxParticipants} onChange={(e) => state.setMaxParticipants(Number(e.target.value))}
-          title={"Макс. участников"} type={"text"}
+          title={"Макс. участников"} id={"swim-max-participants"} type={"text"}
         />
 
         <TextInput
           value={state.ageFrom} onChange={(e) => state.setAgeFrom(Number(e.target.value))}
-          title={"Возраст (от)"} type={"text"}
+          title={"Возраст (от)"} id={"swim-age-from"} type={"text"}
         />
 
         <TextInput
           value={state.ageTo} onChange={(e) => state.setAgeTo(Number(e.target.value))}
-          title={"Возраст (до)"} type={"text"}
+          title={"Возраст (до)"} id={"swim-age-to"} type={"text"}
         />
       </div>
 
@@ -56,7 +56,7 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
         <div className="flex flex-row w-full gap-4">
           <TextInput
             value={state.price} onChange={(e) => state.setPrice(Number(e.target.value))}
-            title={"Стартовый взнос, ₽"} type={"number"} min={0}
+            title={"Стартовый взнос, ₽"} id={"swim-payment-amount"} type={"number"} min={0}
           />
         </div>
       </div>
@@ -79,12 +79,12 @@ export const SwimCreateForm: React.FC<SwimCreateFormProps> = (
         <div className="flex flex-row w-full gap-4">
           <TextInput
             value={state.startTime} onChange={(e) => state.setStartTime(e.target.value)}
-            title={"Время начала"} type={"time"}
+            title={"Время начала"} id={"swim-time-start"} type={"time"}
           />
 
           <TextInput
             value={state.duration} onChange={(e) => state.setDuration(e.target.value)}
-            title={"Длительность"} type={"time"} step="1"
+            title={"Длительность"} id={"swim-duration"} type={"time"} step="1"
             tooltipText={"Расчётное время за которое планируется провести заплыв"}
           />
         </div>

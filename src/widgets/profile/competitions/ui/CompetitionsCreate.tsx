@@ -104,7 +104,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
         </div>
 
         <FileInput
-          title={"Положение"} accept={".pdf"} required
+          title={"Положение"} accept={".pdf"} required id={"file-select"}
           onChange={(e) => state.setAttachmentFile(e.target.files?.[0] || null)}
         />
       </div>

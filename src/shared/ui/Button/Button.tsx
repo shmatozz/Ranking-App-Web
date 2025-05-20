@@ -62,6 +62,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      name={props.name}
       type={props.type}
       className={clsx(baseClass, sizeClass, paletteClass, stateClass, className)}
       onClick={disabled || isLoading ? undefined : onClick}
