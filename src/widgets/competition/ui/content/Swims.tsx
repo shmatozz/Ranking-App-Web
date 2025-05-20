@@ -32,6 +32,21 @@ export const Swims = () => {
     router.push(`?${newParams.toString()}`, { scroll: false });
   };
 
+  const isAgeValid = (birthDate: string, ageFrom: number, ageTo: number) => {
+    if (!birthDate) return false;
+
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDiff = today.getMonth() - birthDateObj.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+      age--;
+    }
+
+    return age >= ageFrom && age <= ageTo;
+  };
+
   if (!competition || isLoading) {
     return (
       <div className={"flex flex-col w-full p-4 gap-6"}>
@@ -44,12 +59,16 @@ export const Swims = () => {
 
   return (
     <div className={"flex flex-col w-full px-1 py-4 gap-6 items-center xs:px-4"}>
-      {competition.events.map((swim) => {
+      {competition.events.map((swim, index) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [isModalSwimOpen, setIsModalSwimOpen] = useState(false);
 
+        const ageValid = user?.birthDate
+          ? isAgeValid(user.birthDate, swim.ageFrom, swim.ageTo)
+          : false
+
         return (
-          <SwimCard key={swim.eventUuid} swim={swim}>
+          <SwimCard key={swim.eventUuid} swim={swim} id={`swimCard-${index}`}>
             {session.data && session.data.user.email == competition.organizationInfo.email && (
               <div className={"flex flex-col gap-1 items-center w-fit xs:flex-row"}>
                 <Button
@@ -80,9 +99,14 @@ export const Swims = () => {
 
             {session.data && !(whoAmI && whoAmI.organization) && user?.userEvents != undefined && (
               <Button
+                name={"swim-register-button"}
                 size={"S"} variant={"tertiary"}
                 rightIcon={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ? "submit" : "link"}
-                disabled={user.userEvents.some((item) => item.eventUuid == swim.eventUuid) || swim.status != "CREATED"}
+                disabled={
+                  user.userEvents.some((item) => item.eventUuid == swim.eventUuid) ||
+                  swim.status != "CREATED"  ||
+                  !ageValid
+                }
                 onClick={() => {
                   setSelectedSwim(swim.eventUuid);
                   goToRegistration();

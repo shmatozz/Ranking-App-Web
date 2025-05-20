@@ -77,7 +77,7 @@ export const SignInUserForm = () => {
         </Button>
       </Link>
 
-      <Button className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type="submit">
+      <Button name={"login-user-button"} className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type="submit">
         Вход
       </Button>
     </form>

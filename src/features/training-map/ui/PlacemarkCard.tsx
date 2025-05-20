@@ -62,6 +62,7 @@ export const PlacemarkCard: React.FC<PlacemarkCardProps> = (
                     clearForm();
                   }}
                   onCancel={() => setUpdateFormVisible(false)}
+                  edit
                 />
               )}
             </>

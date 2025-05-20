@@ -53,7 +53,7 @@ export const CompetitionHeader = () => {
             <Modal>
               <p>Вы уверены, что хотите удалить своё соревнование?</p>
               <div className="flex gap-4 mt-4 justify-evenly">
-                <Button variant="primary" size={"S"} onClick={handleDelete} isLoading={isDeleting}>Удалить</Button>
+                <Button name={"confirm-competition-delete"} variant="primary" size={"S"} onClick={handleDelete} isLoading={isDeleting}>Удалить</Button>
                 <Button variant="secondary" size={"S"} onClick={() => setIsModalOpen(false)}>Отмена</Button>
               </div>
             </Modal>

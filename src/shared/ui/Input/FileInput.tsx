@@ -38,6 +38,7 @@ export const FileInput: React.FC<FileInputProps> = ({
     <div className={"relative flex flex-col w-full gap-0"}>
       {/* Title */}
       <label
+        htmlFor={props.id}
         className={clsx(
           "flex flex-row h-fit select-none gap-1",
           "pointer-events-none",

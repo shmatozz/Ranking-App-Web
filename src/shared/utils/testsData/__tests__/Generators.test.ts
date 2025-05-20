@@ -7,6 +7,7 @@ describe('createTestCompetition', () => {
 
     expect(competition).toEqual({
       competitionUuid: 'default-uuid',
+      attachment: "123.pdf",
       name: 'Default Competition',
       date: '2023-05-19T00:00:00',
       location: 'Default Location',

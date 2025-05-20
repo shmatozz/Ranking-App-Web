@@ -7,10 +7,7 @@ import {categories, gender, amateurCategories, professionalsCategories} from "@/
 import {useSearchParams} from "next/navigation";
 
 export const RatingsHeader = () => {
-  const filters = useRatingsStore((state) => state.filters);
-  const filtersActions = useRatingsStore((state) => state.filtersActions);
-
-  const { getRatings, setPage } = useRatingsStore();
+  const { getRatings, setPage, filtersActions, filters } = useRatingsStore();
 
   const searchParams = useSearchParams();
   const page = searchParams.get("p");
@@ -31,7 +28,7 @@ export const RatingsHeader = () => {
     <div className={"flex flex-col gap-4"}>
       <label className={"text-h4 text-base-100"}>Рейтинг спортсменов</label>
 
-      <div className={"flex flex-col gap-3 items-center xs:flex-row"}>
+      <div className={"flex flex-col gap-3 items-center xs:flex-row"} data-testid="ratings-header">
         <Dropdown
           items={gender}
           selectedItems={filters.gender ? [filters.gender] : []}
