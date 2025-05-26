@@ -21,11 +21,12 @@ export const CompetitionsList = () => {
         <CompetitionCard key={index} isLoading={isLoading}/>
       ))}
 
-      {competitions && !isLoading && competitions.map((comp) => (
+      {competitions && !isLoading && competitions.map((comp, index) => (
         <CompetitionCard
           key={comp.competitionUuid}
           competition={comp}
           onClick={() => router.push(`/calendar/competition?id=${comp.competitionUuid}`)}
+          id={`competitionCard-${index}`}
         />
       ))}
 

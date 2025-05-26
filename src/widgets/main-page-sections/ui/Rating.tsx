@@ -27,12 +27,21 @@ export const Rating = () => {
       </div>
 
       <div className={"flex flex-col w-full gap-2"}>
-        {rating.length > 0 && (
+        {(!rating) && (
+          <div data-testid="ratings-loader" className={"flex flex-col gap-4 h-fit w-full"}>
+            <div className={"flex w-full px-4 h-[120px] bg-base-5 rounded-2xl"}/>
+            <div className={"flex w-full px-4 h-[50px] bg-base-5 rounded-2xl"}/>
+            <div className={"flex w-full px-4 h-[50px] bg-base-5 rounded-2xl"}/>
+          </div>
+        )}
+
+
+        {rating && rating.length > 0 && (
           <UserRatingCard key={rating[0].id} user={rating[0]} position={1}/>
         )}
 
         <div>
-          {(rating.length > 1) && (
+          {rating && (rating.length > 1) && (
             <div className={"flex flex-row items-center px-4 gap-4"}>
               <p className={"text-bodyM_medium text-base-95 w-[80px] text-center"}>Позиция</p>
               <div className={"w-[36px] h-[36px] rounded-full bg-base-0"}/>
@@ -53,12 +62,12 @@ export const Rating = () => {
 
           <div className={"w-full h-[2px] bg-base-5"}/>
 
-          {rating.length > 0 && rating.slice(0, 10).map((item, index) => {
+          {rating && rating.length > 0 && rating.slice(0, 10).map((item, index) => {
             if (index > 0) return <UserRatingCard key={item.id} user={item} position={index + 1}/>
           })}
         </div>
 
-        {rating.length === 0 && (
+        {rating && rating.length === 0 && (
           <p className={"text-bodyM_regular text-base-95 text-center"}>
             Информация о рейтинге по данным фильтрам в данный момент недоступна
           </p>

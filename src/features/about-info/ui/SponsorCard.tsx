@@ -78,7 +78,7 @@ export const SponsorCard: React.FC<SponsorCardProps> = (
               setIsEditModalOpen(true)
             }}
           >
-            <p className={"text-h5_bold text-base-95"}>Добавление партнёра</p>
+            <p className={"text-h5_bold text-base-95"}>Редактирование спонсора</p>
 
             <TextInput title={"Название/Описание"} defaultValue={props.sponsor.sponsorDescription}
                        name={"description"}/>

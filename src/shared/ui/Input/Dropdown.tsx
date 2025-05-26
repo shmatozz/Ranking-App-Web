@@ -38,6 +38,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
 
   return (
     <div
+      data-testid={`dropdown-${props.placeholder}`}
       ref={dropdownRef}
       className={clsx(
         "flex flex-col w-full relative",
@@ -71,6 +72,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
       >
         {props.selectedItems.map((item, index) => (
           <p
+            data-testid={`dropdown-${props.placeholder}-${item.name}`}
             key={index}
             className={"text-bodyM_regular text-base-70 select-none px-4 py-2 bg-base-5 cursor-pointer"}
             onClick={() => {
@@ -84,6 +86,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
 
         {props.items.filter((value) => !props.selectedItems.some((v) => v.id == value.id)).map((item, index) => (
           <p
+            data-testid={`dropdown-${props.placeholder}-${item.name}`}
             key={index}
             className={"text-bodyM_regular text-base-70 select-none px-4 py-2 hover:bg-base-5 cursor-pointer"}
             onClick={() => {

@@ -30,18 +30,18 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
         <TextInput
           value={state.name} onChange={(e) => state.setName(e.target.value)}
-          inputSize={"M"} title={"Название старта"} icon={"trophy"}
+          inputSize={"M"} id={"name"} title={"Название старта"} icon={"trophy"} required
         />
 
         <TextInput
           value={state.location} onChange={(e) => state.setLocation(e.target.value)}
-          inputSize={"M"} title={"Место проведения"} icon={"location"}
+          inputSize={"M"} id={"place"} title={"Место проведения"} icon={"location"} required
         />
 
         <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
           <TextInput
             value={state.date} onChange={(e) => state.setDate(e.target.value)}
-            inputSize={"M"} title={"Дата"} type={"date"} min={new Date().toISOString().split("T")[0]}
+            inputSize={"M"} id={"date"} title={"Дата"} type={"date"} required min={new Date().toISOString().split("T")[0]}
           />
 
           <div className={"flex flex-col w-full"}>
@@ -58,12 +58,12 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
         <TextInput
           value={state.description} onChange={(e) => state.setDescription(e.target.value)}
-          inputSize={"M"} title={"Описание"} type={"area"} className={"min-h-[120px]"}
+          inputSize={"M"} id={"description"} title={"Описание"} type={"area"} className={"min-h-[120px]"} required
         />
 
         <TextInput
           value={state.videoLink} onChange={(e) => state.setVideoLink(e.target.value)}
-          inputSize={"M"} title={"Ссылка на трансляцию"} type={"text"}
+          inputSize={"M"} id={"liveVideoLink"} title={"Ссылка на трансляцию"} type={"text"}
         />
 
         <div className={"flex flex-col gap-2"}>
@@ -71,7 +71,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
 
           <TextInput
             value={state.contacts[0]} onChange={(e) => state.setContact(0, e.target.value)}
-            inputSize={"M"} title={"Основной контакт"} type={"text"} icon={"forum"} animatedLabel={false}
+            inputSize={"M"} id={"mainContact"} title={"Основной контакт"} type={"text"} icon={"forum"} animatedLabel={false} required
           />
 
           <Checkbox
@@ -82,7 +82,7 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
             }}
           />
 
-          <div className={`flex w-full justify-center cursor-pointer transition-all ${showAdditionalContacts ? "rotate-180" : "rotate-0"}`} onClick={() => setShowAdditionalContacts(!showAdditionalContacts)}>
+          <div data-testid="expand" className={`flex w-full justify-center cursor-pointer transition-all ${showAdditionalContacts ? "rotate-180" : "rotate-0"}`} onClick={() => setShowAdditionalContacts(!showAdditionalContacts)}>
             <Icon name="chevronDown" color="gray" />
           </div>
 
@@ -93,18 +93,19 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
           >
             <TextInput
               value={state.contacts[1]} onChange={(e) => state.setContact(1, e.target.value)}
-              inputSize="M" title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
+              inputSize="M" id={"additionalContact1"} title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
             />
 
             <TextInput
               value={state.contacts[2]} onChange={(e) => state.setContact(2, e.target.value)}
-              inputSize="M" title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
+              inputSize="M" id={"additionalContact2"} title="Дополнительный контакт" type="text" icon="forum" animatedLabel={false}
             />
           </div>
         </div>
 
         <FileInput
-          title={"Положение"} accept={".pdf"}
+          title={"Положение"} accept={".pdf"} required id={"file-select"}
+          onChange={(e) => state.setAttachmentFile(e.target.files?.[0] || null)}
         />
       </div>
 
@@ -149,19 +150,27 @@ export const CompetitionsCreate: React.FC<CompetitionsCreateProps> = ({
       <div className={"flex h-1 w-full bg-base-5"}/>
 
       {/* BUTTONS */}
-      <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
-        <Button
-          variant={"tertiary"} size={"M"} className={"w-full"} onClick={onCancel}
-        >
-          Отменить создание
-        </Button>
+      <div className={"flex flex-col gap-2 w-full"}>
+        {state.hasError && (
+          <p className={"text-red-80 bg-red-5 px-4 py-2 text-center rounded-2xl"}>При созднии соревнования произошла
+            ошибка</p>
+        )}
 
-        <Button
-          onClick={() => state.createCompetition(onSuccess)}
-          variant={"primary"} size={"M"} className={"w-full"} disabled={!state.isFormValid}
-        >
-          Создать
-        </Button>
+        <div className={"flex flex-col w-full gap-2 xs:flex-row xs:gap-8"}>
+          <Button
+            variant={"tertiary"} size={"M"} className={"w-full"} onClick={onCancel}
+          >
+            Отменить создание
+          </Button>
+
+          <Button
+            onClick={() => state.createCompetition(onSuccess)}
+            variant={"primary"} size={"M"} className={"w-full"}
+            disabled={!state.isFormValid || state.isLoading} isLoading={state.isLoading}
+          >
+            Создать
+          </Button>
+        </div>
       </div>
     </div>
   )

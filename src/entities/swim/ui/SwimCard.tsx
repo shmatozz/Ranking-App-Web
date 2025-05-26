@@ -9,6 +9,7 @@ interface SwimCardProps {
   isLoading?: boolean;
   className?: string;
   children?: React.ReactNode;
+  id?: string;
 }
 
 export const SwimCard: React.FC<SwimCardProps> = (
@@ -31,6 +32,7 @@ export const SwimCard: React.FC<SwimCardProps> = (
 
   return (
     <div
+      id={props.id}
       className={clsx(
         "flex flex-col w-full h-fit px-6 py-4 shadow-[0_4px_16px_0px_rgba(0,0,0,0.08)] rounded-2xl bg-base-0 items-center gap-4 xs:px-8 xs:flex-row",
         props.className

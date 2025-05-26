@@ -54,6 +54,7 @@ export const SignInUserForm = () => {
       }
 
       <TextInput
+        id={"email"}
         name="email"
         required
         title={"Email"}
@@ -62,6 +63,7 @@ export const SignInUserForm = () => {
       />
 
       <TextInput
+        id={"password"}
         name="password"
         required
         title={"Пароль"}
@@ -75,7 +77,7 @@ export const SignInUserForm = () => {
         </Button>
       </Link>
 
-      <Button className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type="submit">
+      <Button name={"login-user-button"} className={"w-full max-w-[300px] mt-3 self-center"} isLoading={isLoading} type="submit">
         Вход
       </Button>
     </form>

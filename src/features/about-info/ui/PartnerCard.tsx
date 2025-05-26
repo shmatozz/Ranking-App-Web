@@ -78,7 +78,7 @@ export const PartnerCard: React.FC<PartnerCardProps> = (
               setIsEditModalOpen(true)
             }}
           >
-            <p className={"text-h5_bold text-base-95"}>Добавление партнёра</p>
+            <p className={"text-h5_bold text-base-95"}>Редактирование партнёра</p>
 
             <TextInput title={"Название/Описание"} defaultValue={props.partner.partnerDescription}
                        name={"description"}/>

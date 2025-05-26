@@ -23,7 +23,7 @@ export const Info = () => {
       {/* DESCRIPTION */}
       <div className={"flex flex-col w-full gap-1"}>
         <p className={"text-bodyM_medium text-base-95"}>Описание</p>
-        <p className={"text-bodyM_regular text-base-95"}>{competition.description ? competition.description : "Организатор не предоставил описания"}</p>
+        <p className={"text-bodyM_regular text-base-95 whitespace-pre-wrap"}>{competition.description ? competition.description : "Организатор не предоставил описания"}</p>
       </div>
 
       {/* ORGANIZATION */}
@@ -63,9 +63,24 @@ export const Info = () => {
       >
         <p className={"text-bodyM_medium text-base-95"}>Общая информация</p>
 
-        <div className={"flex flex-col w-full gap-[2px] bg-base-5"}>
-          <InfoRow title={"Тип соревнования"} info={competition.competitionType}/>
+        <div className={"flex flex-col w-full gap-[2px]"}>
+          <InfoRow title={"Тип соревнования"} info={competition.participantsType == "AMATEURS" ? "Любители" : "Профессионалы"}/>
           <InfoRow title={"Дистанции"} info={getDistances(competition.events)}/>
+
+          {competition.attachment && (
+            <div className={"flex flex-col p-2 bg-base-0 xs:flex-row xs:gap-4 xs:items-center"}>
+              <p className={"text-bodyM_regular text-base-90 xs:min-w-[200px]"}>Положение</p>
+              <a
+                href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/file/download/${competition.attachment}`}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-bodyM_regular text-blue-90 underline"
+              >
+                Скачать положение
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -73,7 +88,7 @@ export const Info = () => {
 }
 
 const InfoLoading = () => {
-  const InfoRow = ({title} : { title: string }) => (
+  const InfoRow = ({title}: { title: string }) => (
     <div className={"flex flex-col p-2 bg-base-0 xs:flex-row xs:gap-4 xs:items-center"}>
       <p className={"text-bodyM_regular text-base-95 min-w-[200px]"}>{title}</p>
       <p className={"text-bodyM_regular loader"}>Информация</p>

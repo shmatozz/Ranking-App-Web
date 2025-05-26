@@ -1,12 +1,11 @@
 'use server';
 
-import {CreateCompetitionParams} from "@/features/competition/create";
 import axiosInstance from "@/shared/api/AxiosConfig";
 import {AxiosError} from "axios";
 import {auth} from "@/shared/lib";
 
 export async function createCompetition(
-  params: CreateCompetitionParams,
+  params: FormData,
 ) {
   console.log("Send POST create competition request", params)
   const session = await auth();
@@ -17,7 +16,9 @@ export async function createCompetition(
       params,
       {
         headers: {
+          'accept': '*/*',
           Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
   } catch (e) {

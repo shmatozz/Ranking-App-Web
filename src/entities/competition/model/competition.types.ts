@@ -13,6 +13,7 @@ export type Competition = {
   contactLink2?: string,
   contactLink3?: string,
   participantsType: Participants;
+  attachment: string,
   competitionType: string;
   competitionUuid: string;
   videoLink?: string

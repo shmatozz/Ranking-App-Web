@@ -54,37 +54,37 @@ export const SignUpOrganizationForm = () => {
       }
 
       <TextInput
-        name={"organizationName"} required
+        id={"organizationName"} name={"organizationName"} required
         title={"Название организации"}
         type={"text"}
       />
 
       <TextInput
-        name={"organizationEmail"} required
+        id={"organizationEmail"} name={"organizationEmail"} required
         title={"E-mail"}
         type={"email"}
       />
 
       <TextInput
-        name={"organizationPhone"}
+        id={"organizationPhone"} name={"organizationPhone"}
         title={"Контактный номер организации"}
         type={"tel"}
       />
 
       <TextInput
-        name={"password"} required
+        id={"password"} name={"password"} required
         title={"Пароль"}
         type={"password"}
       />
 
       <TextInput
-        name={"confirmPassword"} required
+        id={"confirmPassword"} name={"confirmPassword"} required
         title={"Повторите пароль"}
         type={"password"}
       />
 
       <Checkbox
-        name={"isOpen"} text={"Открытая организация"}
+        id={"isOpen"} name={"isOpen"} text={"Открытая организация"}
         tooltipText={"Любой спортсмен сможет присоединиться к организации без подтверждения"}
       />
 
