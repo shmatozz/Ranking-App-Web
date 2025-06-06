@@ -11,7 +11,7 @@ export const PlacemarksList = () => {
   const session = useSession()
   const {formVisible, setFormVisible, getMarker, clearForm} = usePlacemarkCreateStore();
   const {
-    placemarks, selectedPointID, editMode,
+    placemarks, selectedPointID, editMode, isLoading,
     setEditMode, addPlacemark, getPlacemarks, deletePlacemark, setSelectedPointID
   } = useMapStore();
   const { whoAmI, getWhoAmI } = useWhoAmIStore()
@@ -50,7 +50,15 @@ export const PlacemarksList = () => {
           />
         ))}
 
-        {placemarks.length === 0 && (
+        {isLoading && (
+          <>
+            <PlacemarkCard/>
+            <PlacemarkCard/>
+            <PlacemarkCard/>
+          </>
+        )}
+
+        {!isLoading && placemarks.length === 0 && (
           <p className={"text-bodyM_regular text-base-95 text-center"}>В данный момент информация отсутвует</p>
         )}
       </div>
