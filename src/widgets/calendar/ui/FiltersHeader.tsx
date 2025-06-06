@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useEffect} from "react";
-import {Button, Dropdown, TextInput} from "@/shared/ui";
+import {Button, Checkbox, Dropdown, TextInput} from "@/shared/ui";
 import {arrangeFilters, useCalendarStore} from "@/features/competition/filter";
 import {ArrangeOption} from "@/shared/lib";
 import {useRouter, useSearchParams} from "next/navigation";
@@ -73,6 +73,8 @@ export const FiltersHeader = () => {
           inputSize={"S"}
           animatedLabel={false}
         />
+
+        <Checkbox text={"Показывать прошедшие"} checked={state.showPastEvents} onClick={() => state.setShowPastEvents(!state.showPastEvents)}/>
       </div>
 
       <div className={"flex flex-col w-full gap-3 lg-md:flex-row"}>
