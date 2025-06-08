@@ -21,6 +21,8 @@ export const Map = () => {
   const {setFormVisible, setCoordinates } = usePlacemarkCreateStore();
 
   React.useEffect(() => {
+    if (typeof window === 'undefined' || !('ymaps3' in window)) return;
+
     Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]).then(([{ reactify }]) =>
       setReactifiedApi(reactify.bindTo(React, ReactDOM).module(ymaps3))
     );

@@ -107,12 +107,12 @@ export const Results = () => {
       {resultsFormVisible && (
         <>
           <div
-            className="fixed inset-0 z-60 bg-base-95 bg-opacity-50"
+            className="fixed inset-0 z-[100] bg-base-95 bg-opacity-50"
             onClick={() => setResultsFormVisible(false)}
           />
 
           <div
-            className="hidden flex-col fixed inset-0 z-70 max-w-[1100px] m-auto my-24 container-shadow rounded-2xl bg-white overflow-auto p-6 lg:flex">
+            className="hidden flex-col fixed inset-0 z-[101] max-w-[1100px] m-auto my-24 container-shadow rounded-2xl bg-white overflow-auto p-6 lg:flex">
 
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Ручной ввод результатов</h2>

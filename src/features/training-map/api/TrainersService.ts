@@ -13,15 +13,9 @@ import {auth} from "@/shared/lib";
 export async function getTrainers(params: GetTrainersRequest) {
   try {
     console.log("Send GET all trainers request");
-    const session = await auth();
 
     const response = await axiosInstance.get<GetTrainersResponseData>(
       `/trainers/${params.coordinateId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.user.token}`,
-        }
-      }
     )
 
     return { data: response.data };
