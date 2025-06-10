@@ -57,15 +57,14 @@ export const Registration = () => {
       <Button
         variant={"primary"} size={"M"} isLoading={isLoading}
         className={"w-full max-w-[350px] self-center"}
-        onClick={() => createWidgetPayment(
-          selectedSwim.price,
-          `Оплата участия в заплыве ${getSwimShort(selectedSwim)}`
-        )}
+        onClick={selectedSwim.price === 0 ?
+          () => joinSwim(selectedSwim.eventUuid) :
+          () => createWidgetPayment(selectedSwim.price, `Оплата участия в заплыве ${getSwimShort(selectedSwim)}`)}
         disabled={user?.userEvents?.some((swim) => swim.eventUuid == selectedSwim.eventUuid)}
       >
         {user?.userEvents?.some((swim) => swim.eventUuid == selectedSwim.eventUuid) ?
           "Вы уже зарегистрированы" :
-          `Оплатить ${selectedSwim.price} ₽`}
+          selectedSwim.price === 0 ? "Зарегистрироваться" : `Оплатить ${selectedSwim.price} ₽`}
       </Button>
 
       {payment && token && (
